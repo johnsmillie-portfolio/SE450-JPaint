@@ -22,6 +22,7 @@ public class Gui implements IUiModule {
 		button.addActionListener((ActionEvent) -> callback.run());
 	}
 
+    @SuppressWarnings({"rawtypes" , "unchecked"})
     @Override
     public <T> T getDialogResponse(IDialogChoice dialogSettings) {
         Object selectedValue = JOptionPane.showInputDialog(null,
@@ -31,6 +32,7 @@ public class Gui implements IUiModule {
                 null,
                 dialogSettings.getDialogOptions(),
                 dialogSettings.getCurrentSelection());
+
         return selectedValue == null
                 ? (T)dialogSettings.getCurrentSelection()
                 : (T)selectedValue;
