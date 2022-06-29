@@ -1,0 +1,133 @@
+@startuml sample
+header SE450\nSharpe\nSummer 2022\nSmillie/Zwerdling
+
+title GUI Layer
+scale 1
+
+package "controller" {
+    interface IJPaintController {
+        + void setup()
+    }
+
+    class JPaintController{
+        
+    }
+
+    IJPaintController <|.. JPaintController
+}
+
+package "model.dialogs" {
+    class ChoosePrimaryColorDialog {
+        - IApplicationState applicationState
+        + ChoosePrimaryColorDialog(IApplicationState applicationState)
+    }
+
+    class ChooseSecondaryColorDialog {
+        - IApplicationState applicationState
+        + ChooseSecondaryColorDialog(IApplicationState applicationState)
+    }
+
+    class ChooseShadingTypeDialog {
+        - IApplicationState applicationState
+        + ChooseShadingTypeDialog(IApplicationState applicationState)
+    }
+
+    class ChooseShapeDialog {
+        - IApplicationState applicationState
+        + ChooseShapeDialog(IApplicationState applicationState)
+    }
+
+    class ChooseStartAndEndPointModeDialog {
+        - IApplicationState applicationState
+        + ChooseStartAndEndPointModeDialog(IApplicationState applicationState)
+    }
+
+    class DialogProvider {
+        - IDialogChoice<ShapeType> chooseShapeDialog;
+        - IDialogChoice<ShapeColor> choosePrimaryColorDialog;
+        - IDialogChoice<ShapeColor> chooseSecondaryColorDialog;
+        - IDialogChoice<ShapeShadingType> chooseShadingTypeDialog;
+        - IDialogChoice<MouseMode> chooseStartAndEndPointModeDialog;
+        - IApplicationState applicationState;
+    }
+}
+
+package "model.interfaces" {
+    interface IDialogChoice {
+    }
+
+    interface IDialogProvider {
+        + IDialogChoice<ShapeType> getChooseShapeDialog()
+        + IDialogChoice<ShapeColor> getChoosePrimaryColorDialog()
+        + IDialogChoice<ShapeColor> getChooseSecondaryColorDialog()
+        + IDialogChoice<ShapeShadingType> getChooseShadingTypeDialog()
+        + IDialogChoice<MouseMode> getChooseStartAndEndPointModeDialog()
+    }
+
+    interface IApplicationState {
+        + void setActiveShape()
+        + void setActivePrimaryColor()
+        + void setActiveSecondaryColor()
+        + void setActiveShadingType()
+        + void setActiveStartAndEndPointMode()
+        + ShapeType getActiveShapeType()
+        + ShapeColor getActivePrimaryColor()
+        + ShapeColor getActiveSecondaryColor()
+        + ShapeShadingType getActiveShapeShadingType()
+        + MouseMode getActiveMouseMode()
+    }
+}
+
+package "model.persistence" {
+    class ApplicationState {
+        - final IUiModule uiModule
+        - final IDialogProvider dialogProvider
+        - ShapeType activeShapeType
+        - ShapeColor activePrimaryColor
+        - ShapeColor activeSecondaryColor
+        - ShapeShadingType activeShapeShadingType
+        - MouseMode activeMouseMode
+
+        + ApplicationState(IUiModule uiModule)
+        + void setActiveShape()
+        + void setActivePrimaryColor()
+        + void setActiveSecondaryColor()
+        + void setActiveShadingType()
+        + void setActiveStartAndEndPointMode()
+        + ShapeType getActiveShapeType()
+        + ShapeColor getActivePrimaryColor()
+        + ShapeColor getActiveSecondaryColor()
+        + ShapeShadingType getActiveShapeShadingType()
+        + MouseMode getActiveMouseMode()
+        + void setDefaults()
+    }
+}
+
+package "view.gui" {
+    class Gui {
+        - IGuiWindow gui
+        + Gui(IGuiWindow gui)
+        + void addEvent(EventName eventName, IEventCallback callback)
+        + getDialogResponse(IDialogChoice dialogSettings)
+    }
+}
+
+package "view.interfaces" {
+    interface IDialogChoice {
+        + String getDialogTitle()
+        + String getDialogText()
+        + T[] getDialogOptions()
+        + T getCurrentSelection()
+    }
+}
+
+IDialogProvider <|.. DialogProvider
+IApplicationState *- ApplicationState
+IDialogChoice *- DialogProvider
+IDialogChoice <|.. ChooseStartAndEndPointModeDialog
+IDialogChoice <|.. ChooseShapeDialog
+IDialogChoice <|.. ChooseShadingTypeDialog
+IDialogChoice <|.. ChooseSecondaryColorDialog
+IDialogChoice <|.. ChoosePrimaryColorDialog
+
+@enduml
