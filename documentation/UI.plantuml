@@ -6,128 +6,243 @@ scale 1
 
 package "controller" {
     interface IJPaintController {
-        + void setup()
+        + setup(): void
     }
 
     class JPaintController{
-        
+        + JPaintController(IUiModule uiModule, IApplicationState applicationState)
+        - setupEvents: void
+    }
+}
+
+
+package "model" {
+    enum ShapeColor {
+        BLACK
+        BLUE
+        CYAN
+        DARK_GRAY
+        GRAY
+        GREEN
+        LIGHT_GRAY
+        MAGENTA
+        ORANGE
+        PINK
+        RED
+        WHITE
+        YELLOW
     }
 
+    enum MouseMode {
+        DRAW
+        SELECT
+        MOVE
+    }
+
+    enum ShapeShadingType {
+        FILLED_IN
+        OUTLINE
+        OUTLINE_AND_FILLED_IN
+    }
+
+    enum ShapeType {
+        ELLIPSE
+        RECTANGLE
+        TRIANGLE
+    }
+
+
+    package "dialogs" {
+        class ChoosePrimaryColorDialog {
+            - IApplicationState applicationState
+            + ChoosePrimaryColorDialog(IApplicationState applicationState)
+        }
+
+        class ChooseSecondaryColorDialog {
+            - IApplicationState applicationState
+            + ChooseSecondaryColorDialog(IApplicationState applicationState)
+        }
+
+        class ChooseShadingTypeDialog {
+            - IApplicationState applicationState
+            + ChooseShadingTypeDialog(IApplicationState applicationState)
+        }
+
+        class ChooseShapeDialog {
+            - IApplicationState applicationState
+            + ChooseShapeDialog(IApplicationState applicationState)
+        }
+
+        class ChooseStartAndEndPointModeDialog {
+            - IApplicationState applicationState
+            + ChooseStartAndEndPointModeDialog(IApplicationState applicationState)
+        }
+
+        class DialogProvider {
+            - IDialogChoice<ShapeType> chooseShapeDialog;
+            - IDialogChoice<ShapeColor> choosePrimaryColorDialog;
+            - IDialogChoice<ShapeColor> chooseSecondaryColorDialog;
+            - IDialogChoice<ShapeShadingType> chooseShadingTypeDialog;
+            - IDialogChoice<MouseMode> chooseStartAndEndPointModeDialog;
+            - IApplicationState applicationState;
+        }
+    }
+
+    package "interfaces" {
+        interface IDialogChoice {
+        }
+
+        interface IDialogProvider {
+            + getChooseShapeDialog(): IDialogChoice<ShapeType>
+            + getChoosePrimaryColorDialog(): IDialogChoice<ShapeColor>
+            + getChooseSecondaryColorDialog(): IDialogChoice<ShapeColor>
+            + getChooseShadingTypeDialog(): IDialogChoice<ShapeShadingType>
+            + getChooseStartAndEndPointModeDialog(): IDialogChoice<MouseMode>
+        }
+
+        interface IApplicationState {
+            + setActiveShape(): void
+            + setActivePrimaryColor(): void
+            + setActiveSecondaryColor(): void
+            + setActiveShadingType(): void
+            + setActiveStartAndEndPointMode(): void
+            + getActiveShapeType(): ShapeType
+            + getActivePrimaryColor(): ShapeColor
+            + getActiveSecondaryColor(): ShapeColor
+            + getActiveShapeShadingType(): ShapeShadingType
+            + getActiveMouseMode(): MouseMode
+        }
+    }
+
+
+    package "persistence" {
+        class ApplicationState {
+            - IUiModule uiModule
+            - IDialogProvider dialogProvider
+            - ShapeType activeShapeType
+            - ShapeColor activePrimaryColor
+            - ShapeColor activeSecondaryColor
+            - ShapeShadingType activeShapeShadingType
+            - MouseMode activeMouseMode
+
+            + ApplicationState(IUiModule uiModule)
+            + setActiveShape(): void
+            + setActivePrimaryColor(): void
+            + setActiveSecondaryColor(): void
+            + setActiveShadingType(): void
+            + setActiveStartAndEndPointMode(): void
+            + getActiveShapeType(): ShapeType
+            + getActivePrimaryColor(): ShapeColor
+            + getActiveSecondaryColor(): ShapeColor
+            + getActiveShapeShadingType(): ShapeShadingType
+            + getActiveMouseMode(): MouseMode
+            + setDefaults(): void
+        }
+    }
+}
+
+package "view" {
+    package "gui " {
+        class Gui {
+            - IGuiWindow gui
+            + Gui(IGuiWindow gui)
+            + addEvent(EventName eventName, IEventCallback callback): void
+            + getDialogResponse(IDialogChoice dialogSettings): T
+        }
+
+        class PaintCanvas {
+            + getGraphics2D(): Graphics2D
+        }
+
+        class GuiWindow {
+            - defaultWidth: int = 1250
+            - defaultHeight: int = 800
+            - defaultTitle: String = "JPaint"
+            - {field} defaultButtonDimensions: Insets = new Insets(5, 8, 5, 8)
+            - {field} eventButtons: Map<EventName, JButton> = new HashMap<>()
+
+            + GuiWindow(JComponent canvas)
+            + getButton(EventName eventName): JButton
+            - createWindow():  JPanel
+            - createMenu():  JPanel
+            - addButtonToPanel(EventName eventName, JPanel panel): void
+            - createButton(EventName eventName): JButton
+            - createButtonBorder(): Border
+            - createButtonPanel(): JPanel
+            - createBackgroundPanel(): JPanel
+        }
+    }
+
+    package "interfaces " {
+        interface IDialogChoice<T> {
+            + getDialogTitle(): String
+            + getDialogText(): String
+            + getDialogOptions(): T[]
+            + getCurrentSelection(): T
+        }
+
+        interface IEventCallback {
+            + run(): void
+        }
+
+        abstract class PaintCanvasBase  {
+            + {abstract} getGraphics2D(): Graphics2D
+        }
+
+        interface IUiModule {
+            + addEvent(EventName eventName, IEventCallback command): void
+            + getDialogResponse(IDialogChoice dialogChoice): T
+        }
+
+        interface IGuiWindow {
+            + getButton(EventName eventName): JButton
+        }
+    }
+
+    enum EventName {
+        CHOOSE_SHAPE
+        CHOOSE_PRIMARY_COLOR
+        CHOOSE_SECONDARY_COLOR
+        CHOOSE_SHADING_TYPE
+        CHOOSE_MOUSE_MODE
+        UNDO
+        REDO
+        COPY
+        PASTE
+        DELETE
+        UNGROUP
+        GROUP
+        }
+    }
+
+    package javax.swing {
+        class JComponent {}
+        class JFrame {}
+    }
+
+    IDialogProvider <|.. DialogProvider
+    IApplicationState <|.. ApplicationState
+    IApplicationState *-- DialogProvider
+    IApplicationState o.. JPaintController
+    IDialogChoice <|.. ChooseStartAndEndPointModeDialog
+    IDialogChoice <|.. ChooseShapeDialog
+    IDialogChoice <|.. ChooseShadingTypeDialog
+    IDialogChoice <|.. ChooseSecondaryColorDialog
+    IDialogChoice <|.. ChoosePrimaryColorDialog
+    IDialogChoice *-- DialogProvider
+    ApplicationState o-- ChoosePrimaryColorDialog
+    ApplicationState o-- ChooseSecondaryColorDialog
+    ApplicationState o-- ChooseShadingTypeDialog
+    ApplicationState o-- ChooseShapeDialog
+    ApplicationState o-- ChooseStartAndEndPointModeDialog
     IJPaintController <|.. JPaintController
-}
+    JComponent <|-- PaintCanvasBase
+    IGuiWindow <|.. GuiWindow
+    IGuiWindow o.. Gui
+    IUiModule <|.. Gui
+    IUiModule o.. JPaintController
+    IUiModule o-- ApplicationState
+    PaintCanvasBase <|-- PaintCanvas
+    JFrame <|-- GuiWindow
 
-package "model.dialogs" {
-    class ChoosePrimaryColorDialog {
-        - IApplicationState applicationState
-        + ChoosePrimaryColorDialog(IApplicationState applicationState)
-    }
-
-    class ChooseSecondaryColorDialog {
-        - IApplicationState applicationState
-        + ChooseSecondaryColorDialog(IApplicationState applicationState)
-    }
-
-    class ChooseShadingTypeDialog {
-        - IApplicationState applicationState
-        + ChooseShadingTypeDialog(IApplicationState applicationState)
-    }
-
-    class ChooseShapeDialog {
-        - IApplicationState applicationState
-        + ChooseShapeDialog(IApplicationState applicationState)
-    }
-
-    class ChooseStartAndEndPointModeDialog {
-        - IApplicationState applicationState
-        + ChooseStartAndEndPointModeDialog(IApplicationState applicationState)
-    }
-
-    class DialogProvider {
-        - IDialogChoice<ShapeType> chooseShapeDialog;
-        - IDialogChoice<ShapeColor> choosePrimaryColorDialog;
-        - IDialogChoice<ShapeColor> chooseSecondaryColorDialog;
-        - IDialogChoice<ShapeShadingType> chooseShadingTypeDialog;
-        - IDialogChoice<MouseMode> chooseStartAndEndPointModeDialog;
-        - IApplicationState applicationState;
-    }
-}
-
-package "model.interfaces" {
-    interface IDialogChoice {
-    }
-
-    interface IDialogProvider {
-        + IDialogChoice<ShapeType> getChooseShapeDialog()
-        + IDialogChoice<ShapeColor> getChoosePrimaryColorDialog()
-        + IDialogChoice<ShapeColor> getChooseSecondaryColorDialog()
-        + IDialogChoice<ShapeShadingType> getChooseShadingTypeDialog()
-        + IDialogChoice<MouseMode> getChooseStartAndEndPointModeDialog()
-    }
-
-    interface IApplicationState {
-        + void setActiveShape()
-        + void setActivePrimaryColor()
-        + void setActiveSecondaryColor()
-        + void setActiveShadingType()
-        + void setActiveStartAndEndPointMode()
-        + ShapeType getActiveShapeType()
-        + ShapeColor getActivePrimaryColor()
-        + ShapeColor getActiveSecondaryColor()
-        + ShapeShadingType getActiveShapeShadingType()
-        + MouseMode getActiveMouseMode()
-    }
-}
-
-package "model.persistence" {
-    class ApplicationState {
-        - final IUiModule uiModule
-        - final IDialogProvider dialogProvider
-        - ShapeType activeShapeType
-        - ShapeColor activePrimaryColor
-        - ShapeColor activeSecondaryColor
-        - ShapeShadingType activeShapeShadingType
-        - MouseMode activeMouseMode
-
-        + ApplicationState(IUiModule uiModule)
-        + void setActiveShape()
-        + void setActivePrimaryColor()
-        + void setActiveSecondaryColor()
-        + void setActiveShadingType()
-        + void setActiveStartAndEndPointMode()
-        + ShapeType getActiveShapeType()
-        + ShapeColor getActivePrimaryColor()
-        + ShapeColor getActiveSecondaryColor()
-        + ShapeShadingType getActiveShapeShadingType()
-        + MouseMode getActiveMouseMode()
-        + void setDefaults()
-    }
-}
-
-package "view.gui" {
-    class Gui {
-        - IGuiWindow gui
-        + Gui(IGuiWindow gui)
-        + void addEvent(EventName eventName, IEventCallback callback)
-        + getDialogResponse(IDialogChoice dialogSettings)
-    }
-}
-
-package "view.interfaces" {
-    interface IDialogChoice {
-        + String getDialogTitle()
-        + String getDialogText()
-        + T[] getDialogOptions()
-        + T getCurrentSelection()
-    }
-}
-
-IDialogProvider <|.. DialogProvider
-IApplicationState *- ApplicationState
-IDialogChoice *- DialogProvider
-IDialogChoice <|.. ChooseStartAndEndPointModeDialog
-IDialogChoice <|.. ChooseShapeDialog
-IDialogChoice <|.. ChooseShadingTypeDialog
-IDialogChoice <|.. ChooseSecondaryColorDialog
-IDialogChoice <|.. ChoosePrimaryColorDialog
-
-@enduml
+    @enduml
