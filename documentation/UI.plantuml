@@ -1,4 +1,4 @@
-@startuml sample
+@startuml UI
 header SE450\nSharpe\nSummer 2022\nSmillie/Zwerdling
 
 title GUI Layer

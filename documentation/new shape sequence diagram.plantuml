@@ -1,0 +1,15 @@
+@startuml Command Sequence
+MouseHandler -> EventHandler: Mouse Down
+EventHandler -> NewShapeCommandBuilder: New NewShapeCommandBuilder
+EventHandler -> EventHandler: Hold in local field at most one new NewShapeCommandBuilder
+EventHandler -> NewShapeCommandBuilder: Set origin at position of mouse down
+MouseHandler -> EventHandler: Mouse Up
+EventHandler -> NewShapeCommandBuilder: Set origin at position of mouse up
+EventHandler -> NewShapeCommandBuilder: Finalize NewShapeCommand
+EventHandler -> EventHandler: Null local field-held NewShapeCommandBuilder
+NewShapeCommandBuilder -> EventHandler: Complete NewShapeCommand
+EventHandler -> LogicFacade: Send complete NewShapeCommand
+LogicFacade -> NewShapeCommand: Invoke command
+LogicFacade -> UndoCommandStack: Add NewShapeCommand to undo stack
+LogicFacade -> PaintCanvas: Paint
+@enduml
