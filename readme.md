@@ -46,7 +46,12 @@ Most but not all ICommands are undoable.  For example, moving shapes, creating n
 
 - How should undo be implemented with commands?
 
-Commands are, probably, undoable.  However, Undo is also a command.  This means that, in order for the undo command to take its action, it must act on the CommandHistory, or the undo action must take place outside the command.
+Commands are, probably, undoable.  However, Undo is also a command.  This means that, in order for the undo command to take its action, it must act on the CommandHistory, or the undo action must take place outside the command.  
+  - Perhaps this will not be an issue: we can keep the CommandHistory as a shared object given to the command on creation, and ignore its implications in the LogicFacade.
+
+- Do we need a LogicFacade?
+  
+This was probably created prematurely as a place to encapsulate all the actions the UI can take, but those will be implemented in each command.  Perhaps this class is unecessary.
 
 
 # To-Do
