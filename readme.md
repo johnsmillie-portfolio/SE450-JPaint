@@ -1,5 +1,5 @@
 # Introduction
-This is the JPaint application produced for Jeff Sharpe's SE450 in Summer 2022 at DePaul Univesity.  The substantive changes to the base code in this repository were made by John Smillie and David Zwerdling.
+This is the JPaint application produced for SE450 in Summer 2022 at DePaul Univesity, instructed by Jeff Sharpe.  The substantive additions to the base code in this repository were made by John Smillie and David Zwerdling.
 
 # Grading Notes
 ## Missing Features
@@ -13,17 +13,42 @@ This is the JPaint application produced for Jeff Sharpe's SE450 in Summer 2022 a
 ## GitHub Repository
 https://github.com/zwerdlds/CSC450-JPaint
 
-## List of Design Patterns
-1.
-2.
-3.
-4.
-5.
-6.
+# List of Design Patterns
+## 1. Command
+The behavior of the user interface needs to be extensible.  While the project starts with limited functionality, more will be added.  Interacting with the logic layer should be decoupled from the interface, but the interface should have knowledge of the functions it is capable of performing.  For these reasons, the project implements a Command pattern.  The UI layer is one client capable of creating commands, which then are passed to the logic layer to be invoked, and kept in a stack, to be revoked in case of an undo.
 
-# Discussion
-- The ability to create disparate shapes with similar attributes suggests the use of a shared method of creation.
+### 2. 
+### 3. 
+### 4. 
+### 5. 
+### 6. 
 
+## Additional Discussion
+
+- Since the distinct drawing behaviour of each shape is decided by an enumerator, each the shape class will be implemented identically across all shapes.  The shape object need only contain a start, end, primary color, secondary color, and type field.  This is sufficient to deterministically draw each shape.  Since shape types do not contain any fields distinctive to them, there is no reason to differentiate each by type.  Drawing method does differ by type, however.  Drawing is a behavior, and since it differs by shape type, we should implement the strategy pattern to impement drawing.
+
+- Each shape is drawn in a similar way.  This may be implemented as a Chain of Responsibility.  It is perhaps capable of being combined with a decorator pattern to alter the way each is invoked.
+
+
+## Unresolved Issues
+- Should new shape commands be built using a builder?
+  
+The MouseHandler is probably the only place the mouse down and up location will be dynamic.  Elsewhere these values will be used, but as start and end points on shapes.  It is an unresolved issue:  should we implement a command builder capable of creating the newshapecommands that can set its start and end positions?
+  
+The start value is required.  This is understood to mean that the best way to implement it is via the type-system.  That would require the mousehandler to keep track of the state, so when the mousedown takes place, the mousehandler will set an internal field storing the location.
+
+However, it is possible that the functionality of creating newshapecommands will be required elsewhere in the future.  That would benefit from a builder pattern, perhaps encapsulated further by a static factory.
+
+
+- Should ICommand include additional functionality?
+
+Most but not all ICommands are undoable.  For example, moving shapes, creating new shapes, changing colors etc.  However, not all ICommands can be undone - save, for example.  Should ICommand require implementation of undo/redo?  What is the requirement for ICommand-level functionality?  Should other interfaces require this implementation instead?  Once these are implemented should the interfaces be aggregated and how are they to be differentiated at runtime?
+
+# To-Do
+- Sprint 1 Demo
+- Draw
+  - Functional Impl
+  - Refactor to patterns
 
 # Currently Unimplmented Features
 - Pick a shape
@@ -47,11 +72,7 @@ https://github.com/zwerdlds/CSC450-JPaint
 
 ## Sprint 1 (Ends on Week 4)
 - Draw a filled-in Rectangle
-  - Click and drag while in Draw mode – a Rectangle will display on
-the screen on mouse release. The Rectangle will match the
-direction and size of the mouse movement. Rectangle does not
-need to display while clicking and dragging – it will suddenly
-appear on the screen only once the mouse is released.
+  - Click and drag while in Draw mode – a Rectangle will display on the screen on mouse release. The Rectangle will match the direction and size of the mouse movement. Rectangle does not need to display while clicking and dragging – it will suddenly appear on the screen only once the mouse is released.
 - Undo/Redo Draw
 - Whiteboard exercise/Discussion post
 Grading Notes:
