@@ -44,6 +44,11 @@ However, it is possible that the functionality of creating newshapecommands will
 
 Most but not all ICommands are undoable.  For example, moving shapes, creating new shapes, changing colors etc.  However, not all ICommands can be undone - save, for example.  Should ICommand require implementation of undo/redo?  What is the requirement for ICommand-level functionality?  Should other interfaces require this implementation instead?  Once these are implemented should the interfaces be aggregated and how are they to be differentiated at runtime?
 
+- How should undo be implemented with commands?
+
+Commands are, probably, undoable.  However, Undo is also a command.  This means that, in order for the undo command to take its action, it must act on the CommandHistory, or the undo action must take place outside the command.
+
+
 # To-Do
 - Sprint 1 Demo
 - Draw
