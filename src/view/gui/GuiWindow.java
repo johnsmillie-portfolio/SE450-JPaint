@@ -7,6 +7,7 @@ import java.util.NoSuchElementException;
 import javax.swing.*;
 import javax.swing.border.*;
 
+import logic.ClickHandler;
 import view.interfaces.IGuiWindow;
 import view.EventName;
 
@@ -27,7 +28,7 @@ public class GuiWindow extends JFrame implements IGuiWindow {
         setSize(defaultWidth, defaultHeight);
         setBackground(new Color(157, 157, 157));
         setExtendedState(JFrame.MAXIMIZED_BOTH);
-        JPanel window = createWindow();
+        JPanel window = createWindow(canvas);
         window.add(canvas, BorderLayout.CENTER);
 		validate();
     }
@@ -40,8 +41,10 @@ public class GuiWindow extends JFrame implements IGuiWindow {
 		return eventButtons.get(eventName);
 	}
 
-	private JPanel createWindow() {
+	private JPanel createWindow(JComponent canvas) {
 		JPanel contentPane = createBackgroundPanel();
+        ClickHandler handler = new ClickHandler((PaintCanvas) canvas);
+        contentPane.addMouseListener(handler);
         JPanel buttonPanel = createMenu();
         contentPane.add(buttonPanel, BorderLayout.NORTH);
         return contentPane;

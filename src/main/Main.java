@@ -2,6 +2,7 @@ package main;
 
 import controller.IJPaintController;
 import controller.JPaintController;
+import logic.ClickHandler;
 import model.ShapeColor;
 import model.ShapeType;
 import model.persistence.ApplicationState;
@@ -24,7 +25,7 @@ public class Main {
         ApplicationState appState = new ApplicationState(uiModule);
         IJPaintController controller = new JPaintController(uiModule, appState);
         controller.setup();
-
+       // ClickHandler handler = new ClickHandler();
         // For example purposes only; remove all lines below from your final project.
 
         try {
@@ -32,7 +33,8 @@ public class Main {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
+       // paintCanvas.getGraphics2D().addMouseListener(handler);
+        System.out.println("Program started");
         // Filled in rectangle
         Graphics2D graphics2d = paintCanvas.getGraphics2D();
         graphics2d.setColor(Color.GREEN);
