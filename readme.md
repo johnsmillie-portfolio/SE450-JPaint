@@ -57,7 +57,7 @@ This was probably created prematurely as a place to encapsulate all the actions 
 # To-Do
 - Sprint 1 Demo
 - Draw
-  - Functional Impl
+  + Functional Impl
   - Refactor to patterns
 
 # Currently Unimplmented Features
