@@ -1,0 +1,9 @@
+@startuml Command Sequence
+title Undo Command Sequence
+hide footbox
+
+UNKNOWNSOURCE -> CommandReceiver: Send new UndoCommand
+CommandReceiver -> UndoCommand: Invoke command
+UndoCommand -> CommandStack: Undo
+UndoCommand -> PaintCanvas: Repaint
+@enduml
