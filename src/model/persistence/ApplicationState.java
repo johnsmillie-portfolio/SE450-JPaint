@@ -26,6 +26,11 @@ public class ApplicationState implements IApplicationState {
     }
 
     @Override
+    public void undo() {
+        System.out.println("Undo Clicked.");
+    }
+
+    @Override
     public void setActiveShape() {
         activeShapeType = uiModule.getDialogResponse(
                 dialogProvider.getChooseShapeDialog());

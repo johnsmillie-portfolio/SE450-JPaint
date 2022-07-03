@@ -2,13 +2,13 @@
 title New Shape Command Sequence
 hide footbox
 
-MouseHandler -> ClickHandler: Mouse Down
+User -> ClickHandler: User Clicks mouse
 ClickHandler -> NewShapeCommandBuilder: Create new
 activate NewShapeCommandBuilder
 ClickHandler -> NewShapeCommandBuilder: Set origin at position of mouse down
 == user moves dragging cursor ==        
-MouseHandler -> ClickHandler: Mouse Up
-ClickHandler -> NewShapeCommandBuilder: Set origin at position of mouse up
+User -> ClickHandler: User Releases mouse
+ClickHandler -> NewShapeCommandBuilder: Set endpoint at position of mouse up
 ClickHandler -> NewShapeCommandBuilder: Finalize NewShapeCommand
 return NewShapeCommand
 destroy NewShapeCommandBuilder
