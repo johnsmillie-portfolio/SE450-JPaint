@@ -6,7 +6,7 @@ MouseHandler -> ClickHandler: Mouse Down
 ClickHandler -> NewShapeCommandBuilder: Create new
 activate NewShapeCommandBuilder
 ClickHandler -> NewShapeCommandBuilder: Set origin at position of mouse down
-== user drags cursor ==        
+== user moves dragging cursor ==        
 MouseHandler -> ClickHandler: Mouse Up
 ClickHandler -> NewShapeCommandBuilder: Set origin at position of mouse up
 ClickHandler -> NewShapeCommandBuilder: Finalize NewShapeCommand
