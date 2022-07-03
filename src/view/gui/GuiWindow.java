@@ -44,7 +44,7 @@ public class GuiWindow extends JFrame implements IGuiWindow {
 	private JPanel createWindow(JComponent canvas) {
 		JPanel contentPane = createBackgroundPanel();
         ClickHandler handler = new ClickHandler((PaintCanvas) canvas);
-        contentPane.addMouseListener(handler);
+        canvas.addMouseListener(handler);
         JPanel buttonPanel = createMenu();
         contentPane.add(buttonPanel, BorderLayout.NORTH);
         return contentPane;
