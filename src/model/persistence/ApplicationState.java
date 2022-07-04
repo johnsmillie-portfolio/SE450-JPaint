@@ -3,6 +3,7 @@ package model.persistence;
 import model.ShapeColor;
 import model.ShapeShadingType;
 import model.ShapeType;
+import logic.commands.CommandHistory;
 import model.MouseMode;
 import model.dialogs.DialogProvider;
 import model.interfaces.IApplicationState;
@@ -23,11 +24,6 @@ public class ApplicationState implements IApplicationState {
         this.uiModule = uiModule;
         this.dialogProvider = new DialogProvider(this);
         setDefaults();
-    }
-
-    @Override
-    public void undo() {
-        System.out.println("Undo Clicked.");
     }
 
     @Override

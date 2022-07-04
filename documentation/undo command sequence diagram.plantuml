@@ -3,17 +3,15 @@ title Undo Command Sequence
 hide footbox
 
 participant User order 10
-participant UiModule order 20
-participant CommandReceiver order 30
-participant UndoCommand order 40
-participant CommandStack order 50
-participant PaintCanvas order 60
+participant UiModule order 40
+participant JPaintController order 30
+participant CommandHistory order 50
+participant Stack order 50
 
 JPaintController -> UiModule: Add UndoCommand to be triggered when Undo button is clicked
 == Time elapses ==
 User -> UiModule: Undo button Clicked
-UiModule -> CommandReceiver: Send new UndoCommand
-CommandReceiver -> UndoCommand: Invoke command
-UndoCommand -> CommandStack: Undo
-UndoCommand -> PaintCanvas: Repaint
+UiModule -> CommandHistory: Undo
+CommandHistory -> Stack: Call Undo on last command
+CommandHistory -> CommandHistory: Move undo to redo stack
 @enduml

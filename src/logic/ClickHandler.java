@@ -1,39 +1,47 @@
 package logic;
 
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+
 import javax.swing.event.MouseInputAdapter;
-import javax.swing.event.MouseInputListener;
-
+import logic.commands.AddShapeCommandBuilder;
+// import model.persistence.ApplicationState;
 import view.gui.PaintCanvas;
+import view.interfaces.IPaintShape;
 
-import java.awt.Point;
-import java.awt.Graphics2D;
-import java.awt.Color;
-public class ClickHandler extends MouseInputAdapter implements MouseInputListener {
-    Point start_point;
+public class ClickHandler extends MouseInputAdapter {
     PaintCanvas paintCanvas;
+    ArrayList<IPaintShape> shapeList;
+    // ApplicationState applicationState;
+    private AddShapeCommandBuilder addShapeCommandBuilder;
 
-    public ClickHandler (PaintCanvas paintCanvas) {
+    public ClickHandler(PaintCanvas paintCanvas,
+            ArrayList<IPaintShape> shapeList
+    // , ApplicationState applicationState
+    ) {
         this.paintCanvas = paintCanvas;
+        this.shapeList = shapeList;
+        // this.applicationState = applicationState;
     }
-    
+
     @Override
     public void mousePressed(MouseEvent e) {
         System.out.println("mouse pressed called");
-        this.start_point = e.getPoint();
+        this.addShapeCommandBuilder = new AddShapeCommandBuilder(
+                this.paintCanvas, this.shapeList);
+        this.addShapeCommandBuilder.setOrigin(e.getPoint());
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
         System.out.println("mouse released called");
-        int x = Math.min(this.start_point.x, e.getX());
-        int y = Math.min(this.start_point.y, e.getY());
-        int height = Math.max(this.start_point.y, e.getY()) - y;
-        int width = Math.max(this.start_point.x, e.getX()) - x;
-        
-        // Filled in rectangle
-        Graphics2D graphics2d = this.paintCanvas.getGraphics2D();
-        graphics2d.setColor(Color.GREEN);
-        graphics2d.fillRect(x, y, width, height);
+
+        // Set endpoint at position of mouse up
+        this.addShapeCommandBuilder
+                .setEndpoint(e.getPoint());
+
+        // Finalize NewShapeCommand
+        // Invoke command
+        this.addShapeCommandBuilder.build().invoke();
     }
 }

@@ -1,0 +1,19 @@
+@startuml Command Sequence
+title New Shape Command Sequence
+hide footbox
+
+User -> ClickHandler: User Clicks mouse
+ClickHandler -> AddShapeCommandBuilder: Create new
+activate AddShapeCommandBuilder
+ClickHandler -> AddShapeCommandBuilder: Set origin at position of mouse down
+== user moves dragging cursor ==        
+User -> ClickHandler: User Releases mouse
+ClickHandler -> AddShapeCommandBuilder: Set endpoint at position of mouse up
+ClickHandler -> AddShapeCommandBuilder: Finalize NewShapeCommand
+return NewShapeCommand
+destroy AddShapeCommandBuilder
+ClickHandler -> NewShapeCommand: Invoke command
+NewShapeCommand -> CommandHistory: Add NewShapeCommand to undo stack
+NewShapeCommand -> ShapeList: Add shape to shape list
+NewShapeCommand -> PaintCanvas: Repaint
+@enduml

@@ -1,5 +1,6 @@
 package controller;
 
+import logic.commands.CommandHistory;
 import model.interfaces.IApplicationState;
 import view.EventName;
 import view.interfaces.IEventCallback;
@@ -36,6 +37,8 @@ public class JPaintController implements IJPaintController {
                 () -> applicationState
                         .setActiveStartAndEndPointMode());
         uiModule.addEvent(EventName.UNDO,
-                () -> applicationState.undo());
+                () -> CommandHistory.undo());
+        uiModule.addEvent(EventName.REDO,
+                () -> CommandHistory.redo());
     }
 }
