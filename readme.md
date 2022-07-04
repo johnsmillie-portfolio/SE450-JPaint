@@ -53,6 +53,7 @@ Commands are, probably, undoable.  However, Undo is also a command.  This means 
   
 This was probably created prematurely as a place to encapsulate all the actions the UI can take, but those will be implemented in each command.  Perhaps this class is unecessary.
 
+- Investigate the visitor pattern for the differentiating between undoable and not undoable
 
 # To-Do
 - Sprint 1 Demo
