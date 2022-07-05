@@ -1,0 +1,47 @@
+@startuml Command Sequence
+title Add Shape Undo Redo Command Sequence
+hide footbox
+
+participant Main order 10
+participant PaintCanvas order 20
+participant ShapeList order 30
+participant User order 40
+participant JPaintController order 50
+participant ClickHandler order 60
+participant AddShapeCommandBuilder order 70
+participant AddShapeCommand order 80
+participant PaintShape order 85
+participant CommandHistory order 90
+participant UiModule order 100
+participant Stack order 110
+
+
+Main -> PaintCanvas: GUI Window display
+Main -> PaintCanvas: addMouseListener
+Main -> ShapeList: new shape list
+JPaintController -> UiModule: Add undo event to be triggered when Undo button is clicked
+JPaintController -> UiModule: Add redo event to be triggered when Redo button is clicked
+== time elapses ==
+User -> ClickHandler: User Clicks Mouse
+activate AddShapeCommandBuilder
+ClickHandler -> AddShapeCommandBuilder: Set origin at position of mouse down
+== mouse is dragged ==
+ClickHandler -> AddShapeCommandBuilder: Set end point at position of mouse up
+ClickHandler -> AddShapeCommandBuilder: call build, Finalize AddShapeCommand
+return AddShapeCommand
+destroy AddShapeCommandBuilder
+ClickHandler -> AddShapeCommand: Invoke command
+AddShapeCommand -> PaintShape: createdShape
+AddShapeCommand -> CommandHistory: add AddNewCommand 
+AddShapeCommand -> ShapeList: add shape to shape list
+AddShapeCommand -> PaintCanvas: repaint
+== time elapses ==
+User -> UiModule: undo button clicked
+CommandHistory -> Stack: pop from undo stack
+CommandHistory -> CommandHistory: push to redo stack
+== time elapses ==
+User -> UiModule: redo button clicked
+CommandHistory -> Stack: pop from redo stack
+CommandHistoty -> Stack: push to undo stack
+@enduml
+
