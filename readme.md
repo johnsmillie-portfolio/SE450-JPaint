@@ -11,7 +11,7 @@ This is the JPaint application produced for SE450 in Summer 2022 at DePaul Unive
 ## Miscellaneous Notes
 
 ## GitHub Repository
-https://github.com/zwerdlds/CSC450-JPaint
+https://github.com/zwerdlds/SE450-JPaint
 
 # List of Design Patterns
 ## 1. Command
@@ -85,9 +85,9 @@ at a time to select
 don’t need to click and drag on the highlighted shape(s).
 
 
-# Currently Unimplmented Features
+# Completed Features
 
-## Sprint 1 (Ends on Week 4)
+## Sprint 1 Features
 - Draw a filled-in Rectangle
   - Click and drag while in Draw mode – a Rectangle will display on the screen on mouse release. The Rectangle will match the direction and size of the mouse movement. Rectangle does not need to display while clicking and dragging – it will suddenly appear on the screen only once the mouse is released.
 - Undo/Redo Draw
@@ -96,6 +96,8 @@ Grading Notes:
 - For grading purposes, the order in which shapes appear on canvas
 don’t matter. If you draw one shape on top of another, undo, then redo,
 and the order changes, that’s okay!
+
+# Currently Unimplmented Features
 
 ## Sprint 2 (Ends on Week 6)
 - Draw Rectangles, Ellipses, and Triangles
