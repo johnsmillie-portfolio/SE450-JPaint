@@ -1,4 +1,4 @@
-@startuml
+@startuml selection observer class diagram
 title Selected Shapes Class Diagram
 
 class ClickHandler {

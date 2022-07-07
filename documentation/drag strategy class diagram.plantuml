@@ -1,4 +1,4 @@
-@startuml
+@startuml drag stategy class diagram
 title Drag Strategy Class Diagram
 
 class ClickHandler {

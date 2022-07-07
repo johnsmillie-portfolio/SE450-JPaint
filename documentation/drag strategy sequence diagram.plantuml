@@ -1,4 +1,5 @@
-@startuml
+@startuml drag strategy class diagram
+hide footbox
 title Drag Strategy Class Diagram
 
 User -> ClickHandler : mouse down
@@ -7,4 +8,13 @@ ClickHandler -> ClickHandler : update drag strategy based on application state
 User -> ClickHandler : mouse up
 ClickHandler -> IDragStrategy : update drag location
 
+== add shape strategy ==
+IDragStrategy -> AddShapeDragStrategy 
+AddShapeDragStrategy -> AddShapeCommandBuilder : Create AddShapeCommand & invoke
+== drag strategy ==
+IDragStrategy -> SelectDragStrategy 
+SelectDragStrategy -> SelectDragStrategy : inform selection observer of change of selection
+== move strategy ==
+IDragStrategy -> MoveDragStrategy 
+MoveDragStrategy -> MoveDragStrategy : Calculate mouse location change offset and update shape locations 
 @enduml
