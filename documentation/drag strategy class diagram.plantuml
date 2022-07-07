@@ -1,0 +1,28 @@
+@startuml
+title Drag Strategy Class Diagram
+
+class ClickHandler {
+    - dragStrategy: IDragStrategy
+}
+
+interface IDragStrategy {
+    + updateDragLocation(start: Point, end: Point)
+}
+
+class SelectDragStrategy {
+}
+
+
+class AddShapeDragStrategy {
+}
+
+
+class MoveDragStrategy {
+}
+
+SelectDragStrategy ..|> IDragStrategy
+AddShapeDragStrategy ..|> IDragStrategy
+MoveDragStrategy ..|> IDragStrategy
+ClickHandler --o IDragStrategy
+
+@enduml

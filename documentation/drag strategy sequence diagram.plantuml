@@ -1,0 +1,10 @@
+@startuml
+title Drag Strategy Class Diagram
+
+User -> ClickHandler : mouse down
+ClickHandler -> ClickHandler : update drag strategy based on application state
+== user moves mouse ==
+User -> ClickHandler : mouse up
+ClickHandler -> IDragStrategy : update drag location
+
+@enduml
