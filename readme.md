@@ -26,19 +26,13 @@ TODO: Add description of addnewshapecommandbuilder
 ### 6. 
 
 ## Additional Discussion
-
-- Since the distinct drawing behaviour of each shape is decided by an enumerator, each the shape class will be implemented identically across all shapes.  The shape object need only contain a start, end, primary color, secondary color, and type field.  This is sufficient to deterministically draw each shape.  Since shape types do not contain any fields distinctive to them, there is no reason to differentiate each by type.  Drawing method does differ by type, however.  Drawing is a behavior, and since it differs by shape type, we should implement the strategy pattern to impement drawing.
-
 - Each shape is drawn in a similar way.  This may be implemented as a Chain of Responsibility.  It is perhaps capable of being combined with a decorator pattern to alter the way each is invoked.
 
-
 ## Unresolved Issues
-- Investigate using observer pattern on shape list for updating drawing
 - Investigate using observer pattern on selected shape list for updating drawing
 - Investigate using strategy pattern for drawing disparate shape types
-- Investigate using strategy pattern for drawing disparate shape shading types
 - Investigate refactoring shape to take paint context as constructor
-- Investigate using state pattern for click mode (select, add new shape, move)
+- Investigate using strategy pattern for click mode (select, add new shape, move)
 
 # To-Do
 - Draw Rectangles, Ellipses, and Triangles
@@ -84,20 +78,17 @@ at a time to select
 - You can move by clicking and dragging anywhere on the screen, you
 don’t need to click and drag on the highlighted shape(s).
 
-
 # Completed Features
 
 ## Sprint 1 Features
 - Draw a filled-in Rectangle
-  - Click and drag while in Draw mode – a Rectangle will display on the screen on mouse release. The Rectangle will match the direction and size of the mouse movement. Rectangle does not need to display while clicking and dragging – it will suddenly appear on the screen only once the mouse is released.
+  - Click and drag while in Draw mode
 - Undo/Redo Draw
-- Whiteboard exercise/Discussion post
-Grading Notes:
-- For grading purposes, the order in which shapes appear on canvas
-don’t matter. If you draw one shape on top of another, undo, then redo,
-and the order changes, that’s okay!
+- Whiteboard exercise/Discussion post 1
+
 
 # Currently Unimplmented Features
+
 
 ## Sprint 2 (Ends on Week 6)
 - Draw Rectangles, Ellipses, and Triangles
