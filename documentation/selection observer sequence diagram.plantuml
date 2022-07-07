@@ -1,0 +1,9 @@
+@startuml
+title Selected Shapes Class Diagram
+hide footbox
+
+ClickHandler -> SelectionPublisher: Change selection points
+SelectionPublisher -> SelectionPublisher: Update selected shapes based on points
+SelectionPublisher -> ISelectionSubscriber: Notify of selection change
+
+@enduml
