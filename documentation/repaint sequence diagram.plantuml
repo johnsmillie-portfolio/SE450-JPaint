@@ -1,0 +1,12 @@
+@startuml Command Sequence
+title PaintCanvas Repaint Sequence
+hide footbox
+
+PaintCanvas -> PaintCanvas: Fetch the graphics2d context
+PaintCanvas -> Graphics2D: Set draw color to white
+PaintCanvas -> Graphics2D: Fill all available space
+PaintCanvas -> PaintCanvas: Paint all shapes in shapeList
+PaintCanvas -> PaintShape: Paint shape
+PaintShape -> Graphics2D: Set draw color to green
+PaintShape -> Graphics2D: Draw fill rect with shape start and end
+@enduml
