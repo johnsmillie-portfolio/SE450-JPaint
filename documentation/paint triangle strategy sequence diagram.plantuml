@@ -1,0 +1,12 @@
+@startuml paint triangle strategy sequence diagram 
+hide footbox
+title Paint Triangle Strategy Sequence Diagram
+
+== user: mouse down, move mouse, mouse up ==
+IDragStrategy -> AddShapeDragStrategy 
+AddShapeDragStrategy -> AddShapeCommandBuilder : Create AddShapeCommand & invoke
+
+AddShapeCommand -> IPaintShape : paint
+IPaintShape -> PaintTraingle : paint triangle algorithm
+
+@enduml

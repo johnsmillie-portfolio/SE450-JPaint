@@ -1,0 +1,11 @@
+@startuml paint rectangle strategy sequence diagram 
+hide footbox
+title Paint Rectangle Strategy Sequence Diagram
+
+== user: mouse down, move mouse, mouse up ==
+IDragStrategy -> AddShapeDragStrategy 
+AddShapeDragStrategy -> AddShapeCommandBuilder : Create AddShapeCommand & invoke
+
+AddShapeCommand -> IPaintShape : paint
+IPaintShape -> PaintRectangle : paint rectangle algorithm
+@enduml

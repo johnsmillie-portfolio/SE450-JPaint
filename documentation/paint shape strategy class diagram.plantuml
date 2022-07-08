@@ -10,21 +10,21 @@ interface IPaintStrategy {
     +buildShape(??)
 }
 
-class paintRectangle {
+class PaintRectangle () {
 
 }
 
-class paintTriangle {
+class PaintTriangle () {
 
 }
  
-class paintEllipse {
+class PaintEllipse () {
 
 }
 
-paintRectangle ..|> IPaintStrategy
-paintTriangle ..|> IPaintStrategy
-paintEllipse ..|> IPaintStrategy
+PaintRectangle ..|> IPaintStrategy
+PaintTriangle ..|> IPaintStrategy
+PaintEllipse ..|> IPaintStrategy
 PaintShape --o IPaintStrategy
 
 @enduml

@@ -1,0 +1,11 @@
+@startuml paint ellipse strategy sequence diagram 
+hide footbox
+title Paint Ellipse Strategy Sequence Diagram
+
+== user: mouse down, move mouse, mouse up ==
+IDragStrategy -> AddShapeDragStrategy 
+AddShapeDragStrategy -> AddShapeCommandBuilder : Create AddShapeCommand & invoke
+
+AddShapeCommand -> IPaintShape : paint
+IPaintShape -> PaintEllipse : paint ellipse algorithm
+@enduml
