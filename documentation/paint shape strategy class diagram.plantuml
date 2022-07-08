@@ -1,0 +1,30 @@
+@startuml paint shape strategy class diagram 
+title Paint Shape Strategy Class Diagram 
+
+class PaintShape {
+    - ShapeType: shapeType
+    + buildShape(??)
+}
+
+interface IPaintStrategy {
+    +buildShape(??)
+}
+
+class paintRectangle {
+
+}
+
+class paintTriangle {
+
+}
+ 
+class paintEllipse {
+
+}
+
+paintRectangle ..|> IPaintStrategy
+paintTriangle ..|> IPaintStrategy
+paintEllipse ..|> IPaintStrategy
+PaintShape --o IPaintStrategy
+
+@enduml
