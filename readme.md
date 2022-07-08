@@ -20,7 +20,8 @@ The behavior of the user interface needs to be extensible.  While the project st
 ### 2. Builder
 TODO: Add description of addnewshapecommandbuilder
 
-### 3. 
+### 3. Strategy
+TODO: Add description of paintStrategy
 ### 4. 
 ### 5. 
 ### 6. 

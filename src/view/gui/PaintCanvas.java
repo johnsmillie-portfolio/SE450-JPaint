@@ -22,6 +22,7 @@ public class PaintCanvas extends PaintCanvasBase {
     public void paint(Graphics g) {
         Graphics2D graphics2d = (Graphics2D) g;
         graphics2d.setColor(Color.WHITE);
+        // TODO: fetch the appropriate dimensions
         graphics2d.fillRect(0, 0, 5000, 5000);
 
         // Draw all shapes here

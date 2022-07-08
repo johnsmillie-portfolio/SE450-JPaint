@@ -2,6 +2,7 @@ package view.gui;
 
 import java.awt.Point;
 
+import model.ShapeType;
 import view.interfaces.IPaintShape;
 import view.interfaces.PaintCanvasBase;
 
@@ -11,6 +12,7 @@ import java.awt.Graphics2D;
 public class PaintShape implements IPaintShape {
     private Point origin;
     private Point endpoint;
+    private ShapeType shapeType;
 
     public PaintShape(Point origin, Point endpoint) {
         this.origin = origin;
