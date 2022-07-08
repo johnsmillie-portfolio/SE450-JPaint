@@ -21,7 +21,8 @@ The behavior of the user interface needs to be extensible.  While the project st
 TODO: Add description of addnewshapecommandbuilder
 
 ### 3. Strategy
-TODO: Add description of paintStrategy
+The behavior of the mouse will fire different actions based on the application state. A mouse down -> move mouse -> mouse up could be used to build a new shape, or to select a current shape. This is relative to the application state. Furthermore, the painting of differernt shapes will require different algorithms based on the type of shape being painted. Different approaches will need to be applied based on the current state, and that is why we have used the Strategy Pattern to provide strategies for these implementations. "The Strategy pattern suggests that you take a class that does something specific in a lot of different ways and extract all of these algorithms into separate classes called strategies" -Refactoring Guru. We have applied this to the drag mouse and paint shape behaviors by programming to an interface and allowing implementing classes to perform our various strategies. 
+
 ### 4. 
 ### 5. 
 ### 6. 
