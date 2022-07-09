@@ -3,23 +3,20 @@ title Paint Shape Strategy Class Diagram
 
 class PaintShape {
     - ShapeType: shapeType
-    + buildShape(??)
+    - IPaintStrategy: paintStrategy
 }
 
 interface IPaintStrategy {
-    +buildShape(??)
+    + paint()
 }
 
-class PaintRectangle () {
-
+class PaintRectangle {
 }
 
-class PaintTriangle () {
-
+class PaintTriangle {
 }
  
-class PaintEllipse () {
-
+class PaintEllipse {
 }
 
 PaintRectangle ..|> IPaintStrategy
