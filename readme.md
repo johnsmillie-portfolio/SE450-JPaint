@@ -5,6 +5,8 @@ This is the JPaint application produced for SE450 in Summer 2022 at DePaul Unive
 ## Missing Features
 
 ## Bugs
+- Interaction between selection and undo.
+    There is undocumented behavior when considering the interaction between selection and undo.  In the case where a selection is made, and then an undo occurs in which the shape is 'removed', modifications made to the 'selected' but invisible (undone) shape will still take place.  If the redo button is clicked, whatever modifications are made to the invisible object will be visible.  Additionally, a shape that is not in the visible list when a selection takes place, but is then 'redone' to become visible after a selection, that would have been selected had it been present *will not be selected*.
 
 ## Extra Credit
 
@@ -23,12 +25,14 @@ TODO: Add description of addnewshapecommandbuilder
 ### 3. Strategy
 The behavior of the mouse will fire different actions based on the application state. A mouse down -> move mouse -> mouse up could be used to build a new shape, or to select a current shape. This is relative to the application state. Furthermore, the painting of differernt shapes will require different algorithms based on the type of shape being painted. Different approaches will need to be applied based on the current state, and that is why we have used the Strategy Pattern to provide strategies for these implementations. "The Strategy pattern suggests that you take a class that does something specific in a lot of different ways and extract all of these algorithms into separate classes called strategies" -Refactoring Guru. We have applied this to the drag mouse and paint shape behaviors by programming to an interface and allowing implementing classes to perform our various strategies. 
 
-### 4. 
+### 4. Observer
+The painting and selection processes both rely on dynamic lists of shapes, which are defined by their follow-on processes based on the list populations.  Because the lists are dynamic and there is dependent logic we do not want to be responsible for at the list-population logic layer, this suggests a decoupling via an observer pattern.  In the case of painting, the list of shapes will be populated by the drawing mechanism invoked by the AddNewShapeCommand.  The PaintCanvas class implements the subscriber interface and subscribe to shape list updates.  Additionally, the ClickHandler will also implement the subscriber interface, so that it may correctly calculate the selection.  In the case of selection, the list of selected shapes will be calculated and updated by the ClickHandler class, to be acted upon by any following subscribers.
+
 ### 5. 
 ### 6. 
 
 ## Additional Discussion
-- Each shape is drawn in a similar way.  This may be implemented as a Chain of Responsibility.  It is perhaps capable of being combined with a decorator pattern to alter the way each is invoked.
+
 
 ## Unresolved Issues
 - Investigate using observer pattern on selected shape list for updating drawing
@@ -80,10 +84,11 @@ at a time to select
 - You can move by clicking and dragging anywhere on the screen, you
 don’t need to click and drag on the highlighted shape(s).
 
+
 # Completed Features
 
 ## Sprint 1 Features
-- Draw a filled-in Rectangle
+- Draw a filled-in (always green) Rectangle
   - Click and drag while in Draw mode
 - Undo/Redo Draw
 - Whiteboard exercise/Discussion post 1
