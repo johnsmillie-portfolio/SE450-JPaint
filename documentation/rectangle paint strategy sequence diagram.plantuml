@@ -7,5 +7,7 @@ IDragStrategy -> AddShapeDragStrategy
 AddShapeDragStrategy -> AddShapeCommandBuilder : Create AddShapeCommand & invoke
 
 AddShapeCommand -> IPaintShape : paint
-IPaintShape -> PaintRectangle : paint rectangle algorithm
+IPaintShape -> RectaglePaintStrategy
+PaintShape -> RectaglePaintStrategy : new rectangle paint Strategy
+RectaglePaintStrategy : paint
 @enduml

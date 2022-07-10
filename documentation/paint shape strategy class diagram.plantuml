@@ -10,18 +10,18 @@ interface IPaintStrategy {
     + paint()
 }
 
-class PaintRectangle {
+class RectanglePaintStrategy {
 }
 
-class PaintTriangle {
+class TrianglePaintStrategy {
 }
  
-class PaintEllipse {
+class EllipsePaintStrategy {
 }
 
-PaintRectangle ..|> IPaintStrategy
-PaintTriangle ..|> IPaintStrategy
-PaintEllipse ..|> IPaintStrategy
+RectanglePaintStrategy ..|> IPaintStrategy
+TrianglePaintStrategy ..|> IPaintStrategy
+EllipsePaintStrategy ..|> IPaintStrategy
 PaintShape --o IPaintStrategy
 
 @enduml

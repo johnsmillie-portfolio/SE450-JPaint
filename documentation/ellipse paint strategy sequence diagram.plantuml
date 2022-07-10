@@ -7,5 +7,7 @@ IDragStrategy -> AddShapeDragStrategy
 AddShapeDragStrategy -> AddShapeCommandBuilder : Create AddShapeCommand & invoke
 
 AddShapeCommand -> IPaintShape : paint
-IPaintShape -> PaintEllipse : paint ellipse algorithm
+IPaintShape -> PaintShape
+PaintShape -> EllipsePaintStrategy: new ellipse strategy
+PaintShape -> EllipsePaintStrategy : paint
 @enduml
