@@ -4,10 +4,14 @@ import view.interfaces.IPaintShape;
 import view.interfaces.PaintCanvasBase;
 
 import javax.swing.JComponent;
+
+import logic.shapelist.IShapeListSubscriber;
+
 import java.awt.*;
 import java.util.Collection;
 
-public class PaintCanvas extends PaintCanvasBase {
+public class PaintCanvas extends PaintCanvasBase
+        implements IShapeListSubscriber {
     private Collection<IPaintShape> shapeList;
 
     public PaintCanvas(Collection<IPaintShape> shapeList) {
@@ -20,14 +24,22 @@ public class PaintCanvas extends PaintCanvasBase {
 
     @Override
     public void paint(Graphics g) {
+        var size = this.getSize();
+
         Graphics2D graphics2d = (Graphics2D) g;
         graphics2d.setColor(Color.WHITE);
-        // TODO: fetch the appropriate dimensions
-        graphics2d.fillRect(0, 0, 5000, 5000);
+        graphics2d.fillRect(0, 0, this.getSize().width, this.getSize().width);
 
         // Draw all shapes here
         for (var s : this.shapeList) {
             s.paint(this);
         }
+    }
+
+    @Override
+    public void notifyUpdatedShapeList(
+            IPaintShape[] shapes) {
+        // TODO Auto-generated method stub
+        
     }
 }
