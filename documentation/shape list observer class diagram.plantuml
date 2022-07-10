@@ -1,0 +1,30 @@
+@startuml Shape List Observer class diagram
+title Selected Shapes Class Diagram
+
+class ClickHandler {
+    - allShapes: ShapeListPublisher
+    - selectedShapes: ShapeListPublisher
+    --
+    + ClickHandler(allShapes: ShapeListPublisher, selectedShapes: ShapeListPublisher)
+}
+
+class ShapeListPublisher {
+    - shapeList: ArrayList<IPaintShape>
+    - subscribers: IShapeListSubscriber[]
+    --
+    + subscribe(sub: IShapeListSubscriber)
+    + updateShapeList(ArrayList<IPaintShape>)
+}
+
+interface IShapeListSubscriber {
+    + notifyUpdateShapeList(shapeList: ArrayList<IPaintShape>): void
+}
+ 
+class PaintCanvas {}
+
+PaintCanvas --|> IShapeListSubscriber
+ClickHandler --o ShapeListPublisher
+ShapeListPublisher o--> IShapeListSubscriber
+
+
+@enduml
