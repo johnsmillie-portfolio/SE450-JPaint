@@ -3,6 +3,7 @@ header SE450\nSharpe\nSummer 2022\nSmillie/Zwerdling
 
 title GUI Layer
 scale 1
+left to right direction
 
 package "controller" {
     interface IJPaintController {
@@ -220,29 +221,29 @@ package "view" {
         class JFrame {}
     }
 
-    IDialogProvider <|.. DialogProvider
-    IApplicationState <|.. ApplicationState
-    IApplicationState *-- DialogProvider
-    IApplicationState o.. JPaintController
-    IDialogChoice <|.. ChooseStartAndEndPointModeDialog
-    IDialogChoice <|.. ChooseShapeDialog
-    IDialogChoice <|.. ChooseShadingTypeDialog
-    IDialogChoice <|.. ChooseSecondaryColorDialog
-    IDialogChoice <|.. ChoosePrimaryColorDialog
-    IDialogChoice *-- DialogProvider
+    IDialogProvider <|... DialogProvider
+    IApplicationState <|... ApplicationState
+    IApplicationState *--- DialogProvider
+    IApplicationState o... JPaintController
+    IDialogChoice <|... ChooseStartAndEndPointModeDialog
+    IDialogChoice <|... ChooseShapeDialog
+    IDialogChoice <|... ChooseShadingTypeDialog
+    IDialogChoice <|... ChooseSecondaryColorDialog
+    IDialogChoice <|... ChoosePrimaryColorDialog
+    IDialogChoice *--- DialogProvider
     ApplicationState o-- ChoosePrimaryColorDialog
     ApplicationState o-- ChooseSecondaryColorDialog
     ApplicationState o-- ChooseShadingTypeDialog
     ApplicationState o-- ChooseShapeDialog
     ApplicationState o-- ChooseStartAndEndPointModeDialog
-    IJPaintController <|.. JPaintController
-    JComponent <|-- PaintCanvasBase
-    IGuiWindow <|.. GuiWindow
-    IGuiWindow o.. Gui
-    IUiModule <|.. Gui
-    IUiModule o.. JPaintController
-    IUiModule o-- ApplicationState
-    PaintCanvasBase <|-- PaintCanvas
-    JFrame <|-- GuiWindow
+    IJPaintController <|... JPaintController
+    JComponent <|--- PaintCanvasBase
+    IGuiWindow <|... GuiWindow
+    IGuiWindow o... Gui
+    IUiModule <|... Gui
+    IUiModule o... JPaintController
+    IUiModule o--- ApplicationState
+    PaintCanvasBase <|--- PaintCanvas
+    JFrame <|--- GuiWindow
 
     @enduml
