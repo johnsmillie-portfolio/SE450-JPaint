@@ -2,27 +2,27 @@
 title Selected Shapes Class Diagram
 
 class ClickHandler {
-    - allShapes: ShapeListPublisher
-    - selectedShapes: ShapeListPublisher
+    - allShapes: IPaintShape[]
     --
     + ClickHandler(allShapes: ShapeListPublisher, selectedShapes: ShapeListPublisher)
 }
 
 class ShapeListPublisher {
-    - shapeList: ArrayList<IPaintShape>
-    - subscribers: IShapeListSubscriber[]
+    - shapeList: IPaintShape[]
+    - subscribers: ArrayList<IShapeListSubscriber>
     --
     + subscribe(sub: IShapeListSubscriber)
-    + updateShapeList(ArrayList<IPaintShape>)
+    + updateShapeList(shapes: IPaintShape[])
 }
 
 interface IShapeListSubscriber {
-    + notifyUpdateShapeList(shapeList: ArrayList<IPaintShape>): void
+    + notifyUpdatedShapeList(shapeList: IPaintShape[]): void
 }
- 
+
 class PaintCanvas {}
 
 PaintCanvas --|> IShapeListSubscriber
+ClickHandler --|> IShapeListSubscriber
 ClickHandler --o ShapeListPublisher
 ShapeListPublisher o--> IShapeListSubscriber
 
