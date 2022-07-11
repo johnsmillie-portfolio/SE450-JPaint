@@ -3,7 +3,6 @@ package model.persistence;
 import model.ShapeColor;
 import model.ShapeShadingType;
 import model.ShapeType;
-import logic.commands.CommandHistory;
 import model.MouseMode;
 import model.dialogs.DialogProvider;
 import model.interfaces.IApplicationState;
