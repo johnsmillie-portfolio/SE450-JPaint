@@ -12,7 +12,7 @@ import view.interfaces.IPaintShape;
 import view.interfaces.PaintCanvasBase;
 import view.interfaces.IUiModule;
 
-import java.awt.*;
+//import java.awt.*;
 import java.util.ArrayList;
 
 public class Main {
@@ -20,10 +20,6 @@ public class Main {
         ArrayList<IPaintShape> shapeList = new ArrayList<IPaintShape>();
         PaintCanvasBase paintCanvas = new PaintCanvas(
                 shapeList);
-
-          //TODO      
-        //application state in constructor
-        
         IGuiWindow guiWindow = new GuiWindow(paintCanvas);
         IUiModule uiModule = new Gui(guiWindow);
         ApplicationState appState = new ApplicationState(
@@ -34,7 +30,7 @@ public class Main {
         ClickHandler handler = new ClickHandler(
                 (PaintCanvas) paintCanvas, shapeList, appState);
         paintCanvas.addMouseListener(handler);
-        // ClickHandler handler = new ClickHandler();
+        
         // For example purposes only; remove all lines below from your final project.
 
         try {

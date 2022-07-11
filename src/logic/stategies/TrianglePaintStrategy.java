@@ -1,8 +1,10 @@
 package logic.stategies;
 
+import view.interfaces.PaintCanvasBase;
+
 public class TrianglePaintStrategy implements IPaintStrategy {
 
-    public void paint() {
+    public void paint(PaintCanvasBase c) {
         // TODO
         // Implement paint triangle algorithm
 

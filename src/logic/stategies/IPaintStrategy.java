@@ -1,5 +1,7 @@
 package logic.stategies;
 
+import view.interfaces.PaintCanvasBase;
+
 public interface IPaintStrategy {
-    void paint();
+    void paint(PaintCanvasBase c);
 }

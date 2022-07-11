@@ -9,10 +9,7 @@ class PaintShape {
 interface IPaintStrategy {
     + paint()
 }
-class PaintStrategyBuilder {
-    +build() 
-    return IPaintStrategy
-}
+
 
 class RectanglePaintStrategy {
 }

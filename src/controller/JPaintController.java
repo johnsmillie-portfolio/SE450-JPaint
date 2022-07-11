@@ -3,7 +3,7 @@ package controller;
 import logic.commands.CommandHistory;
 import model.interfaces.IApplicationState;
 import view.EventName;
-import view.interfaces.IEventCallback;
+// import view.interfaces.IEventCallback;
 import view.interfaces.IUiModule;
 
 public class JPaintController implements IJPaintController {

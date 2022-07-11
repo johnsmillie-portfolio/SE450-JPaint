@@ -6,8 +6,6 @@ import java.util.NoSuchElementException;
 
 import javax.swing.*;
 import javax.swing.border.*;
-
-import logic.ClickHandler;
 import view.interfaces.IGuiWindow;
 import view.EventName;
 

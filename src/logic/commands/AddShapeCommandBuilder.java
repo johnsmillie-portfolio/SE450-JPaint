@@ -1,7 +1,7 @@
 package logic.commands;
 
-import model.ShapeColor;
-import model.ShapeShadingType;
+//import model.ShapeColor;
+//import model.ShapeShadingType;
 import model.ShapeType;
 import view.gui.PaintCanvas;
 import view.interfaces.IPaintShape;
@@ -15,9 +15,9 @@ public class AddShapeCommandBuilder {
     private PaintCanvas canvas;
     private Collection<IPaintShape> shapeList;
 
-    private ShapeColor fillColor;
-    private ShapeColor strokeColor;
-    private ShapeShadingType shapeShadingType;
+    // private ShapeColor fillColor;
+    // private ShapeColor strokeColor;
+    // private ShapeShadingType shapeShadingType;
     private ShapeType shapeType;
 
     public AddShapeCommandBuilder(PaintCanvas canvas,
