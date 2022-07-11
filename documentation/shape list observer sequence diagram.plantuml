@@ -6,7 +6,7 @@ User -> ClickHandler : Click Down
 User -> ClickHandler : Click Up
 ClickHandler -> ApplicationState : Continue if in selection mode
 ClickHandler -> ClickHandler: Calculate Selected Shapes from total list
-ClickHandler -> ShapeListPublisher: Change ShapeList shapes 
+ClickHandler -> ShapeListPublisher: Set Shapes List 
 ShapeListPublisher -> IShapeListSubscriber: Notify of ShapeList change
 
 @enduml
