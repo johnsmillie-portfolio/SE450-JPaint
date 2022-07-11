@@ -79,7 +79,7 @@ multiple shapes at once. You should not be able to click on shapes one
 at a time to select
 - You can move by clicking and dragging anywhere on the screen, you
 don’t need to click and drag on the highlighted shape(s).
-
+- Refactor out the AddShapeCommandBuilder
 # Completed Features
 
 ## Sprint 1 Features

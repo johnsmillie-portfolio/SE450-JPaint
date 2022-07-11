@@ -1,8 +1,8 @@
 package logic.commands;
 
-// import model.ShapeColor;
-// import model.ShapeShadingType;
-// import model.ShapeType;
+import model.ShapeColor;
+import model.ShapeShadingType;
+import model.ShapeType;
 import view.gui.PaintCanvas;
 import view.interfaces.IPaintShape;
 
@@ -15,24 +15,22 @@ public class AddShapeCommandBuilder {
     private PaintCanvas canvas;
     private Collection<IPaintShape> shapeList;
 
-    // private ShapeColor fillColor;
-    // private ShapeColor strokeColor;
-    // private ShapeShadingType shapeShadingType;
-    // private ShapeType shapeType;
+    private ShapeColor fillColor;
+    private ShapeColor strokeColor;
+    private ShapeShadingType shapeShadingType;
+    private ShapeType shapeType;
 
     public AddShapeCommandBuilder(PaintCanvas canvas,
-            Collection<IPaintShape> shapeList
-    // , ShapeColor fillColor,
-    // ShapeColor strokeColor,
-    // ShapeShadingType shapeShadingType,
-    // ShapeType shapeType
+            Collection<IPaintShape> shapeList,  ShapeType shapeType
+ //ShapeColor fillColor, ShapeColor strokeColor, ShapeShadingType shapeShadingType
     ) {
         this.canvas = canvas;
         this.shapeList = shapeList;
-        // this.fillColor = fillColor;
-        // this.strokeColor = strokeColor;
-        // this.shapeShadingType = shapeShadingType;
-        // this.shapeType = shapeType;
+        this.shapeType = shapeType;
+        //this.fillColor = fillColor;
+        //this.strokeColor = strokeColor;
+        //this.shapeShadingType = shapeShadingType;
+        
     }
 
     public void setOrigin(Point p) {
@@ -43,11 +41,12 @@ public class AddShapeCommandBuilder {
         this.endpoint = p;
     }
 
+
     public AddShapeCommand build() {
-        return new AddShapeCommand(origin, endpoint, canvas,
-                this.shapeList
+       return new AddShapeCommand(origin, endpoint, canvas,
+                this.shapeList, shapeType
         // , fillColor, strokeColor,
-        // shapeShadingType, shapeType
+        // shapeShadingType,
         );
     }
 

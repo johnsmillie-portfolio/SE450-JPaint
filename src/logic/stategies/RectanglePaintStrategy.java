@@ -3,7 +3,7 @@ package logic.stategies;
 public class RectanglePaintStrategy implements IPaintStrategy {
     
     public void paint() {
-        // TO DO
+        // TODO
         // Implement paint rectagle algorithm
         /*int x = Math.min(this.origin.x, this.endpoint.x);
         int y = Math.min(this.origin.y, this.endpoint.y);

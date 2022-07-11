@@ -3,7 +3,7 @@ package logic.stategies;
 public class TrianglePaintStrategy implements IPaintStrategy {
 
     public void paint() {
-        // TO DO
+        // TODO
         // Implement paint triangle algorithm
 
         //draw polygon method in java

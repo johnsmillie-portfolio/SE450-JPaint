@@ -5,30 +5,30 @@ import java.util.ArrayList;
 
 import javax.swing.event.MouseInputAdapter;
 import logic.commands.AddShapeCommandBuilder;
-// import model.persistence.ApplicationState;
+import model.persistence.ApplicationState;
 import view.gui.PaintCanvas;
 import view.interfaces.IPaintShape;
 
 public class ClickHandler extends MouseInputAdapter {
     PaintCanvas paintCanvas;
     ArrayList<IPaintShape> shapeList;
-    // ApplicationState applicationState;
+    ApplicationState applicationState;
     private AddShapeCommandBuilder addShapeCommandBuilder;
 
     public ClickHandler(PaintCanvas paintCanvas,
             ArrayList<IPaintShape> shapeList
-    // , ApplicationState applicationState
+    , ApplicationState applicationState
     ) {
         this.paintCanvas = paintCanvas;
         this.shapeList = shapeList;
-        // this.applicationState = applicationState;
+        this.applicationState = applicationState;
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
         System.out.println("mouse pressed called");
         this.addShapeCommandBuilder = new AddShapeCommandBuilder(
-                this.paintCanvas, this.shapeList);
+                this.paintCanvas, this.shapeList, applicationState.getActiveShapeType());
         this.addShapeCommandBuilder.setOrigin(e.getPoint());
     }
 

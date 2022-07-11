@@ -20,9 +20,10 @@ public class Main {
         ArrayList<IPaintShape> shapeList = new ArrayList<IPaintShape>();
         PaintCanvasBase paintCanvas = new PaintCanvas(
                 shapeList);
-        ClickHandler handler = new ClickHandler(
-                (PaintCanvas) paintCanvas, shapeList);
-        paintCanvas.addMouseListener(handler);
+
+          //TODO      
+        //application state in constructor
+        
         IGuiWindow guiWindow = new GuiWindow(paintCanvas);
         IUiModule uiModule = new Gui(guiWindow);
         ApplicationState appState = new ApplicationState(
@@ -30,6 +31,9 @@ public class Main {
         IJPaintController controller = new JPaintController(
                 uiModule, appState);
         controller.setup();
+        ClickHandler handler = new ClickHandler(
+                (PaintCanvas) paintCanvas, shapeList, appState);
+        paintCanvas.addMouseListener(handler);
         // ClickHandler handler = new ClickHandler();
         // For example purposes only; remove all lines below from your final project.
 
