@@ -1,18 +1,14 @@
 package view.gui;
 
 import java.awt.Point;
-
-import model.ShapeType;
 import view.interfaces.IPaintShape;
 import view.interfaces.PaintCanvasBase;
-
 import java.awt.Color;
 import java.awt.Graphics2D;
 
 public class PaintShape implements IPaintShape {
     private Point origin;
     private Point endpoint;
-    private ShapeType shapeType;
 
     public PaintShape(Point origin, Point endpoint) {
         this.origin = origin;
@@ -32,5 +28,11 @@ public class PaintShape implements IPaintShape {
         Graphics2D graphics2d = c.getGraphics2D();
         graphics2d.setColor(Color.GREEN);
         graphics2d.fillRect(x, y, width, height);
+    }
+
+    @Override
+    public boolean collides(Point from, Point to) {
+        // TODO Implement Collision Logic
+        return false;
     }
 }

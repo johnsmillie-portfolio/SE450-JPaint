@@ -2,20 +2,13 @@ package view.gui;
 
 import view.interfaces.IPaintShape;
 import view.interfaces.PaintCanvasBase;
-
-import javax.swing.JComponent;
-
-import logic.shapelist.IShapeListSubscriber;
-
 import java.awt.*;
-import java.util.Collection;
 
-public class PaintCanvas extends PaintCanvasBase
-        implements IShapeListSubscriber {
-    private Collection<IPaintShape> shapeList;
+public class PaintCanvas extends PaintCanvasBase {
+    private IPaintShape[] visibleShapes;
 
-    public PaintCanvas(Collection<IPaintShape> shapeList) {
-        this.shapeList = shapeList;
+    public PaintCanvas() {
+        this.visibleShapes = new IPaintShape[0];
     }
 
     public Graphics2D getGraphics2D() {
@@ -24,22 +17,32 @@ public class PaintCanvas extends PaintCanvasBase
 
     @Override
     public void paint(Graphics g) {
-        var size = this.getSize();
+        this.clearAndRedraw(g);
+    }
 
-        Graphics2D graphics2d = (Graphics2D) g;
-        graphics2d.setColor(Color.WHITE);
-        graphics2d.fillRect(0, 0, this.getSize().width, this.getSize().width);
+    private void clearAndRedraw(Graphics g) {
+        this.clear(g);
+        this.drawAll();
+    }
 
+    private void drawAll() {
         // Draw all shapes here
-        for (var s : this.shapeList) {
+        for (var s : this.visibleShapes) {
             s.paint(this);
         }
+    }
+
+    private void clear(Graphics g) {
+        Graphics2D graphics2d = (Graphics2D) g;
+        graphics2d.setColor(Color.WHITE);
+        graphics2d.fillRect(0, 0, this.getSize().width,
+                this.getSize().height);
     }
 
     @Override
     public void notifyUpdatedShapeList(
             IPaintShape[] shapes) {
-        // TODO Auto-generated method stub
-        
+        this.visibleShapes = shapes;
+        this.paint(this.getGraphics());
     }
 }

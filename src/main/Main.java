@@ -3,30 +3,35 @@ package main;
 import controller.IJPaintController;
 import controller.JPaintController;
 import logic.ClickHandler;
+import logic.shapelist.ShapeListPublisher;
 import model.persistence.ApplicationState;
 import view.gui.Gui;
 import view.gui.GuiWindow;
 import view.gui.PaintCanvas;
 import view.interfaces.IGuiWindow;
-import view.interfaces.IPaintShape;
 import view.interfaces.PaintCanvasBase;
 import view.interfaces.IUiModule;
 
-import java.awt.*;
-import java.util.ArrayList;
-
 public class Main {
     public static void main(String[] args) {
-        ArrayList<IPaintShape> shapeList = new ArrayList<IPaintShape>();
-        PaintCanvasBase paintCanvas = new PaintCanvas(
-                shapeList);
-        ClickHandler handler = new ClickHandler(
-                (PaintCanvas) paintCanvas, shapeList);
-        paintCanvas.addMouseListener(handler);
+        ShapeListPublisher visibleShapesListPublisher = new ShapeListPublisher();
+        ShapeListPublisher selectedShapesListPublisher = new ShapeListPublisher();
+
+        PaintCanvasBase paintCanvas = new PaintCanvas();
+        visibleShapesListPublisher.subscribe(paintCanvas);
+
         IGuiWindow guiWindow = new GuiWindow(paintCanvas);
         IUiModule uiModule = new Gui(guiWindow);
+
         ApplicationState appState = new ApplicationState(
                 uiModule);
+
+        ClickHandler handler = new ClickHandler(
+                visibleShapesListPublisher,
+                selectedShapesListPublisher, appState);
+
+        paintCanvas.addMouseListener(handler);
+
         IJPaintController controller = new JPaintController(
                 uiModule, appState);
         controller.setup();

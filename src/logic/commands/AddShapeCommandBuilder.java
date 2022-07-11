@@ -3,32 +3,28 @@ package logic.commands;
 // import model.ShapeColor;
 // import model.ShapeShadingType;
 // import model.ShapeType;
-import view.gui.PaintCanvas;
-import view.interfaces.IPaintShape;
-
 import java.awt.Point;
-import java.util.Collection;
+import logic.shapelist.IShapeListPublisher;
 
 public class AddShapeCommandBuilder {
     private Point origin;
     private Point endpoint;
-    private PaintCanvas canvas;
-    private Collection<IPaintShape> shapeList;
+    private IShapeListPublisher visibleShapesListPublisher;
 
     // private ShapeColor fillColor;
     // private ShapeColor strokeColor;
     // private ShapeShadingType shapeShadingType;
     // private ShapeType shapeType;
 
-    public AddShapeCommandBuilder(PaintCanvas canvas,
-            Collection<IPaintShape> shapeList
+    public AddShapeCommandBuilder(
+            IShapeListPublisher visibleShapesListPublisher
     // , ShapeColor fillColor,
     // ShapeColor strokeColor,
     // ShapeShadingType shapeShadingType,
     // ShapeType shapeType
     ) {
-        this.canvas = canvas;
-        this.shapeList = shapeList;
+        this.visibleShapesListPublisher = visibleShapesListPublisher;
+
         // this.fillColor = fillColor;
         // this.strokeColor = strokeColor;
         // this.shapeShadingType = shapeShadingType;
@@ -44,8 +40,8 @@ public class AddShapeCommandBuilder {
     }
 
     public AddShapeCommand build() {
-        return new AddShapeCommand(origin, endpoint, canvas,
-                this.shapeList
+        return new AddShapeCommand(origin, endpoint,
+                visibleShapesListPublisher
         // , fillColor, strokeColor,
         // shapeShadingType, shapeType
         );
