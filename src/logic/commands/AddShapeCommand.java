@@ -77,10 +77,10 @@ public class AddShapeCommand
                 paintStrategy = new RectanglePaintStrategy(origin, endpoint);
             }
             else if (shapeType.compareTo(ShapeType.ELLIPSE) == 0) {
-                paintStrategy = new EllipsePaintStrategy();
+                paintStrategy = new EllipsePaintStrategy(origin, endpoint);
             }
             else if (shapeType.compareTo(ShapeType.TRIANGLE) == 0) {
-                paintStrategy = new TrianglePaintStrategy();
+                paintStrategy = new TrianglePaintStrategy(origin, endpoint);
             }   
            
             this.createdShape = new PaintShape(paintStrategy);
