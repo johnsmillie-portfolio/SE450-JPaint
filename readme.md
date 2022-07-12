@@ -78,6 +78,7 @@ select it – it does not need to be completely surrounded
 ## Sprint 2
 - Select all shapes by dragging.
 - Move Selected Shapes.
+  - Move does not deselect.
 - Have at three design patterns implemented
 
 
