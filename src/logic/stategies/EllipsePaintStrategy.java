@@ -3,18 +3,34 @@ package logic.stategies;
 import view.interfaces.PaintCanvasBase;
 // import view.gui.PaintCanvas;
 import java.awt.Point;
+
+import model.ShapeColor;
+import model.ShapeShadingType;
+
 import java.awt.Color;
 import java.awt.Graphics2D;
 
 
 public class EllipsePaintStrategy implements IPaintStrategy {
-    public Point origin;
-    public Point endpoint;
+    private Point origin;
+    private Point endpoint;
+    private ShapeColor fillColor;
+    private ShapeColor strokeColor;
+    private ShapeShadingType shapeShadingType;
+    Color secondaryColor;
         
-    public EllipsePaintStrategy(Point origin, Point endpoint){
+    public EllipsePaintStrategy(Point origin, Point endpoint,
+        ShapeColor fillColor,
+        ShapeColor strokeColor,
+        ShapeShadingType shapeShadingType)
+    {
         this.origin = origin;
         this.endpoint = endpoint;
+        this.fillColor = fillColor;
+        this.strokeColor = strokeColor;
+        this.shapeShadingType = shapeShadingType;
     }
+
     public void paint(PaintCanvasBase c) {
         // TODO
        
@@ -24,8 +40,20 @@ public class EllipsePaintStrategy implements IPaintStrategy {
                 this.endpoint.y) - y;
         int width = Math.max(this.origin.x, this.endpoint.x) - x;
 
-        Graphics2D graphics2d = c.getGraphics2D();
-        graphics2d.setColor(Color.RED);
-        graphics2d.drawOval(x, y, width, height);
+        if (shapeShadingType.equals(ShapeShadingType.FILLED_IN) || 
+        shapeShadingType.equals(shapeShadingType.OUTLINE_AND_FILLED_IN)) {
+            Graphics2D graphics2dFill = c.getGraphics2D();
+            graphics2dFill.setColor(secondaryColor = Color.PINK);
+            graphics2dFill.fillOval(x, y, width, height);
+
+        }
+
+        if (shapeShadingType.equals(ShapeShadingType.OUTLINE) || 
+        shapeShadingType.equals(shapeShadingType.OUTLINE_AND_FILLED_IN)) {
+            Graphics2D graphics2dOutline = c.getGraphics2D();
+            graphics2dOutline.setColor(Color.BLACK);
+            graphics2dOutline.drawOval(x, y, width, height);
+        }
+
     }
 }

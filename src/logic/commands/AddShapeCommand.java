@@ -1,7 +1,8 @@
 package logic.commands;
 
+import model.ShapeColor;
 //import model.ShapeColor;
-//import model.ShapeShadingType;
+import model.ShapeShadingType;
 import model.ShapeType;
 import view.gui.PaintCanvas;
 import view.gui.PaintShape;
@@ -26,26 +27,26 @@ public class AddShapeCommand
     private Collection<IPaintShape> shapeList;
     private ShapeType shapeType;
     IPaintStrategy paintStrategy;
-    //private ShapeColor fillColor;
-    //private ShapeColor strokeColor;
-   // private ShapeShadingType shapeShadingType;
+    private ShapeColor fillColor;
+    private ShapeColor strokeColor;
+    private ShapeShadingType shapeShadingType;
     
 
     public AddShapeCommand(Point origin, Point endpoint,
-            PaintCanvas canvas,
-            Collection<IPaintShape> shapeList,  ShapeType shapeType
-    //ShapeColor fillColor, ShapeColor strokeColor,
-    //ShapeShadingType shapeShadingType,
-   
-    ) {
+        PaintCanvas canvas,
+        Collection<IPaintShape> shapeList,  ShapeType shapeType,
+        ShapeColor fillColor, ShapeColor strokeColor,
+        ShapeShadingType shapeShadingType) 
+    
+    {
         this.origin = origin;
         this.endpoint = endpoint;
         this.canvas = canvas;
         this.shapeList = shapeList;
         this.shapeType = shapeType; 
-        //this.fillColor = fillColor;
-        //this.strokeColor = strokeColor;
-       // this.shapeShadingType = shapeShadingType;
+        this.fillColor = fillColor;
+        this.strokeColor = strokeColor;
+        this.shapeShadingType = shapeShadingType;
         
     }
 
@@ -73,14 +74,19 @@ public class AddShapeCommand
         if (this.createdShape == null) {
             //TODO
             //create the paintStrategy here
+                    
+        
             if (shapeType.compareTo(ShapeType.RECTANGLE) == 0) {
-                paintStrategy = new RectanglePaintStrategy(origin, endpoint);
+                paintStrategy = new RectanglePaintStrategy(origin, 
+                endpoint, fillColor, strokeColor, shapeShadingType);
             }
             else if (shapeType.compareTo(ShapeType.ELLIPSE) == 0) {
-                paintStrategy = new EllipsePaintStrategy(origin, endpoint);
+                paintStrategy = new EllipsePaintStrategy(origin, endpoint,
+                fillColor, strokeColor, shapeShadingType);
             }
             else if (shapeType.compareTo(ShapeType.TRIANGLE) == 0) {
-                paintStrategy = new TrianglePaintStrategy(origin, endpoint);
+                paintStrategy = new TrianglePaintStrategy(origin, endpoint,
+                fillColor, strokeColor, shapeShadingType);
             }   
            
             this.createdShape = new PaintShape(paintStrategy);

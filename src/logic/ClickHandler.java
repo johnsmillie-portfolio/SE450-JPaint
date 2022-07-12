@@ -28,7 +28,11 @@ public class ClickHandler extends MouseInputAdapter {
     public void mousePressed(MouseEvent e) {
         System.out.println("mouse pressed called");
         this.addShapeCommandBuilder = new AddShapeCommandBuilder(
-                this.paintCanvas, this.shapeList, applicationState.getActiveShapeType());
+                this.paintCanvas, this.shapeList, 
+                applicationState.getActiveShapeType(),
+                applicationState.getActivePrimaryColor(), 
+                applicationState.getActiveSecondaryColor(), 
+                applicationState.getActiveShapeShadingType());
         this.addShapeCommandBuilder.setOrigin(e.getPoint());
     }
 

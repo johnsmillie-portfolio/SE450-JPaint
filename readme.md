@@ -88,6 +88,8 @@ don’t need to click and drag on the highlighted shape(s).
 - Undo/Redo Draw
 - Whiteboard exercise/Discussion post 1
 
+## Sprint 2 (Ends on Week 6)
+- Draw Rectangles, Ellipses, and Triangles
 
 # Currently Unimplmented Features
 

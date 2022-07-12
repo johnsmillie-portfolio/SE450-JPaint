@@ -1,5 +1,7 @@
 package logic.commands;
 
+import model.ShapeColor;
+import model.ShapeShadingType;
 //import model.ShapeColor;
 //import model.ShapeShadingType;
 import model.ShapeType;
@@ -15,21 +17,22 @@ public class AddShapeCommandBuilder {
     private PaintCanvas canvas;
     private Collection<IPaintShape> shapeList;
 
-    // private ShapeColor fillColor;
-    // private ShapeColor strokeColor;
-    // private ShapeShadingType shapeShadingType;
+    private ShapeColor fillColor;
+    private ShapeColor strokeColor;
+    private ShapeShadingType shapeShadingType;
     private ShapeType shapeType;
 
     public AddShapeCommandBuilder(PaintCanvas canvas,
-            Collection<IPaintShape> shapeList,  ShapeType shapeType
- //ShapeColor fillColor, ShapeColor strokeColor, ShapeShadingType shapeShadingType
+            Collection<IPaintShape> shapeList,  ShapeType shapeType,
+    ShapeColor fillColor, ShapeColor strokeColor,
+     ShapeShadingType shapeShadingType
     ) {
         this.canvas = canvas;
         this.shapeList = shapeList;
         this.shapeType = shapeType;
-        //this.fillColor = fillColor;
-        //this.strokeColor = strokeColor;
-        //this.shapeShadingType = shapeShadingType;
+        this.fillColor = fillColor;
+        this.strokeColor = strokeColor;
+        this.shapeShadingType = shapeShadingType;
         
     }
 
@@ -44,10 +47,9 @@ public class AddShapeCommandBuilder {
 
     public AddShapeCommand build() {
        return new AddShapeCommand(origin, endpoint, canvas,
-                this.shapeList, shapeType
-        // , fillColor, strokeColor,
-        // shapeShadingType,
-        );
+                this.shapeList, shapeType,
+        fillColor, strokeColor,
+        shapeShadingType);
     }
 
 }
