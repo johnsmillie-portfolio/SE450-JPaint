@@ -3,16 +3,29 @@ package view.gui;
 import view.interfaces.IPaintShape;
 import view.interfaces.PaintCanvasBase;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
-public class PaintCanvas extends PaintCanvasBase {
-    private IPaintShape[] visibleShapes;
+import logic.observer.IPublisher;
+import logic.observer.ISubscriber;
 
-    public PaintCanvas() {
-        this.visibleShapes = new IPaintShape[0];
+public class PaintCanvas extends PaintCanvasBase
+        implements ISubscriber<List<IPaintShape>> {
+    private List<IPaintShape> visibleShapes;
+
+    public PaintCanvas(
+            IPublisher<List<IPaintShape>> visibleShapesListPublisher) {
+        this.visibleShapes = new ArrayList<>();
+        visibleShapesListPublisher.subscribe(this);
     }
 
     public Graphics2D getGraphics2D() {
         return (Graphics2D) getGraphics();
+    }
+
+    @Override
+    public void repaint() {
+        this.paint(this.getGraphics2D());
     }
 
     @Override
@@ -40,9 +53,8 @@ public class PaintCanvas extends PaintCanvasBase {
     }
 
     @Override
-    public void notifyUpdatedShapeList(
-            IPaintShape[] shapes) {
+    public void notifyUpdate(List<IPaintShape> shapes) {
         this.visibleShapes = shapes;
-        this.paint(this.getGraphics());
+        this.repaint();
     }
 }

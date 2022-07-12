@@ -1,73 +1,67 @@
 package logic;
 
 import java.awt.event.MouseEvent;
-import java.util.Arrays;
+import java.util.List;
 
 import javax.swing.event.MouseInputAdapter;
-import logic.commands.AddShapeCommandBuilder;
-import logic.shapelist.IShapeListPublisher;
-import logic.shapelist.IShapeListSubscriber;
-import model.MouseMode;
+import logic.dragstrategy.AddNewShapeDragStrategy;
+import logic.dragstrategy.IDragStrategy;
+import logic.dragstrategy.MoveDragStrategy;
+import logic.dragstrategy.SelectDragStrategy;
+import logic.observer.IPublisher;
+import logic.observer.IStatefulListPublisher;
+import logic.observer.StatefulListPublisher;
 import model.persistence.ApplicationState;
 import java.awt.Point;
 import view.interfaces.IPaintShape;
 
-public class ClickHandler extends MouseInputAdapter
-        implements IShapeListSubscriber {
-    private IShapeListPublisher visibleShapesListPublisher;
-    private IShapeListPublisher selectedShapesListPublisher;
-    private IPaintShape[] visibleShapes;
+public class ClickHandler extends MouseInputAdapter {
+    private IStatefulListPublisher<IPaintShape> visibleShapesListPublisher;
+    private IPublisher<List<IPaintShape>> selectedShapesListPublisher;
     private ApplicationState applicationState;
-    private Point dragStartPos;
+    private IDragStrategy dragStrategy;
+    private List<IPaintShape> visibleShapes;
+    private List<IPaintShape> selectedShapes;
 
     public ClickHandler(
-            IShapeListPublisher visibleShapesListPublisher,
-            IShapeListPublisher selectedShapesListPublisher,
+            IPublisher<List<IPaintShape>> visibleShapesListPublisher,
+            IPublisher<List<IPaintShape>> selectedShapesListPublisher,
             ApplicationState applicationState) {
-        this.visibleShapesListPublisher = visibleShapesListPublisher;
+        visibleShapesListPublisher
+                .subscribe((v) -> this.visibleShapes = v);
+        this.visibleShapesListPublisher = new StatefulListPublisher<IPaintShape>(
+                visibleShapesListPublisher);
         this.selectedShapesListPublisher = selectedShapesListPublisher;
-        this.visibleShapes = new IPaintShape[0];
+        selectedShapesListPublisher
+                .subscribe((v) -> this.selectedShapes = v);
         this.applicationState = applicationState;
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
         System.out.println("mouse pressed called");
-        this.dragStartPos = e.getPoint();
+        this.dragStrategy = this
+                .getDragStrategy(e.getPoint());
     }
 
-    @Override
-    public void mouseReleased(MouseEvent e) {
-        System.out.println("mouse released called");
-
+    private IDragStrategy getDragStrategy(
+            Point dragStartPos) {
         var dragMouseMode = this.applicationState
                 .getActiveMouseMode();
 
-        // TODO: Implement move drag strategy
-        // TODO: break out into strategy classes
-        if (dragMouseMode == MouseMode.DRAW) {
-            var addShapeCommandBuilder = new AddShapeCommandBuilder(
+        switch (dragMouseMode) {
+        case DRAW:
+            return new AddNewShapeDragStrategy(dragStartPos,
                     this.visibleShapesListPublisher);
-            addShapeCommandBuilder
-                    .setOrigin(this.dragStartPos);
-
-            addShapeCommandBuilder
-                    .setEndpoint(e.getPoint());
-
-            addShapeCommandBuilder.build().invoke();
-        }
-        else if (dragMouseMode == MouseMode.SELECT) {
-            IPaintShape[] selectedShapes = Arrays
-                    .stream(this.visibleShapes)
-                    .filter(s -> s.collides(
-                            this.dragStartPos,
-                            e.getPoint()))
-                    .toArray(IPaintShape[]::new);
-
-            this.selectedShapesListPublisher
-                    .updateShapeList(selectedShapes);
-        }
-        else {
+        case SELECT:
+            return new SelectDragStrategy(dragStartPos,
+                    visibleShapes,
+                    this.selectedShapesListPublisher);
+        case MOVE:
+            return new MoveDragStrategy(dragStartPos,
+                    selectedShapes,
+                    this.visibleShapesListPublisher);
+        default:
             throw new Error(
                     "Not sure how to handle mouse mode "
                             + dragMouseMode);
@@ -75,8 +69,8 @@ public class ClickHandler extends MouseInputAdapter
     }
 
     @Override
-    public void notifyUpdatedShapeList(
-            IPaintShape[] shapes) {
-        this.visibleShapes = shapes;
+    public void mouseReleased(MouseEvent e) {
+        System.out.println("mouse released called");
+        this.dragStrategy.endDrag(e.getPoint());
     }
 }

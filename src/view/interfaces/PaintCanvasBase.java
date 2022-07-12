@@ -1,11 +1,8 @@
 package view.interfaces;
 
 import javax.swing.*;
-
-import logic.shapelist.IShapeListSubscriber;
-
 import java.awt.*;
 
-public abstract class PaintCanvasBase extends JComponent implements IShapeListSubscriber {
+public abstract class PaintCanvasBase extends JComponent {
     public abstract Graphics2D getGraphics2D();
 }

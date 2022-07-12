@@ -4,12 +4,14 @@ package logic.commands;
 // import model.ShapeShadingType;
 // import model.ShapeType;
 import java.awt.Point;
-import logic.shapelist.IShapeListPublisher;
+
+import logic.observer.IStatefulListPublisher;
+import view.interfaces.IPaintShape;
 
 public class AddShapeCommandBuilder {
     private Point origin;
     private Point endpoint;
-    private IShapeListPublisher visibleShapesListPublisher;
+    private IStatefulListPublisher<IPaintShape> visibleShapesPub;
 
     // private ShapeColor fillColor;
     // private ShapeColor strokeColor;
@@ -17,13 +19,13 @@ public class AddShapeCommandBuilder {
     // private ShapeType shapeType;
 
     public AddShapeCommandBuilder(
-            IShapeListPublisher visibleShapesListPublisher
+            IStatefulListPublisher<IPaintShape> visibleShapesPub
     // , ShapeColor fillColor,
     // ShapeColor strokeColor,
     // ShapeShadingType shapeShadingType,
     // ShapeType shapeType
     ) {
-        this.visibleShapesListPublisher = visibleShapesListPublisher;
+        this.visibleShapesPub = visibleShapesPub;
 
         // this.fillColor = fillColor;
         // this.strokeColor = strokeColor;
@@ -40,8 +42,8 @@ public class AddShapeCommandBuilder {
     }
 
     public AddShapeCommand build() {
-        return new AddShapeCommand(origin, endpoint,
-                visibleShapesListPublisher
+        return new AddShapeCommand(this.origin,
+                this.endpoint, this.visibleShapesPub
         // , fillColor, strokeColor,
         // shapeShadingType, shapeType
         );

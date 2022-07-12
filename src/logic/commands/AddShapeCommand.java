@@ -6,14 +6,14 @@ package logic.commands;
 import view.gui.PaintShape;
 import view.interfaces.IPaintShape;
 import java.awt.Point;
-import logic.shapelist.IShapeListPublisher;
+import logic.observer.IStatefulListPublisher;
 
 public class AddShapeCommand
         implements ICommand, IUndoable {
 
     private Point origin;
     private Point endpoint;
-    private IShapeListPublisher visibleShapeListPublisher;
+    private IStatefulListPublisher<IPaintShape> visibleShapesPub;
     private IPaintShape createdShape;
     // private ShapeColor fillColor;
     // private ShapeColor strokeColor;
@@ -21,14 +21,14 @@ public class AddShapeCommand
     // private ShapeType shapeType;
 
     public AddShapeCommand(Point origin, Point endpoint,
-            IShapeListPublisher visibleShapeListPublisher
+            IStatefulListPublisher<IPaintShape> visibleShapesPub
     // , ShapeColor fillColor, ShapeColor strokeColor,
     // ShapeShadingType shapeShadingType,
     // ShapeType shapeType
     ) {
         this.origin = origin;
         this.endpoint = endpoint;
-        this.visibleShapeListPublisher = visibleShapeListPublisher;
+        this.visibleShapesPub = visibleShapesPub;
         // this.fillColor = fillColor;
         // this.strokeColor = strokeColor;
         // this.shapeShadingType = shapeShadingType;
@@ -37,7 +37,7 @@ public class AddShapeCommand
 
     @Override
     public void undo() {
-        this.removeShape();
+        this.visibleShapesPub.remove(this.createdShape);
     }
 
     @Override
@@ -57,12 +57,6 @@ public class AddShapeCommand
                     this.endpoint);
         }
 
-        this.visibleShapeListPublisher
-                .addShape(this.createdShape);
-    }
-
-    private void removeShape() {
-        this.visibleShapeListPublisher
-                .removeShape(this.createdShape);
+        this.visibleShapesPub.add(this.createdShape);
     }
 }

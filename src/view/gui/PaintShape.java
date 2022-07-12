@@ -32,7 +32,16 @@ public class PaintShape implements IPaintShape {
 
     @Override
     public boolean collides(Point from, Point to) {
-        // TODO Implement Collision Logic
-        return false;
+        // TODO Implement actual Collision Logic
+        return true;
+    }
+
+    @Override
+    public void move(int x, int y) {
+        this.origin = new Point(this.origin.x + x,
+                this.origin.y + y);
+
+        this.endpoint = new Point(this.endpoint.x + x,
+                this.endpoint.y + y);
     }
 }
