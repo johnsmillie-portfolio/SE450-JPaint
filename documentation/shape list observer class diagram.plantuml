@@ -1,36 +1,96 @@
-@startuml Shape List Observer class diagram
+@startuml Shapes Class Diagram
 title Selected Shapes Class Diagram
 
-class ClickHandler {
-    - visibleShapes: List<IPaintShape>
-    --
-    + ClickHandler(selectedShapesPublisher: ShapeListPublisher)
+package logic {
+    package observer {
+        package interfaces {
+            interface IPublisher <T> {
+                subscribe(sub: IContextualSubscriber<T>)
+                announce(updatedValue: T)
+            }
+
+            interface ISubscriber<T> {
+                notifyUpdate(updatedValue: T): void
+            }
+
+            interface IStatefulListPublisher<E> {
+                add(element: E): void
+                remove(element: E): void
+            }
+
+            interface IRetriggerable {
+                retrigger(): void
+            }
+
+            interface IStatefulPublisher<T>{}
+        }
+
+        class SimplePublisher<T> {
+            - subscribers: ArrayList<ISubscriber<T>>
+        }
+
+        class StatefulListPublisher<E> {
+            + StatefulListPublisher(parent: IPublisher)
+        }
+    }
+
+    class ClickHandler {
+        - visibleShapesPublisher: IStatefulListPublisher
+        - selectedShapesPublisher: IPublisher
+        --
+        + ClickHandler(visibleShapesPublisher: IPublisher, selectedShapesPublisher: IPublisher)
+    }
+
+    package commands {
+        class AddShapeCommand {
+
+        }
+
+        class MoveShapeCommand {
+
+        }
+    }
+
+    package dragstrategy {
+        interface IDragStrategy{
+            endDrag(point: Point): void
+        }
+        class MoveDragStrategy
+        class AddNewShapeDragStrategy
+        class SelectDragStrategy
+    }
+
+    package command {
+        class MoveCommand
+        class AddNewShapeCommand
+    }
+
 }
 
-interface IShapeListPublisher {
-    + subscribe(sub: IShapeListSubscriber)
-    + addShape(shape: IPaintShape)
-    + removeShape(shape: IPaintShape)
-    + setShapeList(shapes: IPaintShape[])
+package view.gui {
+    class PaintCanvas {}
 }
 
-class ShapeListPublisher {
-    - subscribers: ArrayList<IShapeListSubscriber>
-}
-
-interface IShapeListSubscriber {
-    + notifyUpdatedShapeList(shapeList: IPaintShape[]): void
-}
-
-class PaintCanvas {
-    - drawShapes: List<IPaintShape>
-}
-
-PaintCanvas --|> IShapeListSubscriber
-ClickHandler --|> IShapeListSubscriber
-ClickHandler --o IShapeListPublisher
-ShapeListPublisher ..|> IShapeListPublisher
-IShapeListPublisher o--> IShapeListSubscriber
-
+StatefulListPublisher ..|> IStatefulListPublisher
+StatefulListPublisher --o IPublisher
+IPublisher --> ISubscriber : < notifies
+IStatefulPublisher --|> IPublisher
+IStatefulPublisher --|> IRetriggerable
+IStatefulListPublisher --|> IStatefulPublisher : T: List<E>
+SimplePublisher ..|> IPublisher
+PaintCanvas "T: IPaintShape[]" ..|> ISubscriber : < gets visible\nshape list updates
+ClickHandler "T: IPaintShape[]" ..|> ISubscriber : < gets visible\nshape list updates
+AddNewShapeCommand --o IStatefulListPublisher : < sends visible shapes
+MoveShapeCommand --o IRetriggerable : < retriggers on shape location changed
+ClickHandler --* IStatefulListPublisher
+ClickHandler --> MoveDragStrategy
+ClickHandler --> SelectDragStrategy
+ClickHandler --> AddNewShapeDragStrategy
+ClickHandler --* IDragStrategy : stateful dragging
+AddNewShapeDragStrategy --> AddNewShapeCommand : creates\nand invokes
+MoveDragStrategy --> MoveCommand : creates\nand invokes
+MoveDragStrategy ..|> IDragStrategy
+SelectDragStrategy ..|> IDragStrategy
+AddNewShapeDragStrategy ..|> IDragStrategy
 
 @enduml
