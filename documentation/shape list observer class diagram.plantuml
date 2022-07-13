@@ -69,19 +69,21 @@ IStatefulPublisher --|> IPublisher
 IStatefulPublisher --|> IRetriggerable
 IStatefulListPublisher --|> IStatefulPublisher : T: List<E>
 SimplePublisher ..|> IPublisher
-PaintCanvas "T: IPaintShape[]" ..|> ISubscriber : < gets visible\nshape list updates
-ClickHandler "T: IPaintShape[]" ..|> ISubscriber : < gets visible\nshape list updates
+PaintCanvas "T: IPaintShape[]" ..|> ISubscriber : < gets updated\nvisible shapes
+ClickHandler "T: IPaintShape[]" ..|> ISubscriber : < gets updated\nselected shapes
+ClickHandler "T: IPaintShape[]" ..|> ISubscriber : < gets updated\nvisible shapes
 AddShapeCommand --o IStatefulListPublisher : < sends visible shapes
-AddShapeDragStrategy --o IStatefulListPublisher : < populates command
+AddShapeDragStrategy --o IStatefulListPublisher : < populates\ncommand
 ClickHandler --* IStatefulListPublisher
 ClickHandler --> MoveDragStrategy
 ClickHandler --> SelectDragStrategy
 ClickHandler --> AddShapeDragStrategy
-ClickHandler --* IDragStrategy : stateful dragging
+ClickHandler --* IDragStrategy : stateful\ndragging
 AddShapeDragStrategy --> AddShapeCommand : creates\nand invokes
 MoveDragStrategy --> MoveShapesCommand : creates\nand invokes
 MoveDragStrategy ..|> IDragStrategy
 SelectDragStrategy ..|> IDragStrategy
 AddShapeDragStrategy ..|> IDragStrategy
+MoveShapesCommand --o IRetriggerable : notifies\nafter move
 
 @enduml
