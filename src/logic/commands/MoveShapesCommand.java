@@ -6,7 +6,6 @@ package logic.commands;
 import view.interfaces.IPaintShape;
 import java.awt.Point;
 import java.util.List;
-
 import logic.observer.IRetriggerable;
 
 public class MoveShapesCommand

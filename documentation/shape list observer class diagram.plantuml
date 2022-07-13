@@ -37,18 +37,15 @@ package logic {
     class ClickHandler {
         - visibleShapesPublisher: IStatefulListPublisher
         - selectedShapesPublisher: IPublisher
+        - visibleShapes: List<IPaintShape>
+        - selectedShapes: List<IPaintShape>
         --
         + ClickHandler(visibleShapesPublisher: IPublisher, selectedShapesPublisher: IPublisher)
     }
 
     package commands {
-        class AddShapeCommand {
-
-        }
-
-        class MoveShapeCommand {
-
-        }
+        class AddShapeCommand 
+        class MoveShapesCommand
     }
 
     package dragstrategy {
@@ -56,15 +53,9 @@ package logic {
             endDrag(point: Point): void
         }
         class MoveDragStrategy
-        class AddNewShapeDragStrategy
+        class AddShapeDragStrategy
         class SelectDragStrategy
     }
-
-    package command {
-        class MoveCommand
-        class AddNewShapeCommand
-    }
-
 }
 
 package view.gui {
@@ -80,17 +71,17 @@ IStatefulListPublisher --|> IStatefulPublisher : T: List<E>
 SimplePublisher ..|> IPublisher
 PaintCanvas "T: IPaintShape[]" ..|> ISubscriber : < gets visible\nshape list updates
 ClickHandler "T: IPaintShape[]" ..|> ISubscriber : < gets visible\nshape list updates
-AddNewShapeCommand --o IStatefulListPublisher : < sends visible shapes
-MoveShapeCommand --o IRetriggerable : < retriggers on shape location changed
+AddShapeCommand --o IStatefulListPublisher : < sends visible shapes
+AddShapeDragStrategy --o IStatefulListPublisher : < populates command
 ClickHandler --* IStatefulListPublisher
 ClickHandler --> MoveDragStrategy
 ClickHandler --> SelectDragStrategy
-ClickHandler --> AddNewShapeDragStrategy
+ClickHandler --> AddShapeDragStrategy
 ClickHandler --* IDragStrategy : stateful dragging
-AddNewShapeDragStrategy --> AddNewShapeCommand : creates\nand invokes
-MoveDragStrategy --> MoveCommand : creates\nand invokes
+AddShapeDragStrategy --> AddShapeCommand : creates\nand invokes
+MoveDragStrategy --> MoveShapesCommand : creates\nand invokes
 MoveDragStrategy ..|> IDragStrategy
 SelectDragStrategy ..|> IDragStrategy
-AddNewShapeDragStrategy ..|> IDragStrategy
+AddShapeDragStrategy ..|> IDragStrategy
 
 @enduml
