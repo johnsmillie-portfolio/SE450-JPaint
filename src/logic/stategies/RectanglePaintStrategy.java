@@ -40,7 +40,7 @@ public class RectanglePaintStrategy implements IPaintStrategy {
         if (shapeShadingType.equals(ShapeShadingType.FILLED_IN) || 
         shapeShadingType.equals(shapeShadingType.OUTLINE_AND_FILLED_IN)) {
             Graphics2D graphics2dFill = c.getGraphics2D();
-            graphics2dFill.setColor(secondaryColor = Color.PINK);
+            graphics2dFill.setColor(fillColor.getColor());
             graphics2dFill.fillRect(x, y, width, height);
 
         }
@@ -48,7 +48,7 @@ public class RectanglePaintStrategy implements IPaintStrategy {
         if (shapeShadingType.equals(ShapeShadingType.OUTLINE) || 
         shapeShadingType.equals(shapeShadingType.OUTLINE_AND_FILLED_IN)) {
             Graphics2D graphics2dOutline = c.getGraphics2D();
-            graphics2dOutline.setColor(Color.BLACK);
+            graphics2dOutline.setColor(strokeColor.getColor());
             graphics2dOutline.drawRect(x, y, width, height);
         }
 
