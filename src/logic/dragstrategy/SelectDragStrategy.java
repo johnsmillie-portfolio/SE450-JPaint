@@ -2,6 +2,8 @@ package logic.dragstrategy;
 
 import java.awt.Point;
 import java.util.List;
+
+import logic.commands.SelectCommand;
 import logic.observer.IPublisher;
 import view.interfaces.IPaintShape;
 
@@ -21,14 +23,8 @@ public class SelectDragStrategy
 
     @Override
     public void endDrag(Point p) {
-        if (this.visibleShapes != null) {
-            List<IPaintShape> selectedShapes = this.visibleShapes
-                    .stream().filter(s -> s
-                            .collides(this.startPoint, p))
-                    .toList();
-
-            this.selectedShapesPublisher
-                    .announce(selectedShapes);
-        }
+        (new SelectCommand(this.startPoint, p,
+                this.selectedShapesPublisher,
+                this.visibleShapes)).invoke();
     }
 }

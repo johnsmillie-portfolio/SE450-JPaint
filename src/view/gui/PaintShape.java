@@ -4,7 +4,6 @@ import java.awt.Point;
 import view.interfaces.IPaintShape;
 import view.interfaces.PaintCanvasBase;
 import java.awt.Color;
-import java.awt.Rectangle;
 import java.awt.Graphics2D;
 
 public class PaintShape implements IPaintShape {
