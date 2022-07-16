@@ -5,12 +5,6 @@ This is the JPaint application produced for SE450 in Summer 2022 at DePaul Unive
 ## Missing Features
 
 ## Bugs
-- Interaction between selection and undo.
-    There is undocumented behavior when considering the interaction between selection and undo.  In the case where a selection is made, and then an undo occurs in which the shape is 'removed', modifications made to the 'selected' but invisible (undone) shape will still take place.  If the redo button is clicked, whatever modifications are made to the invisible object will be visible.  Additionally, a shape that is not in the visible list when a selection takes place, but is then 'redone' to become visible after a selection, that would have been selected had it been present *will not be selected*.
-
-- Selection currently has no collision logic
-    All visible shapes will be selected upon completion of a selection-mouse-mode drag.
-
 - Painting bugs on closure of popups
     On DZwerdling's system, upon closing the mouse mode selection dialog, there are visual bugs that prevent shapes from being drawn correctly.
 
@@ -54,15 +48,6 @@ be no visible outline. Use Primary Color to draw this.
   - Outline and Filled-In – Both the inside and the outline will be
 drawn. Use Primary Color for the inside and Secondary Color for
 the outline.
-- Refine Selection Logic
-  - Collision logic
-  - If you click a single point on a shape while in Select mode, that
-shape should be selected. If you click a single point on the canvas
-or select an empty area, the selected shapes should be
-deselected This is the default behavior for collision detection and
-shouldn’t require any modification – this is easier for you!
-  - You should be able to click and drag into any part of a shape to
-select it – it does not need to be completely surrounded
 - Whiteboard exercise/Discussion post
 
 
@@ -76,7 +61,7 @@ select it – it does not need to be completely surrounded
 - Undo/Redo Move
 
 ## Sprint 2
-- Select all shapes by dragging.
+- Select shapes by dragging.
 - Move Selected Shapes.
   - Move does not deselect.
 - Have at three design patterns implemented
