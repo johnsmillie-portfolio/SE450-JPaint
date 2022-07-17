@@ -1,21 +1,26 @@
 package view.gui;
+
 import logic.stategies.IPaintStrategy;
 import view.interfaces.IPaintShape;
 import view.interfaces.PaintCanvasBase;
 import java.awt.Point;
 
+// TODO Contemplate a solution to the redundant origin and endpoint fields in PaintStrategy and PaintShape
 public class PaintShape implements IPaintShape {
     private IPaintStrategy paintStrategy;
     private Point origin;
     private Point endpoint;
 
-    public PaintShape (Point origin, Point endpoint,IPaintStrategy paintStrategy) {
+    public PaintShape(Point origin, Point endpoint,
+            IPaintStrategy paintStrategy) {
+        this.origin = origin;
+        this.endpoint = endpoint;
         this.paintStrategy = paintStrategy;
     }
 
     @Override
     public void paint(PaintCanvasBase c) {
-            paintStrategy.paint(c);
+        paintStrategy.paint(c);
     }
 
     @Override
