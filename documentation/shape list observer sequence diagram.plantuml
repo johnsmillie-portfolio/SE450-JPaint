@@ -1,0 +1,12 @@
+@startuml Shape List Observer sequence diagram
+title Selected Shapes Class Diagram
+hide footbox
+
+User -> ClickHandler : Click Down
+User -> ClickHandler : Click Up
+ClickHandler -> ApplicationState : Continue if in selection mode
+ClickHandler -> ClickHandler: Calculate Selected Shapes from total list
+ClickHandler -> ShapeListPublisher: Announce new selected Shapes List 
+ShapeListPublisher -> IShapeListSubscriber: Notify of ShapeList change
+
+@enduml

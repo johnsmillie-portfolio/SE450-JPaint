@@ -1,8 +1,11 @@
 package main;
 
+import java.util.List;
+
 import controller.IJPaintController;
 import controller.JPaintController;
 import logic.ClickHandler;
+import logic.observer.SimplePublisher;
 import model.persistence.ApplicationState;
 import view.gui.Gui;
 import view.gui.GuiWindow;
@@ -12,24 +15,29 @@ import view.interfaces.IPaintShape;
 import view.interfaces.PaintCanvasBase;
 import view.interfaces.IUiModule;
 
-//import java.awt.*;
-import java.util.ArrayList;
-
 public class Main {
     public static void main(String[] args) {
-        ArrayList<IPaintShape> shapeList = new ArrayList<IPaintShape>();
+        var visibleShapesListPublisher = new SimplePublisher<List<IPaintShape>>();
+        var selectedShapesListPublisher = new SimplePublisher<List<IPaintShape>>();
+
         PaintCanvasBase paintCanvas = new PaintCanvas(
-                shapeList);
+                visibleShapesListPublisher);
+
         IGuiWindow guiWindow = new GuiWindow(paintCanvas);
         IUiModule uiModule = new Gui(guiWindow);
+
         ApplicationState appState = new ApplicationState(
                 uiModule);
+
+        ClickHandler handler = new ClickHandler(
+                visibleShapesListPublisher,
+                selectedShapesListPublisher, appState);
+
+        paintCanvas.addMouseListener(handler);
+
         IJPaintController controller = new JPaintController(
                 uiModule, appState);
         controller.setup();
-        ClickHandler handler = new ClickHandler(
-                (PaintCanvas) paintCanvas, shapeList, appState);
-        paintCanvas.addMouseListener(handler);
         
         // For example purposes only; remove all lines below from your final project.
 

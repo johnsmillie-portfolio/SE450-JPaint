@@ -5,6 +5,8 @@ This is the JPaint application produced for SE450 in Summer 2022 at DePaul Unive
 ## Missing Features
 
 ## Bugs
+- Painting bugs on closure of popups
+    On DZwerdling's system, upon closing the mouse mode selection dialog, there are visual bugs that prevent shapes from being drawn correctly.
 
 ## Extra Credit
 
@@ -17,126 +19,47 @@ https://github.com/zwerdlds/SE450-JPaint
 ## 1. Command
 The behavior of the user interface needs to be extensible.  While the project starts with limited functionality, more will be added.  Interacting with the logic layer should be decoupled from the interface, but the interface should have knowledge of the functions it is capable of performing.  For these reasons, the project implements a Command pattern.  The UI layer is one client capable of creating commands, which then are passed to the logic layer to be invoked, and kept in a stack, to be revoked in case of an undo.
 
-### 2. Builder
-TODO: Add description of addnewshapecommandbuilder
-
-### 3. Strategy
+### 2. Strategy
 The behavior of the mouse will fire different actions based on the application state. A mouse down -> move mouse -> mouse up could be used to build a new shape, or to select a current shape. This is relative to the application state. Furthermore, the painting of differernt shapes will require different algorithms based on the type of shape being painted. Different approaches will need to be applied based on the current state, and that is why we have used the Strategy Pattern to provide strategies for these implementations. "The Strategy pattern suggests that you take a class that does something specific in a lot of different ways and extract all of these algorithms into separate classes called strategies" -Refactoring Guru. We have applied this to the drag mouse and paint shape behaviors by programming to an interface and allowing implementing classes to perform our various strategies. 
 
-### 4. 
+### 3. Observer
+The painting and selection processes both rely on dynamic lists of shapes, which are defined by their follow-on processes based on the list populations.  Because the lists are dynamic and there is dependent logic we do not want to be responsible for at the list-population logic layer, this suggests a decoupling via an observer pattern.  In the case of painting, the list of shapes will be populated by the drawing mechanism invoked by the AddNewShapeCommand.  The PaintCanvas class implements the subscriber interface and subscribe to shape list updates.  Additionally, the ClickHandler will also implement the subscriber interface, so that it may correctly calculate the selection.  In the case of selection, the list of selected shapes will be calculated and updated by the ClickHandler class, to be acted upon by any following subscribers.
+
+### 4.
 ### 5. 
 ### 6. 
 
 ## Additional Discussion
-- Each shape is drawn in a similar way.  This may be implemented as a Chain of Responsibility.  It is perhaps capable of being combined with a decorator pattern to alter the way each is invoked.
+
 
 ## Unresolved Issues
 - Investigate using observer pattern on selected shape list for updating drawing
 - Investigate using strategy pattern for drawing disparate shape types
 - Investigate refactoring shape to take paint context as constructor
-- Investigate using strategy pattern for click mode (select, add new shape, move)
 
 # To-Do
-- Draw Rectangles, Ellipses, and Triangles
-- Draw shapes with various colors
-- Draw shapes with various shading types
-  - Outline Only – Only shape outline will be drawn. Use Primary
-Color to draw this.
-  - Filled-In – Only the inside of the shape will be drawn – there will
-be no visible outline. Use Primary Color to draw this.
-  - Outline and Filled-In – Both the inside and the outline will be
-drawn. Use Primary Color for the inside and Secondary Color for
-the outline.
-- Select a shape.
-  - In Select mouse mode, select any shapes that are touched by the
-invisible bounding box created by clicking and dragging to select.
-You can use (and share on D2L) a Collision detection algorithm
-that you find. The selection can be imprecise; when selecting,
-assume any shape (e.g. ellipse or triangle) has an invisible
-bounding box that surrounds the shape. You can use that
-bounding box for your collision detection calculation (this is much
-easier for you!).
-  - If you click a single point on a shape while in Select mode, that
-shape should be selected. If you click a single point on the canvas
-or select an empty area, the selected shapes should be
-deselected This is the default behavior for collision detection and
-shouldn’t require any modification – this is easier for you!
-  - You should be able to click and drag into any part of a shape to
-select it – it does not need to be completely surrounded
-  - At this point, nothing visible has to happen.
-- Move a shape
-  - In Move Mouse Mode, clicking and dragging will offset any
-Selected shapes by the amount your mouse moves.
-  - Moving should not deselect any shapes
-- Undo/Redo Move
-- Have at least two design patterns implemented
 - Whiteboard exercise/Discussion post
-Grading Notes:
-- The ability to move a shape is dependent on the ability to select a
-shape.
-- Shape selection must include the ability to click and drag to select
-multiple shapes at once. You should not be able to click on shapes one
-at a time to select
-- You can move by clicking and dragging anywhere on the screen, you
-don’t need to click and drag on the highlighted shape(s).
-- Refactor out the AddShapeCommandBuilder
+
 # Completed Features
 
-## Sprint 1 Features
-- Draw a filled-in Rectangle
+## Sprint 1
+- Draw a filled-in (always green) Rectangle
   - Click and drag while in Draw mode
 - Undo/Redo Draw
 - Whiteboard exercise/Discussion post 1
+- Undo/Redo Move
+
+## Sprint 2
+- Select shapes by dragging.
+- Move Selected Shapes.
+  - Move does not deselect.
+- Have at three design patterns implemented
+
 
 ## Sprint 2 (Ends on Week 6)
 - Draw Rectangles, Ellipses, and Triangles
 
 # Currently Unimplmented Features
-
-
-## Sprint 2 (Ends on Week 6)
-- Draw Rectangles, Ellipses, and Triangles
-- Draw shapes with various colors
-- Draw shapes with various shading types
-  - Outline Only – Only shape outline will be drawn. Use Primary
-Color to draw this.
-  - Filled-In – Only the inside of the shape will be drawn – there will
-be no visible outline. Use Primary Color to draw this.
-  - Outline and Filled-In – Both the inside and the outline will be
-drawn. Use Primary Color for the inside and Secondary Color for
-the outline.
-- Select a shape.
-  - In Select mouse mode, select any shapes that are touched by the
-invisible bounding box created by clicking and dragging to select.
-You can use (and share on D2L) a Collision detection algorithm
-that you find. The selection can be imprecise; when selecting,
-assume any shape (e.g. ellipse or triangle) has an invisible
-bounding box that surrounds the shape. You can use that
-bounding box for your collision detection calculation (this is much
-easier for you!).
-  - If you click a single point on a shape while in Select mode, that
-shape should be selected. If you click a single point on the canvas
-or select an empty area, the selected shapes should be
-deselected This is the default behavior for collision detection and
-shouldn’t require any modification – this is easier for you!
-  - You should be able to click and drag into any part of a shape to
-select it – it does not need to be completely surrounded
-  - At this point, nothing visible has to happen.
-- Move a shape
-  - In Move Mouse Mode, clicking and dragging will offset any
-Selected shapes by the amount your mouse moves.
-  - Moving should not deselect any shapes
-- Undo/Redo Move
-- Have at least two design patterns implemented
-- Whiteboard exercise/Discussion post
-Grading Notes:
-- The ability to move a shape is dependent on the ability to select a
-shape.
-- Shape selection must include the ability to click and drag to select
-multiple shapes at once. You should not be able to click on shapes one
-at a time to select
-- You can move by clicking and dragging anywhere on the screen, you
-don’t need to click and drag on the highlighted shape(s).
 
 ## Sprint 3 (Ends on Week 8)
 - Copy

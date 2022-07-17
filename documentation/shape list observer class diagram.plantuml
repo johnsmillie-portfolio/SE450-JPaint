@@ -1,0 +1,113 @@
+@startuml Shapes Class Diagram
+title Selected Shapes Class Diagram
+
+package logic {
+    package observer {
+        package interfaces {
+            interface IPublisher <T> {
+                subscribe(sub: ISubscriber<T>)
+                announce(updatedValue: T)
+            }
+
+            interface ISubscriber<T> {
+                notifyUpdate(updatedValue: T): void
+            }
+
+            interface IStatefulListPublisher<E> {
+                add(element: E): void
+                remove(element: E): void
+            }
+
+            interface IRetriggerable {
+                retrigger(): void
+            }
+
+            interface IStatefulPublisher<T>{}
+        }
+
+        class SimplePublisher<T> {
+            - subscribers: ArrayList<ISubscriber<T>>
+        }
+
+        class StatefulListPublisher<E> {
+            - parent: IPublisher
+            + StatefulListPublisher(parent: IPublisher)
+        }
+    }
+
+    class ClickHandler {
+        - visibleShapesPublisher: IStatefulListPublisher
+        - selectedShapesPublisher: IPublisher
+        - visibleShapes: List<IPaintShape>
+        - selectedShapes: List<IPaintShape>
+        --
+        + ClickHandler(visibleShapesPublisher: IPublisher, selectedShapesPublisher: IPublisher)
+    }
+
+    package commands {
+        class AddShapeCommand
+        class MoveShapesCommand
+        class SelectShapesCommand
+
+        interface ICommand
+        interface IUndoable
+    }
+
+    package dragstrategy {
+        interface IDragStrategy{
+            endDrag(point: Point): void
+        }
+        class MoveDragStrategy
+        class AddShapeDragStrategy
+        class SelectDragStrategy
+    }
+}
+
+package view.gui {
+    class PaintCanvas {}
+}
+
+StatefulListPublisher ..|> IStatefulListPublisher
+StatefulListPublisher --o IPublisher
+IPublisher --> ISubscriber : < notifies
+IStatefulPublisher --|> IPublisher
+IStatefulPublisher --|> IRetriggerable
+IStatefulListPublisher --|> IStatefulPublisher : T: List<E>
+SimplePublisher .d.|> IPublisher
+SimplePublisher -[hidden]r- StatefulListPublisher
+IPublisher -[hidden]r- IRetriggerable
+
+PaintCanvas ..|> ISubscriber : < gets updated\nT: IPaintShape[]\nvisible shapes
+ClickHandler .r.|> ISubscriber : < gets updated\nT: IPaintShape[]\nselected shapes
+ClickHandler .r.|> ISubscriber : < gets updated\nT: IPaintShape[]\nvisible shapes
+AddShapeCommand --o IStatefulListPublisher : < sends visible shapes
+ClickHandler -r-* IStatefulListPublisher
+ClickHandler -d-> MoveDragStrategy
+ClickHandler -d-> SelectDragStrategy
+ClickHandler -d-> AddShapeDragStrategy
+ClickHandler -d-* IDragStrategy : stateful\ndragging
+
+AddShapeDragStrategy -r-> AddShapeCommand : creates\nand invokes
+MoveDragStrategy -r-> MoveShapesCommand : creates\nand invokes
+SelectDragStrategy -r-> SelectShapesCommand : creates\nand invokes
+MoveDragStrategy .l.|> IDragStrategy
+SelectDragStrategy .l.|> IDragStrategy
+AddShapeDragStrategy .l.|> IDragStrategy
+SelectDragStrategy -[hidden]d- AddShapeDragStrategy
+AddShapeDragStrategy -[hidden]d- MoveDragStrategy
+
+MoveShapesCommand --o IRetriggerable : < notifies\nafter move
+SelectShapesCommand --o IPublisher : < notifies of\nnew selection
+MoveShapesCommand ..|> IUndoable
+MoveShapesCommand ..|> ICommand
+SelectShapesCommand ..|> ICommand
+AddShapeCommand ..|> IUndoable
+AddShapeCommand ..|> ICommand
+
+PaintCanvas -[hidden]r- ClickHandler
+SelectShapesCommand -[hidden]d- AddShapeCommand
+AddShapeCommand -[hidden]d- MoveShapesCommand
+AddShapeCommand -[hidden]d- StatefulListPublisher
+
+
+@enduml

@@ -1,58 +1,47 @@
 package logic.commands;
 
 import model.ShapeColor;
-//import model.ShapeColor;
 import model.ShapeShadingType;
 import model.ShapeType;
-import view.gui.PaintCanvas;
 import view.gui.PaintShape;
 import view.interfaces.IPaintShape;
 import java.awt.Point;
-import java.util.Collection;
-
 import logic.stategies.EllipsePaintStrategy;
 import logic.stategies.IPaintStrategy;
 import logic.stategies.RectanglePaintStrategy;
 import logic.stategies.TrianglePaintStrategy;
-import model.ShapeType;
-
+import logic.observer.IStatefulListPublisher;
 
 public class AddShapeCommand
         implements ICommand, IUndoable {
 
     private Point origin;
     private Point endpoint;
-    private PaintCanvas canvas;
+    private IStatefulListPublisher<IPaintShape> visibleShapesPub;
     private IPaintShape createdShape;
-    private Collection<IPaintShape> shapeList;
     private ShapeType shapeType;
     IPaintStrategy paintStrategy;
     private ShapeColor fillColor;
     private ShapeColor strokeColor;
     private ShapeShadingType shapeShadingType;
-    
 
     public AddShapeCommand(Point origin, Point endpoint,
-        PaintCanvas canvas,
-        Collection<IPaintShape> shapeList,  ShapeType shapeType,
-        ShapeColor fillColor, ShapeColor strokeColor,
-        ShapeShadingType shapeShadingType) 
-    
-    {
+            IStatefulListPublisher<IPaintShape> visibleShapesPub,
+            ShapeType shapeType, ShapeColor fillColor,
+            ShapeColor strokeColor,
+            ShapeShadingType shapeShadingType) {
         this.origin = origin;
         this.endpoint = endpoint;
-        this.canvas = canvas;
-        this.shapeList = shapeList;
-        this.shapeType = shapeType; 
+        this.shapeType = shapeType;
         this.fillColor = fillColor;
         this.strokeColor = strokeColor;
         this.shapeShadingType = shapeShadingType;
-        
+        this.visibleShapesPub = visibleShapesPub;
     }
 
     @Override
     public void undo() {
-        this.removeShape();
+        this.visibleShapesPub.remove(this.createdShape);
     }
 
     @Override
@@ -63,47 +52,35 @@ public class AddShapeCommand
     @Override
     public void invoke() {
         this.addShape();
-
-        // store this command in the undo stack
-        // TODO: Refactor to visitor pattern
         CommandHistory.add(this);
     }
 
     private void addShape() {
-        // Create a new shape
         if (this.createdShape == null) {
-            //TODO
-            //create the paintStrategy here
-                    
-        
-            if (shapeType.compareTo(ShapeType.RECTANGLE) == 0) {
-                paintStrategy = new RectanglePaintStrategy(origin, 
-                endpoint, fillColor, strokeColor, shapeShadingType);
+            if (shapeType
+                    .compareTo(ShapeType.RECTANGLE) == 0) {
+                paintStrategy = new RectanglePaintStrategy(
+                        origin, endpoint, fillColor,
+                        strokeColor, shapeShadingType);
             }
-            else if (shapeType.compareTo(ShapeType.ELLIPSE) == 0) {
-                paintStrategy = new EllipsePaintStrategy(origin, endpoint,
-                fillColor, strokeColor, shapeShadingType);
+            else if (shapeType
+                    .compareTo(ShapeType.ELLIPSE) == 0) {
+                paintStrategy = new EllipsePaintStrategy(
+                        origin, endpoint, fillColor,
+                        strokeColor, shapeShadingType);
             }
-            else if (shapeType.compareTo(ShapeType.TRIANGLE) == 0) {
-                paintStrategy = new TrianglePaintStrategy(origin, endpoint,
-                fillColor, strokeColor, shapeShadingType);
-            }   
-           
-            this.createdShape = new PaintShape(paintStrategy);
+            else if (shapeType
+                    .compareTo(ShapeType.TRIANGLE) == 0) {
+                paintStrategy = new TrianglePaintStrategy(
+                        origin, endpoint, fillColor,
+                        strokeColor, shapeShadingType);
+            }
+
+            // TODO probably refactor
+            this.createdShape = new PaintShape(this.origin,
+                    this.endpoint, this.paintStrategy);
         }
 
-        this.shapeList.add(this.createdShape);
-        this.repaint();
+        this.visibleShapesPub.add(this.createdShape);
     }
-
-    private void removeShape() {
-        // Remove our shape
-        this.shapeList.remove(this.createdShape);
-        this.repaint();
-    }
-
-    private void repaint() {
-        canvas.paint(canvas.getGraphics());
-    }
-
 }

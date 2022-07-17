@@ -2,16 +2,21 @@ package view.gui;
 
 import view.interfaces.IPaintShape;
 import view.interfaces.PaintCanvasBase;
-
-import javax.swing.JComponent;
 import java.awt.*;
-import java.util.Collection;
+import java.util.ArrayList;
+import java.util.List;
+import logic.observer.IPublisher;
 
 public class PaintCanvas extends PaintCanvasBase {
-    private Collection<IPaintShape> shapeList;
+    private List<IPaintShape> visibleShapes;
 
-    public PaintCanvas(Collection<IPaintShape> shapeList) {
-        this.shapeList = shapeList;
+    public PaintCanvas(
+            IPublisher<List<IPaintShape>> visibleShapesListPublisher) {
+        this.visibleShapes = new ArrayList<>();
+        visibleShapesListPublisher.subscribe((v) -> {
+            this.visibleShapes = v;
+            this.repaint();
+        });
     }
 
     public Graphics2D getGraphics2D() {
@@ -19,15 +24,31 @@ public class PaintCanvas extends PaintCanvasBase {
     }
 
     @Override
-    public void paint(Graphics g) {
-        Graphics2D graphics2d = (Graphics2D) g;
-        graphics2d.setColor(Color.WHITE);
-        // TODO: fetch the appropriate dimensions
-        graphics2d.fillRect(0, 0, 5000, 5000);
+    public void repaint() {
+        this.paint(this.getGraphics2D());
+    }
 
+    @Override
+    public void paint(Graphics g) {
+        this.clearAndRedraw(g);
+    }
+
+    private void clearAndRedraw(Graphics g) {
+        this.clear(g);
+        this.drawAll();
+    }
+
+    private void drawAll() {
         // Draw all shapes here
-        for (var s : this.shapeList) {
+        for (var s : this.visibleShapes) {
             s.paint(this);
         }
+    }
+
+    private void clear(Graphics g) {
+        Graphics2D graphics2d = (Graphics2D) g;
+        graphics2d.setColor(Color.WHITE);
+        graphics2d.fillRect(0, 0, this.getSize().width,
+                this.getSize().height);
     }
 }
