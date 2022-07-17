@@ -33,8 +33,6 @@ public class TrianglePaintStrategy implements IPaintStrategy {
     }
 
     public void paint(PaintCanvasBase c) {
-        // TODO
-        // Implement paint rectagle algorithm
         xPoints[0] = Math.min(this.origin.x, this.endpoint.x);
         yPoints[0] = Math.min(this.origin.y, this.endpoint.y);
         xPoints[1] = Math.max(this.origin.x, this.endpoint.x);
@@ -43,7 +41,7 @@ public class TrianglePaintStrategy implements IPaintStrategy {
         yPoints[2] = Math.max(this.origin.y, this.endpoint.y);
 
         if (shapeShadingType.equals(ShapeShadingType.FILLED_IN) || 
-        shapeShadingType.equals(shapeShadingType.OUTLINE_AND_FILLED_IN)) {
+        shapeShadingType.equals(ShapeShadingType.OUTLINE_AND_FILLED_IN)) {
             Graphics2D graphics2dFill = c.getGraphics2D();
             graphics2dFill.setColor(fillColor.getColor());
             graphics2dFill.fillPolygon(xPoints, yPoints, 3);
@@ -51,7 +49,7 @@ public class TrianglePaintStrategy implements IPaintStrategy {
         }
 
         if (shapeShadingType.equals(ShapeShadingType.OUTLINE) || 
-        shapeShadingType.equals(shapeShadingType.OUTLINE_AND_FILLED_IN)) {
+        shapeShadingType.equals(ShapeShadingType.OUTLINE_AND_FILLED_IN)) {
             Graphics2D graphics2dOutline = c.getGraphics2D();
             graphics2dOutline.setColor(strokeColor.getColor());
             graphics2dOutline.drawPolygon(xPoints, yPoints, 3);

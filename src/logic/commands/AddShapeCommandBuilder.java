@@ -7,6 +7,7 @@ import view.interfaces.IPaintShape;
 import java.awt.Point;
 import logic.observer.IStatefulListPublisher;
 
+// TODO Remove
 public class AddShapeCommandBuilder {
     private Point origin;
     private Point endpoint;

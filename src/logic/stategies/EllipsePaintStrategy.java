@@ -32,8 +32,6 @@ public class EllipsePaintStrategy implements IPaintStrategy {
     }
 
     public void paint(PaintCanvasBase c) {
-        // TODO
-       
         int x = Math.min(this.origin.x, this.endpoint.x);
         int y = Math.min(this.origin.y, this.endpoint.y);
         int height = Math.max(this.origin.y,
@@ -41,15 +39,14 @@ public class EllipsePaintStrategy implements IPaintStrategy {
         int width = Math.max(this.origin.x, this.endpoint.x) - x;
 
         if (shapeShadingType.equals(ShapeShadingType.FILLED_IN) || 
-            shapeShadingType.equals(shapeShadingType.OUTLINE_AND_FILLED_IN)) {
+            shapeShadingType.equals(ShapeShadingType.OUTLINE_AND_FILLED_IN)) {
             Graphics2D graphics2dFill = c.getGraphics2D();
             graphics2dFill.setColor(fillColor.getColor());
             graphics2dFill.fillOval(x, y, width, height);
-
         }
 
         if (shapeShadingType.equals(ShapeShadingType.OUTLINE) || 
-        shapeShadingType.equals(shapeShadingType.OUTLINE_AND_FILLED_IN)) {
+        shapeShadingType.equals(ShapeShadingType.OUTLINE_AND_FILLED_IN)) {
             Graphics2D graphics2dOutline = c.getGraphics2D();
             graphics2dOutline.setColor(strokeColor.getColor());
             graphics2dOutline.drawOval(x, y, width, height);

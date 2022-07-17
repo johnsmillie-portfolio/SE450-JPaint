@@ -4,7 +4,6 @@ import java.awt.*;
 
 public enum ShapeColor implements IAwtColorMapable {
     BLACK {
-        @SuppressWarnings("unused")
         public Color getColor(){
             return Color.BLACK;
         }

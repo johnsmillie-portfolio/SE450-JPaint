@@ -52,7 +52,15 @@ public class ClickHandler extends MouseInputAdapter {
         switch (dragMouseMode) {
         case DRAW:
             return new AddNewShapeDragStrategy(dragStartPos,
-                    this.visibleShapesListPublisher);
+                    this.visibleShapesListPublisher,
+                    this.applicationState
+                            .getActiveShapeType(),
+                    this.applicationState
+                            .getActivePrimaryColor(),
+                    this.applicationState
+                            .getActiveSecondaryColor(),
+                    this.applicationState
+                            .getActiveShapeShadingType());
         case SELECT:
             return new SelectDragStrategy(dragStartPos,
                     visibleShapes,
