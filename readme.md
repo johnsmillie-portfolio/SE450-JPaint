@@ -7,6 +7,7 @@ This is the JPaint application produced for SE450 in Summer 2022 at DePaul Unive
 ## Bugs
 - Painting bugs on closure of popups
     On DZwerdling's system, upon closing the mouse mode selection dialog, there are visual bugs that prevent shapes from being drawn correctly.
+- Move and/or select are currently broken
 
 ## Extra Credit
 
@@ -15,8 +16,8 @@ This is the JPaint application produced for SE450 in Summer 2022 at DePaul Unive
 ## GitHub Repository
 https://github.com/zwerdlds/SE450-JPaint
 
-# List of Design Patterns
-## 1. Command
+## List of Design Patterns
+### 1. Command
 The behavior of the user interface needs to be extensible.  While the project starts with limited functionality, more will be added.  Interacting with the logic layer should be decoupled from the interface, but the interface should have knowledge of the functions it is capable of performing.  For these reasons, the project implements a Command pattern.  The UI layer is one client capable of creating commands, which then are passed to the logic layer to be invoked, and kept in a stack, to be revoked in case of an undo.
 
 ### 2. Strategy
