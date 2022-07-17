@@ -5,18 +5,18 @@ import view.interfaces.PaintCanvasBase;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
-
 import logic.observer.IPublisher;
-import logic.observer.ISubscriber;
 
-public class PaintCanvas extends PaintCanvasBase
-        implements ISubscriber<List<IPaintShape>> {
+public class PaintCanvas extends PaintCanvasBase {
     private List<IPaintShape> visibleShapes;
 
     public PaintCanvas(
             IPublisher<List<IPaintShape>> visibleShapesListPublisher) {
         this.visibleShapes = new ArrayList<>();
-        visibleShapesListPublisher.subscribe(this);
+        visibleShapesListPublisher.subscribe((v) -> {
+            this.visibleShapes = v;
+            this.repaint();
+        });
     }
 
     public Graphics2D getGraphics2D() {
@@ -50,11 +50,5 @@ public class PaintCanvas extends PaintCanvasBase
         graphics2d.setColor(Color.WHITE);
         graphics2d.fillRect(0, 0, this.getSize().width,
                 this.getSize().height);
-    }
-
-    @Override
-    public void notifyUpdate(List<IPaintShape> shapes) {
-        this.visibleShapes = shapes;
-        this.repaint();
     }
 }

@@ -20,7 +20,8 @@ public class Main {
         var visibleShapesListPublisher = new SimplePublisher<List<IPaintShape>>();
         var selectedShapesListPublisher = new SimplePublisher<List<IPaintShape>>();
 
-        PaintCanvasBase paintCanvas = new PaintCanvas(visibleShapesListPublisher);
+        PaintCanvasBase paintCanvas = new PaintCanvas(
+                visibleShapesListPublisher);
 
         IGuiWindow guiWindow = new GuiWindow(paintCanvas);
         IUiModule uiModule = new Gui(guiWindow);
