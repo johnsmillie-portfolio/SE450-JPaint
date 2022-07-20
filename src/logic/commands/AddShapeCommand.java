@@ -54,29 +54,29 @@ public class AddShapeCommand
         this.addShape();
         CommandHistory.add(this);
     }
-
+    private IPaintStrategy getPaintStrategy() {
+        switch (shapeType) {
+            case RECTANGLE:
+                return new RectanglePaintStrategy(fillColor,
+                        strokeColor, shapeShadingType);
+            
+            case ELLIPSE:
+                return new EllipsePaintStrategy(fillColor,
+                        strokeColor, shapeShadingType);
+            
+            case TRIANGLE:
+                return new TrianglePaintStrategy(fillColor,
+                        strokeColor, shapeShadingType);
+            
+            default:
+                throw new Error( "Do not recognize this shape" + shapeType);
+        }
+    }
     private void addShape() {
+    
         if (this.createdShape == null) {
-            if (shapeType
-                    .compareTo(ShapeType.RECTANGLE) == 0) {
-                paintStrategy = new RectanglePaintStrategy(
-                        origin, endpoint, fillColor,
-                        strokeColor, shapeShadingType);
-            }
-            else if (shapeType
-                    .compareTo(ShapeType.ELLIPSE) == 0) {
-                paintStrategy = new EllipsePaintStrategy(
-                        origin, endpoint, fillColor,
-                        strokeColor, shapeShadingType);
-            }
-            else if (shapeType
-                    .compareTo(ShapeType.TRIANGLE) == 0) {
-                paintStrategy = new TrianglePaintStrategy(
-                        origin, endpoint, fillColor,
-                        strokeColor, shapeShadingType);
-            }
-
             // TODO probably refactor
+            this.paintStrategy = getPaintStrategy();
             this.createdShape = new PaintShape(this.origin,
                     this.endpoint, this.paintStrategy);
         }

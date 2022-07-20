@@ -9,31 +9,31 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 
-public class RectanglePaintStrategy implements IPaintStrategy {
-    private Point origin;
-    private Point endpoint;
+public class RectanglePaintStrategy implements IPaintStrategy { 
+    //private Point origin;
+    //private Point endpoint;
     private ShapeColor fillColor;
     private ShapeColor strokeColor;
     private ShapeShadingType shapeShadingType;
     Color secondaryColor;
    
-    public RectanglePaintStrategy (Point origin, Point endpoint,   
+    public RectanglePaintStrategy (  
         ShapeColor fillColor,
         ShapeColor strokeColor,
         ShapeShadingType shapeShadingType)
    {
-        this.origin = origin;
-        this.endpoint = endpoint;
+        //this.origin = origin;
+        //this.endpoint = endpoint;
         this.fillColor = fillColor;
         this.strokeColor = strokeColor;
         this.shapeShadingType = shapeShadingType;
     }
     
-    public void paint(PaintCanvasBase c) {
-        int x = Math.min(this.origin.x, this.endpoint.x);
-        int y = Math.min(this.origin.y, this.endpoint.y);
-        int height = Math.max(this.origin.y,this.endpoint.y) - y;
-        int width = Math.max(this.origin.x, this.endpoint.x) - x;
+    public void paint(PaintCanvasBase c, Point origin, Point endpoint) {
+        int x = Math.min(origin.x, endpoint.x);
+        int y = Math.min(origin.y, endpoint.y);
+        int height = Math.max(origin.y, endpoint.y) - y;
+        int width = Math.max(origin.x, endpoint.x) - x;
     
         if (shapeShadingType.equals(ShapeShadingType.FILLED_IN) || 
         shapeShadingType.equals(ShapeShadingType.OUTLINE_AND_FILLED_IN)) {

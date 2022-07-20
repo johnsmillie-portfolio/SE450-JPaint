@@ -20,7 +20,7 @@ public class PaintShape implements IPaintShape {
 
     @Override
     public void paint(PaintCanvasBase c) {
-        paintStrategy.paint(c);
+        paintStrategy.paint(c, origin, endpoint);
     }
 
     @Override
