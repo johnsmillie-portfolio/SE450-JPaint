@@ -2,7 +2,8 @@ package logic.dragstrategy;
 
 import java.awt.Point;
 
-import logic.commands.AddShapeCommandBuilder;
+import logic.commands.AddShapeCommand;
+//import logic.commands.AddShapeCommandBuilder;
 import logic.observer.IStatefulListPublisher;
 import model.ShapeColor;
 import model.ShapeShadingType;
@@ -32,15 +33,12 @@ public class AddNewShapeDragStrategy
 
     @Override
     public void endDrag(Point p) {
-        var addShapeCommandBuilder = new AddShapeCommandBuilder(
+        var addShapeCommand = new AddShapeCommand(startPoint, p,
                 this.visibleShapesListPublisher, shapeType,
                 fillColor, strokeColor, shapeShadingType
         );
-        addShapeCommandBuilder.setOrigin(this.startPoint);
-
-        addShapeCommandBuilder.setEndpoint(p);
-
-        addShapeCommandBuilder.build().invoke();
+       
+        addShapeCommand.invoke();
     }
-
+   
 }
