@@ -6,11 +6,12 @@ import model.ShapeType;
 import view.gui.PaintShape;
 import view.interfaces.IPaintShape;
 import java.awt.Point;
-import logic.stategies.EllipsePaintStrategy;
-import logic.stategies.IPaintStrategy;
-import logic.stategies.RectanglePaintStrategy;
-import logic.stategies.TrianglePaintStrategy;
+
 import logic.observer.IStatefulListPublisher;
+import logic.paintstrategy.EllipsePaintStrategy;
+import logic.paintstrategy.IPaintStrategy;
+import logic.paintstrategy.RectanglePaintStrategy;
+import logic.paintstrategy.TrianglePaintStrategy;
 
 public class AddShapeCommand
         implements ICommand, IUndoable {

@@ -1,9 +1,10 @@
 package view.gui;
 
-import logic.stategies.IPaintStrategy;
 import view.interfaces.IPaintShape;
 import view.interfaces.PaintCanvasBase;
 import java.awt.Point;
+
+import logic.paintstrategy.IPaintStrategy;
 
 // TODO Contemplate a solution to the redundant origin and endpoint fields in PaintStrategy and PaintShape
 public class PaintShape implements IPaintShape {
