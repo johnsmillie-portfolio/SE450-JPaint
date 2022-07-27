@@ -1,4 +1,4 @@
-package logic.stategies;
+package logic.paintstrategy;
 
 import view.interfaces.PaintCanvasBase;
 // import view.gui.PaintCanvas;

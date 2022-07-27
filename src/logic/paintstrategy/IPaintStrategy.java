@@ -1,4 +1,4 @@
-package logic.stategies;
+package logic.paintstrategy;
 import java.awt.Point;
 
 import view.interfaces.PaintCanvasBase;
