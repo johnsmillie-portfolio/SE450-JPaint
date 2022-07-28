@@ -33,12 +33,10 @@ public class AddNewShapeDragStrategy
 
     @Override
     public void endDrag(Point p) {
-        var addShapeCommand = new AddShapeCommand(startPoint, p,
+        new AddShapeCommand(startPoint, p,
                 this.visibleShapesListPublisher, shapeType,
-                fillColor, strokeColor, shapeShadingType
-        );
-       
-        addShapeCommand.invoke();
+                fillColor, strokeColor, shapeShadingType)
+                .invoke();
     }
    
 }
