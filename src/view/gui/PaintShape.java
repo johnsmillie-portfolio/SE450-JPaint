@@ -18,7 +18,7 @@ public class PaintShape implements IPaintShape {
         this.endpoint = endpoint;
         this.paintStrategy = paintStrategy;
     }
-
+   
     @Override
     public void paint(PaintCanvasBase c) {
         paintStrategy.paint(c, origin, endpoint);
@@ -51,5 +51,11 @@ public class PaintShape implements IPaintShape {
 
         this.endpoint = new Point(this.endpoint.x + x,
                 this.endpoint.y + y);
+    }
+    public IPaintShape cloneShape() {
+        PaintShape shapeClone = new PaintShape(
+            new Point(this.origin), new Point(this.endpoint), 
+            this.paintStrategy);
+        return (IPaintShape) shapeClone;
     }
 }

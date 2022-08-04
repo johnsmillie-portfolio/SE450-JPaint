@@ -5,6 +5,7 @@ import java.util.List;
 import controller.IJPaintController;
 import controller.JPaintController;
 import logic.ClickHandler;
+import logic.commands.Clipboard;
 import logic.observer.SimplePublisher;
 import model.persistence.ApplicationState;
 import view.gui.Gui;
@@ -34,9 +35,11 @@ public class Main {
                 selectedShapesListPublisher, appState);
 
         paintCanvas.addMouseListener(handler);
-
+        
         IJPaintController controller = new JPaintController(
                 uiModule, appState);
+       
+        
         controller.setup();
         
         // For example purposes only; remove all lines below from your final project.

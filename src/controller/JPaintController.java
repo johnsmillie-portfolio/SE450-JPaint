@@ -1,18 +1,22 @@
 package controller;
 
+import logic.commands.Clipboard;
 import logic.commands.CommandHistory;
 import model.interfaces.IApplicationState;
 import view.EventName;
 import view.interfaces.IUiModule;
+import view.interfaces.IEventCallback;
 
 public class JPaintController implements IJPaintController {
     private final IUiModule uiModule;
     private final IApplicationState applicationState;
+    
 
     public JPaintController(IUiModule uiModule,
             IApplicationState applicationState) {
         this.uiModule = uiModule;
         this.applicationState = applicationState;
+      
     }
 
     @Override
@@ -39,5 +43,11 @@ public class JPaintController implements IJPaintController {
                 () -> CommandHistory.undo());
         uiModule.addEvent(EventName.REDO,
                 () -> CommandHistory.redo());
+        uiModule.addEvent(EventName.COPY, 
+                () -> Clipboard.copyToClipboard());
+        uiModule.addEvent(EventName.PASTE, 
+                () -> Clipboard.paste());
+        uiModule.addEvent(EventName.DELETE, 
+                () -> Clipboard.delete());
     }
 }

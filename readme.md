@@ -60,8 +60,6 @@ The painting and selection processes both rely on dynamic lists of shapes, which
 ## Sprint 2 (Ends on Week 6)
 - Draw Rectangles, Ellipses, and Triangles
 
-# Currently Unimplmented Features
-
 ## Sprint 3 (Ends on Week 8)
 - Copy
   - Adds selected shapes to the “clipboard”. Nothing visible occurs on
@@ -74,6 +72,13 @@ original shapes, or somewhere else that makes sense. Do not
 paste to the same location as the original shapes; you will not be
 able to see the pasted shapes and it will get marked as “not
 working”.
+
+
+# Currently Unimplmented Features
+
+
+## Sprint 3 (Ends on Week 8)
+
 - Delete
   - Deletes the selected shape(s)
 - Outline Selected Shapes
@@ -104,10 +109,12 @@ grouped.
   - If a selected group is comprised of one or more groups, only the
 outer-most group is ungrouped
 - Undo/Redo Group and Ungroup
-- Have at least six design patterns implemented
+
+## Additional Requirements
+- Have at least 5 design patterns implemented
 - Whiteboard exercise/Discussion post (DUE WEEK 9)
 Non-functional requirements
-- Must use at least 6 unique design patterns. Please note you won’t get
+- Must use at least 5 unique design patterns. Please note you won’t get
 credit for using MVC as a design pattern. Further, you won’t get credit
 for using the Java SDK implementations of patterns (e.g.
 Observer/Iterator).
