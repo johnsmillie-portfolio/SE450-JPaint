@@ -5,42 +5,35 @@ import java.util.List;
 
 
 import logic.observer.IPublisher;
-import logic.observer.IRetriggerable;
 import logic.observer.IStatefulListPublisher;
-import logic.observer.StatefulListPublisher;
 import view.interfaces.IPaintShape;
 
 public class Clipboard {
     public static List<IPaintShape> selectedShapes;
     public static List<IPaintShape> clipboard;
-    public static IStatefulListPublisher<IPaintShape> clipboardPublisher;
+    public static IStatefulListPublisher<IPaintShape> visibleShapesListPub;
 
-    public static void getSelectedShapesListPublisher (
-            IPublisher<List<IPaintShape>> selectedShapesListPublisher) {
+    public static void setup (
+            IPublisher<List<IPaintShape>> selectedShapesListPublisher,
+            IStatefulListPublisher<IPaintShape> visibleShapesListPublisher) {
         selectedShapesListPublisher.subscribe((v) -> selectedShapes = v);
-        clipboardPublisher =  new StatefulListPublisher<>(selectedShapesListPublisher);
+        visibleShapesListPub = visibleShapesListPublisher;
     }
     
     public static void copyToClipboard(){
-        //TODO Implement
+        //TODO Refactor
         clipboard = new ArrayList<IPaintShape>(); 
         for (IPaintShape paintShape : selectedShapes) {
-            clipboard.add(paintShape);
+            IPaintShape newPaintShape = paintShape.cloneShape();
+            clipboard.add(newPaintShape); 
             System.out.println("paint shape copied");
         }
     }
 
      public static void paste () {
-        //TODO
-        for (IPaintShape paintShape : clipboard) {
-            relocate(paintShape);
-            System.out.println("this is an object");
-        }
-        clipboardPublisher.retrigger(); 
-        
-     }
+        (new PasteClipboardCommand(clipboard, visibleShapesListPub)).invoke();
+       
+    }
 
-     public static void relocate (IPaintShape shape) {
-        shape.move(0, 0);
-     }
+    
 }
