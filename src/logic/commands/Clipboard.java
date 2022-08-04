@@ -2,12 +2,8 @@ package logic.commands;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
-
 import logic.observer.IPublisher;
 import logic.observer.IStatefulListPublisher;
-import logic.observer.StatefulListPublisher;
-import view.gui.PaintShape;
 import view.interfaces.IPaintShape;
 
 public class Clipboard {
