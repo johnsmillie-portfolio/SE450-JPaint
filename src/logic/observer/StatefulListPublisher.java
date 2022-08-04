@@ -40,6 +40,11 @@ public class StatefulListPublisher<E>
         this.retrigger();
     }
 
+    public void addCollection(List<E> collection){
+        this.members.addAll(collection);
+        this.retrigger();
+    }
+
     @Override
     public void remove(E element) {
         this.members.remove(element);

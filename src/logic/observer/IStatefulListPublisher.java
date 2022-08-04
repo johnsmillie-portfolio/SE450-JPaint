@@ -7,4 +7,6 @@ public interface IStatefulListPublisher<E>
     void add(E element);
 
     void remove(E element);
+
+    void addCollection(List<E> elementList);
 }
