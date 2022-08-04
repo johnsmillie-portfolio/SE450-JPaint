@@ -35,11 +35,12 @@ public class Main {
                 selectedShapesListPublisher, appState);
 
         paintCanvas.addMouseListener(handler);
-        //Clipboard.getSelectedShapesListPublisher(selectedShapesListPublisher);
+        
         IJPaintController controller = new JPaintController(
                 uiModule, appState);
+       
+        
         controller.setup();
-        Clipboard.getSelectedShapesListPublisher(selectedShapesListPublisher);
         
         // For example purposes only; remove all lines below from your final project.
 
