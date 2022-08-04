@@ -4,6 +4,8 @@ import java.awt.event.MouseEvent;
 import java.util.List;
 
 import javax.swing.event.MouseInputAdapter;
+
+import logic.commands.Clipboard;
 import logic.dragstrategy.AddNewShapeDragStrategy;
 import logic.dragstrategy.IDragStrategy;
 import logic.dragstrategy.MoveDragStrategy;
@@ -35,6 +37,8 @@ public class ClickHandler extends MouseInputAdapter {
         selectedShapesListPublisher
                 .subscribe((v) -> this.selectedShapes = v);
         this.applicationState = applicationState;
+        Clipboard.setup(this.selectedShapesListPublisher, this.visibleShapesListPublisher);
+        
     }
 
     @Override
