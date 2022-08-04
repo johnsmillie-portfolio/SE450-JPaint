@@ -47,5 +47,7 @@ public class JPaintController implements IJPaintController {
                 () -> Clipboard.copyToClipboard());
         uiModule.addEvent(EventName.PASTE, 
                 () -> Clipboard.paste());
+        uiModule.addEvent(EventName.DELETE, 
+                () -> Clipboard.delete());
     }
 }

@@ -1,5 +1,47 @@
 package logic.commands;
 
-public class DeleteShapesCommand implements ICommand {
-    public void invoke(){}
+import java.util.ArrayList;
+import java.util.List;
+
+import logic.observer.IPublisher;
+import logic.observer.IStatefulListPublisher;
+import view.interfaces.IPaintShape;
+
+public class DeleteShapesCommand implements ICommand, IUndoable {
+    public IStatefulListPublisher<IPaintShape> visibleShapesListPub;
+    public IPublisher<List<IPaintShape>> selectedShapesListPub;
+    public List<IPaintShape> visibleShapes;
+    public List<IPaintShape> selectedShapes;
+    
+    public DeleteShapesCommand(List<IPaintShape> selectedShapes,
+            List<IPaintShape> visibleShapes, IStatefulListPublisher<IPaintShape> visibleShapesListPublisher,
+            IPublisher<List<IPaintShape>> selectedShapesListPublisher) {
+        this.visibleShapes = visibleShapes;
+        this.selectedShapes = selectedShapes;
+        this.visibleShapesListPub = visibleShapesListPublisher;
+        this.selectedShapesListPub = selectedShapesListPublisher;
+    }
+
+
+    @Override
+    public void invoke() {
+       List<IPaintShape> newVisibleShapes = new ArrayList<IPaintShape>(); 
+       visibleShapesListPub.announce(newVisibleShapes);
+       selectedShapesListPub.announce(newVisibleShapes);
+       CommandHistory.add(this);
+    }
+
+    @Override
+    public void undo() {
+        // TODO Auto-generated method stub
+        visibleShapesListPub.announce(this.visibleShapes);
+       selectedShapesListPub.announce(this.selectedShapes);
+    }
+
+
+    @Override
+    public void redo() {
+        // TODO Auto-generated method stub
+        this.invoke();
+    }
 }

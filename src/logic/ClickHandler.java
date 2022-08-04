@@ -43,7 +43,6 @@ public class ClickHandler extends MouseInputAdapter {
 
     @Override
     public void mousePressed(MouseEvent e) {
-        System.out.println("mouse pressed called");
         this.dragStrategy = this
                 .getDragStrategy(e.getPoint());
     }
@@ -82,7 +81,6 @@ public class ClickHandler extends MouseInputAdapter {
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        System.out.println("mouse released called");
         this.dragStrategy.endDrag(e.getPoint());
     }
 }
