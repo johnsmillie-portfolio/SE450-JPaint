@@ -67,7 +67,8 @@ public class ClickHandler extends MouseInputAdapter {
         case SELECT:
             return new SelectDragStrategy(dragStartPos,
                     visibleShapes,
-                    this.selectedShapesListPublisher);
+                    this.selectedShapesListPublisher, 
+                    this.visibleShapesListPublisher);
         case MOVE:
             return new MoveDragStrategy(dragStartPos,
                     selectedShapes,

@@ -52,4 +52,10 @@ public class EllipsePaintStrategy implements IPaintStrategy {
         }
 
     }
+
+    @Override
+    public void setSelected(boolean isSelected) {
+        // TODO Auto-generated method stub
+        
+    }
 }

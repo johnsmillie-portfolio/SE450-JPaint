@@ -25,6 +25,9 @@ public class Clipboard {
     public static void copyToClipboard(){
         //TODO Refactor
         clipboard = new ArrayList<IPaintShape>(selectedShapes);
+        for (IPaintShape paintShape : clipboard) {
+            paintShape.setSelected(false);            
+        }
     }
 
     public static void paste () {

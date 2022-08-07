@@ -10,6 +10,7 @@ import java.awt.Point;
 import logic.observer.IStatefulListPublisher;
 import logic.paintstrategy.EllipsePaintStrategy;
 import logic.paintstrategy.IPaintStrategy;
+import logic.paintstrategy.ProxyPaintStrategy;
 import logic.paintstrategy.RectanglePaintStrategy;
 import logic.paintstrategy.TrianglePaintStrategy;
 
@@ -59,16 +60,16 @@ public class AddShapeCommand
     private IPaintStrategy getPaintStrategy() {
         switch (shapeType) {
             case RECTANGLE:
-                return new RectanglePaintStrategy(fillColor,
-                        strokeColor, shapeShadingType);
+                return new ProxyPaintStrategy(new RectanglePaintStrategy(fillColor,
+                        strokeColor, shapeShadingType));
             
             case ELLIPSE:
-                return new EllipsePaintStrategy(fillColor,
-                        strokeColor, shapeShadingType);
+                return new ProxyPaintStrategy(new EllipsePaintStrategy(fillColor,
+                        strokeColor, shapeShadingType));
             
             case TRIANGLE:
-                return new TrianglePaintStrategy(fillColor,
-                        strokeColor, shapeShadingType);
+                return new ProxyPaintStrategy(new TrianglePaintStrategy(fillColor,
+                        strokeColor, shapeShadingType));
             
             default:
                 throw new Error( "Do not recognize this shape" + shapeType);
