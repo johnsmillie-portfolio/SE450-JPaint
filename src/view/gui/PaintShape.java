@@ -57,10 +57,15 @@ public class PaintShape implements IPaintShape {
         PaintShape shapeClone = new PaintShape(
             new Point(this.origin), new Point(this.endpoint), 
             this.paintStrategy);
+            
         return (IPaintShape) shapeClone;
     }
     public void setSelected (boolean isSelected) {
         this.isSelected = isSelected;
+        
+    }
+
+    public void setPaintStrategy (boolean isSelected){
         this.paintStrategy.setSelected(isSelected);
     }
 }

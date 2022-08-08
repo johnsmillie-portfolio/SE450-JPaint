@@ -24,14 +24,23 @@ public class Clipboard {
     
     public static void copyToClipboard(){
         //TODO Refactor
-        clipboard = new ArrayList<IPaintShape>(selectedShapes);
-        for (IPaintShape paintShape : clipboard) {
-            paintShape.setSelected(false);            
+        if (selectedShapes != null) {
+            clipboard = new ArrayList<IPaintShape>(selectedShapes);
+            for (IPaintShape paintShape : clipboard) {
+                paintShape.setSelected(false);
+                paintShape.setPaintStrategy(false);            
+            }
         }
+        
     }
 
     public static void paste () {
-        (new PasteClipboardCommand(clipboard, visibleShapesListPub)).invoke();
+        /*for (IPaintShape paintShape : clipboard) {
+            paintShape.setSelected(false);
+        }
+        visibleShapesListPub.announce(clipboard);*/
+        (new PasteClipboardCommand(clipboard, visibleShapesListPub, 
+        selectedShapesListPub)).invoke();
     }
 
     public static void delete () {
