@@ -34,17 +34,15 @@ public class SelectCommand implements ICommand {
                     .filter(s -> s.collides(this.origin,
                             this.endpoint))
                     .toList();
-            for (IPaintShape paintShape : visibleShapes) {
-                paintShape.setSelected(false);
+            for (IPaintShape paintShape : this.visibleShapes) {
                 paintShape.setPaintStrategy(false);
             }
             for (IPaintShape paintShape : selectedShapes) {
-                paintShape.setSelected(true);
-                paintShape.setPaintStrategy(true);
+                 paintShape.setPaintStrategy(true);
             }
             this.selectedShapesPublisher
                     .announce(selectedShapes);
-            this.visibleShapesPublisher.announce(visibleShapes);
+            this.visibleShapesPublisher.announce(this.visibleShapes);
         }
     }
 }

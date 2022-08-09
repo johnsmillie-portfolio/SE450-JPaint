@@ -5,6 +5,7 @@ import view.interfaces.PaintCanvasBase;
 import java.awt.Point;
 
 import logic.paintstrategy.IPaintStrategy;
+import logic.paintstrategy.ProxyPaintStrategy;
 
 // TODO Contemplate a solution to the redundant origin and endpoint fields in PaintStrategy and PaintShape
 public class PaintShape implements IPaintShape {
@@ -18,6 +19,7 @@ public class PaintShape implements IPaintShape {
         this.origin = origin;
         this.endpoint = endpoint;
         this.paintStrategy = paintStrategy;
+        //this.isSelected = isSelected;
     }
    
     @Override
@@ -56,16 +58,14 @@ public class PaintShape implements IPaintShape {
     public IPaintShape cloneShape() {
         PaintShape shapeClone = new PaintShape(
             new Point(this.origin), new Point(this.endpoint), 
-            this.paintStrategy);
+            new ProxyPaintStrategy(paintStrategy.getPaintStrategy()));
+            
             
         return (IPaintShape) shapeClone;
     }
-    public void setSelected (boolean isSelected) {
-        this.isSelected = isSelected;
-        
-    }
+    
 
-    public void setPaintStrategy (boolean isSelected){
-        this.paintStrategy.setSelected(isSelected);
+    public void setPaintStrategy (boolean selected){
+        this.paintStrategy.setSelected(selected);
     }
 }

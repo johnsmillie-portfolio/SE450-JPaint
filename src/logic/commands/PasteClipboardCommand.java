@@ -36,15 +36,13 @@ public class PasteClipboardCommand implements ICommand, IUndoable {
     public void newShapeClone() {
         for (IPaintShape paintShape : this.clipboard) {
             IPaintShape newPaintShape = paintShape.cloneShape();
-            //paintShape.setSelected(false);
-            //newPaintShape.setSelected(true);
+            newPaintShape.setPaintStrategy(true);
             this.pasteList.add(newPaintShape);
         }
     }
 
     public void selectExchange (){
         for (IPaintShape paintShape : this.pasteList) {
-            paintShape.setSelected(true);
             paintShape.setPaintStrategy(true);
             
         }
@@ -58,13 +56,11 @@ public class PasteClipboardCommand implements ICommand, IUndoable {
     }
     @Override
     public void redo() {
-        // TODO Auto-generated method stub
         this.visibleShapesListPub.addCollection(this.pasteList);
     }
 
     @Override
     public void undo() {
-        // TODO Auto-generated method stub
         this.visibleShapesListPub.removeCollection(this.pasteList);
         }
         

@@ -58,4 +58,10 @@ public class EllipsePaintStrategy implements IPaintStrategy {
         // TODO Auto-generated method stub
         
     }
+
+    @Override
+    public IPaintStrategy getPaintStrategy() {
+        // TODO Auto-generated method stub
+        return null;
+    }
 }

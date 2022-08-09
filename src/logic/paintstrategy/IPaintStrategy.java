@@ -7,4 +7,5 @@ public interface IPaintStrategy {
     void paint(PaintCanvasBase c, Point origin, Point endpoint);
 
     void setSelected(boolean isSelected);
+    IPaintStrategy getPaintStrategy();
 }

@@ -26,19 +26,15 @@ public class Clipboard {
         //TODO Refactor
         if (selectedShapes != null) {
             clipboard = new ArrayList<IPaintShape>(selectedShapes);
-            for (IPaintShape paintShape : clipboard) {
-                paintShape.setSelected(false);
-                paintShape.setPaintStrategy(false);            
-            }
         }
-        
     }
 
     public static void paste () {
-        /*for (IPaintShape paintShape : clipboard) {
-            paintShape.setSelected(false);
+        copyToClipboard();
+        for (IPaintShape paintShape : clipboard) {
+            paintShape.setPaintStrategy(false);            
         }
-        visibleShapesListPub.announce(clipboard);*/
+       
         (new PasteClipboardCommand(clipboard, visibleShapesListPub, 
         selectedShapesListPub)).invoke();
     }
