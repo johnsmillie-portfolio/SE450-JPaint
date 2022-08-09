@@ -26,7 +26,7 @@ public class PaintShapeCollisionTests {
     @Test
     public void testPosShape() {
         var s = new PaintShape(new Point(10, 10),
-                new Point(12, 12), null);
+                new Point(12, 12), null, null);
 
         // Surrounded
         validateTrueSelectionDragPosAndNeg(s,
@@ -82,7 +82,7 @@ public class PaintShapeCollisionTests {
     @Test
     public void testNegShape() {
         var s = new PaintShape(new Point(12, 12),
-                new Point(10, 10), null);
+                new Point(10, 10), null, null);
 
         // Surrounded
         validateTrueSelectionDragPosAndNeg(s,
@@ -138,7 +138,7 @@ public class PaintShapeCollisionTests {
     @Test
     public void testClickPosShape() {
         var s = new PaintShape(new Point(10, 10),
-                new Point(12, 12), null);
+                new Point(12, 12), null, null);
 
         assertTrue(s.collides(new Point(11, 11),
                 new Point(11, 11)));
@@ -150,7 +150,7 @@ public class PaintShapeCollisionTests {
     @Test
     public void testOneDimensionalDrag() {
         var s = new PaintShape(new Point(10, 10),
-                new Point(12, 12), null);
+                new Point(12, 12), null, null);
 
         // Horizontal line
         assertTrue(s.collides(new Point(11, 9),

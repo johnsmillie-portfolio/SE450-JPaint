@@ -23,7 +23,6 @@ public class Clipboard {
     }
     
     public static void copyToClipboard(){
-        //TODO Refactor
         if (selectedShapes != null) {
             clipboard = new ArrayList<IPaintShape>(selectedShapes);
         }

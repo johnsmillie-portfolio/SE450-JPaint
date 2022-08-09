@@ -4,26 +4,21 @@ import java.awt.Point;
 
 import view.interfaces.PaintCanvasBase;
 
-public class ProxyPaintStrategy implements IPaintStrategy {
+public abstract class ProxyPaintStrategy implements IProxyPaintStrategy {
 
     private IPaintStrategy paintStrategy;
     private boolean selected;
     
-    public ProxyPaintStrategy(IPaintStrategy paintStrategy) {
+    public ProxyPaintStrategy(IPaintStrategy paintStrategy, boolean selected) {
         this.paintStrategy = paintStrategy; 
     }
 
     @Override
     public void paint(PaintCanvasBase c, Point origin,
-            Point endpoint) {
-        // TODO Auto-generated method stub
-        
-        if (selected){
-            new RectanglePaintProxy(paintStrategy, c, origin, endpoint);
-        }
-        paintStrategy.paint(c, origin, endpoint);
+            Point endpoint) {        
+        this.paintStrategy.paint(c, origin, endpoint);
     }
-
+    @Override
     public void setSelected(boolean selected){
         this.selected = selected;
     }

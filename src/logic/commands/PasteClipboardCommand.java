@@ -26,7 +26,6 @@ public class PasteClipboardCommand implements ICommand, IUndoable {
     public void invoke() {
         
         this.newShapeClone();
-        this.selectExchange();
         this.applyMove();
         this.visibleShapesListPub.addCollection(this.pasteList);
         this.selectedShapesListPub.announce(this.pasteList);
@@ -41,12 +40,6 @@ public class PasteClipboardCommand implements ICommand, IUndoable {
         }
     }
 
-    public void selectExchange (){
-        for (IPaintShape paintShape : this.pasteList) {
-            paintShape.setPaintStrategy(true);
-            
-        }
-    }
     public void applyMove() {
         int m = ThreadLocalRandom.current().nextInt(-200, 200);
         int n = ThreadLocalRandom.current().nextInt(-200, 200);

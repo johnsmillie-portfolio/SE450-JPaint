@@ -48,16 +48,4 @@ public class RectanglePaintStrategy implements IPaintStrategy {
 
         
     }
-    
-    @Override
-    public void setSelected(boolean isSelected) {
-        // TODO Auto-generated method stub
-        
-    }
-
-    @Override
-    public IPaintStrategy getPaintStrategy() {
-        // TODO Auto-generated method stub
-        return null;
-    }
 }
