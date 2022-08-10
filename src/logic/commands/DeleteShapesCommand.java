@@ -13,6 +13,7 @@ public class DeleteShapesCommand implements ICommand, IUndoable {
     public List<IPaintShape> visibleShapes;
     public List<IPaintShape> selectedShapes;
     
+    
     public DeleteShapesCommand(List<IPaintShape> selectedShapes,
             List<IPaintShape> visibleShapes, IStatefulListPublisher<IPaintShape> visibleShapesListPublisher,
             IPublisher<List<IPaintShape>> selectedShapesListPublisher) {
@@ -20,15 +21,23 @@ public class DeleteShapesCommand implements ICommand, IUndoable {
         this.selectedShapes = selectedShapes;
         this.visibleShapesListPub = visibleShapesListPublisher;
         this.selectedShapesListPub = selectedShapesListPublisher;
+    
     }
 
 
     @Override
     public void invoke() {
-       List<IPaintShape> newVisibleShapes = new ArrayList<IPaintShape>(); 
-       visibleShapesListPub.announce(newVisibleShapes);
-       selectedShapesListPub.announce(newVisibleShapes);
+       this.deleteSelectedShapes();
+       //this.visibleShapesListPub.announce(visibleShapes);
+       this.selectedShapesListPub.announce(new ArrayList<IPaintShape>());
        CommandHistory.add(this);
+    }
+    public void deleteSelectedShapes() {
+        for (IPaintShape paintShape : this.selectedShapes) {
+            this.visibleShapesListPub.remove(paintShape);
+            
+            
+        }
     }
 
     @Override

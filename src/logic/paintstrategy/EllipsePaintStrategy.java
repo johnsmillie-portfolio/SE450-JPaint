@@ -12,20 +12,17 @@ import java.awt.Graphics2D;
 
 
 public class EllipsePaintStrategy implements IPaintStrategy {
-    //private Point origin;
-    //private Point endpoint;
     private ShapeColor fillColor;
     private ShapeColor strokeColor;
     private ShapeShadingType shapeShadingType;
     Color secondaryColor;
+    
         
     public EllipsePaintStrategy(
         ShapeColor fillColor,
         ShapeColor strokeColor,
         ShapeShadingType shapeShadingType)
     {
-        //this.origin = origin;
-        //this.endpoint = endpoint;
         this.fillColor = fillColor;
         this.strokeColor = strokeColor;
         this.shapeShadingType = shapeShadingType;

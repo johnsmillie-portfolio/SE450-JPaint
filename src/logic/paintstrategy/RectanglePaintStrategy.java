@@ -10,8 +10,6 @@ import java.awt.Graphics2D;
 
 
 public class RectanglePaintStrategy implements IPaintStrategy { 
-    //private Point origin;
-    //private Point endpoint;
     private ShapeColor fillColor;
     private ShapeColor strokeColor;
     private ShapeShadingType shapeShadingType;
@@ -22,8 +20,6 @@ public class RectanglePaintStrategy implements IPaintStrategy {
         ShapeColor strokeColor,
         ShapeShadingType shapeShadingType)
    {
-        //this.origin = origin;
-        //this.endpoint = endpoint;
         this.fillColor = fillColor;
         this.strokeColor = strokeColor;
         this.shapeShadingType = shapeShadingType;
@@ -50,8 +46,6 @@ public class RectanglePaintStrategy implements IPaintStrategy {
             graphics2dOutline.drawRect(x, y, width, height);
         }
 
-        
-        
         
     }
 }

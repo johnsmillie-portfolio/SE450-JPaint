@@ -8,9 +8,12 @@ import view.interfaces.IPaintShape;
 import java.awt.Point;
 
 import logic.observer.IStatefulListPublisher;
+import logic.paintstrategy.EllipsePaintProxy;
 import logic.paintstrategy.EllipsePaintStrategy;
 import logic.paintstrategy.IPaintStrategy;
+import logic.paintstrategy.RectanglePaintProxy;
 import logic.paintstrategy.RectanglePaintStrategy;
+import logic.paintstrategy.TrianglePaintProxy;
 import logic.paintstrategy.TrianglePaintStrategy;
 
 public class AddShapeCommand
@@ -59,16 +62,16 @@ public class AddShapeCommand
     private IPaintStrategy getPaintStrategy() {
         switch (shapeType) {
             case RECTANGLE:
-                return new RectanglePaintStrategy(fillColor,
-                        strokeColor, shapeShadingType);
+                return new RectanglePaintProxy(new RectanglePaintStrategy(fillColor,
+                        strokeColor, shapeShadingType), false);
             
             case ELLIPSE:
-                return new EllipsePaintStrategy(fillColor,
-                        strokeColor, shapeShadingType);
+                return new EllipsePaintProxy(new EllipsePaintStrategy(fillColor,
+                        strokeColor, shapeShadingType), false);
             
             case TRIANGLE:
-                return new TrianglePaintStrategy(fillColor,
-                        strokeColor, shapeShadingType);
+                return new TrianglePaintProxy(new TrianglePaintStrategy(fillColor,
+                        strokeColor, shapeShadingType), false);
             
             default:
                 throw new Error( "Do not recognize this shape" + shapeType);
@@ -80,7 +83,7 @@ public class AddShapeCommand
             // TODO probably refactor
             this.paintStrategy = getPaintStrategy();
             this.createdShape = new PaintShape(this.origin,
-                    this.endpoint, this.paintStrategy);
+                    this.endpoint, this.paintStrategy, this.shapeType);
         }
 
         this.visibleShapesPub.add(this.createdShape);

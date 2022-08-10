@@ -72,6 +72,9 @@ original shapes, or somewhere else that makes sense. Do not
 paste to the same location as the original shapes; you will not be
 able to see the pasted shapes and it will get marked as “not
 working”.
+- Delete
+  - Deletes the selected shape(s)
+- Undo/Redo Paste and Delete
 
 
 # Currently Unimplmented Features
@@ -79,8 +82,7 @@ working”.
 
 ## Sprint 3 (Ends on Week 8)
 
-- Delete
-  - Deletes the selected shape(s)
+
 - Outline Selected Shapes
   - Shapes that are selected will display with a dashed outline around
 them. These will need to be offset slightly so they don’t overlap
@@ -88,7 +90,7 @@ the shape. Move the start point up and to the left 5px and add
 10px to the height and width. You can adjust these values
 depending on personal preference.
   - The outline must be the same shape as the shape that’s selected
-- Undo/Redo Paste and Delete
+
 - Have at least four design patterns implemented
 - Whiteboard exercise/Discussion post
 

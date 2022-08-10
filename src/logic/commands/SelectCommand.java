@@ -5,6 +5,7 @@ import java.awt.Point;
 import java.util.List;
 
 import logic.observer.IPublisher;
+import logic.observer.IStatefulListPublisher;
 
 public class SelectCommand implements ICommand {
 
@@ -12,14 +13,17 @@ public class SelectCommand implements ICommand {
     private Point endpoint;
     private List<IPaintShape> visibleShapes;
     private IPublisher<List<IPaintShape>> selectedShapesPublisher;
+    private IStatefulListPublisher<IPaintShape> visibleShapesPublisher;
 
     public SelectCommand(Point origin, Point endpoint,
             IPublisher<List<IPaintShape>> selectedShapesPublisher,
+            IStatefulListPublisher<IPaintShape> visibleShapesPublisher,
             List<IPaintShape> visibleShapes) {
         this.origin = origin;
         this.endpoint = endpoint;
         this.visibleShapes = visibleShapes;
         this.selectedShapesPublisher = selectedShapesPublisher;
+        this.visibleShapesPublisher = visibleShapesPublisher;
     }
 
     @Override
@@ -30,9 +34,15 @@ public class SelectCommand implements ICommand {
                     .filter(s -> s.collides(this.origin,
                             this.endpoint))
                     .toList();
-
+            for (IPaintShape paintShape : this.visibleShapes) {
+                paintShape.setPaintStrategy(false);
+            }
+            for (IPaintShape paintShape : selectedShapes) {
+                 paintShape.setPaintStrategy(true);
+            }
             this.selectedShapesPublisher
                     .announce(selectedShapes);
+            this.visibleShapesPublisher.announce(this.visibleShapes);
         }
     }
 }

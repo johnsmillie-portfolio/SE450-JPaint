@@ -11,25 +11,22 @@ import model.ShapeShadingType;
 import java.awt.Graphics2D;
 
 public class TrianglePaintStrategy implements IPaintStrategy {
-    //private Point origin;
-    //private Point endpoint;
     private ShapeColor fillColor;
     private ShapeColor strokeColor;
     private ShapeShadingType shapeShadingType;
     private int[] xPoints = new int[3];
     private int[] yPoints = new int[3];
+    
         
     public TrianglePaintStrategy(
         ShapeColor fillColor,
         ShapeColor strokeColor,
         ShapeShadingType shapeShadingType)
     {
-            //this.origin = origin;
-            //this.endpoint = endpoint;
             this.fillColor = fillColor;
             this.strokeColor = strokeColor;
             this.shapeShadingType = shapeShadingType;
-    }
+    }   
 
     public void paint(PaintCanvasBase c, Point origin, Point endpoint) {
         xPoints[0] = Math.min(origin.x, endpoint.x);
@@ -55,4 +52,7 @@ public class TrianglePaintStrategy implements IPaintStrategy {
 
         }
     }
+
+   
 }
+
