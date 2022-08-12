@@ -9,12 +9,10 @@ import java.awt.Point;
 
 import logic.observer.IStatefulListPublisher;
 import logic.paintstrategy.EllipsePaintProxy;
-import logic.paintstrategy.EllipsePaintStrategy;
 import logic.paintstrategy.IPaintStrategy;
 import logic.paintstrategy.RectanglePaintProxy;
-import logic.paintstrategy.RectanglePaintStrategy;
 import logic.paintstrategy.TrianglePaintProxy;
-import logic.paintstrategy.TrianglePaintStrategy;
+
 
 public class AddShapeCommand
         implements ICommand, IUndoable {
@@ -62,16 +60,16 @@ public class AddShapeCommand
     private IPaintStrategy getPaintStrategy() {
         switch (shapeType) {
             case RECTANGLE:
-                return new RectanglePaintProxy(new RectanglePaintStrategy(fillColor,
-                        strokeColor, shapeShadingType), false);
+                return new RectanglePaintProxy(fillColor,
+                        strokeColor, shapeShadingType, false);
             
             case ELLIPSE:
-                return new EllipsePaintProxy(new EllipsePaintStrategy(fillColor,
-                        strokeColor, shapeShadingType), false);
+                return new EllipsePaintProxy(fillColor,
+                        strokeColor, shapeShadingType, false);
             
             case TRIANGLE:
-                return new TrianglePaintProxy(new TrianglePaintStrategy(fillColor,
-                        strokeColor, shapeShadingType), false);
+                return new TrianglePaintProxy(fillColor,
+                        strokeColor, shapeShadingType, false);
             
             default:
                 throw new Error( "Do not recognize this shape" + shapeType);
@@ -85,7 +83,6 @@ public class AddShapeCommand
             this.createdShape = new PaintShape(this.origin,
                     this.endpoint, this.paintStrategy, this.shapeType);
         }
-
         this.visibleShapesPub.add(this.createdShape);
     }
 }

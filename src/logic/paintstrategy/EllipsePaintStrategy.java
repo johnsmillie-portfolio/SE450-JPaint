@@ -11,7 +11,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 
-public class EllipsePaintStrategy implements IPaintStrategy {
+class EllipsePaintStrategy implements IPaintStrategy {
     private ShapeColor fillColor;
     private ShapeColor strokeColor;
     private ShapeShadingType shapeShadingType;

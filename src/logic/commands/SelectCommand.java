@@ -35,10 +35,10 @@ public class SelectCommand implements ICommand {
                             this.endpoint))
                     .toList();
             for (IPaintShape paintShape : this.visibleShapes) {
-                paintShape.setPaintStrategy(false);
+                paintShape.setSelected(false);
             }
             for (IPaintShape paintShape : selectedShapes) {
-                 paintShape.setPaintStrategy(true);
+                 paintShape.setSelected(true);
             }
             this.selectedShapesPublisher
                     .announce(selectedShapes);

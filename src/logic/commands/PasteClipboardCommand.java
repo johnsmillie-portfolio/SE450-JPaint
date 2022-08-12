@@ -35,7 +35,7 @@ public class PasteClipboardCommand implements ICommand, IUndoable {
     public void newShapeClone() {
         for (IPaintShape paintShape : this.clipboard) {
             IPaintShape newPaintShape = paintShape.cloneShape();
-            newPaintShape.setPaintStrategy(true);
+            newPaintShape.setSelected(true);
             this.pasteList.add(newPaintShape);
         }
     }

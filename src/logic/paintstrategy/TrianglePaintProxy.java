@@ -4,6 +4,10 @@ import view.interfaces.PaintCanvasBase;
 import java.awt.Point;
 import java.awt.BasicStroke;
 import java.awt.Stroke;
+
+import model.ShapeColor;
+import model.ShapeShadingType;
+
 import java.awt.Graphics2D;
 
 public class TrianglePaintProxy extends ProxyPaintStrategy {
@@ -14,15 +18,11 @@ public class TrianglePaintProxy extends ProxyPaintStrategy {
         BasicStroke.JOIN_MITER, 10.0f, new float[] {16.0f,20.0f}, 0.0f);
 
     public TrianglePaintProxy(
-            IPaintStrategy paintStrategy, boolean selected) {
-        super(paintStrategy, selected);
+        ShapeColor fillColor, ShapeColor strokeColor, 
+        ShapeShadingType shapeShadingType, boolean selected) {
+        super(new TrianglePaintStrategy(fillColor, strokeColor, shapeShadingType), selected);
     }
      
-    public void paint (PaintCanvasBase c, Point origin, Point endpoint){
-        if (mySelected)
-            dashedOutlinePaint(c, origin, endpoint);
-        super.paint(c, origin, endpoint);
-    }
     public void dashedOutlinePaint (PaintCanvasBase c, 
             Point origin, Point endpoint){
         xPoints[0] = Math.min(origin.x, endpoint.x) - 3;
@@ -35,9 +35,4 @@ public class TrianglePaintProxy extends ProxyPaintStrategy {
         graphics2dDashedOutline.setStroke(s);
         graphics2dDashedOutline.drawPolygon(xPoints, yPoints, 3);
     }
-    
-    public void setSelected(boolean selected){
-        this.mySelected = selected;
-    }
-    
 }
