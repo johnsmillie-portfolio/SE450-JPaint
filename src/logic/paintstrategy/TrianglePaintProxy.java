@@ -10,17 +10,20 @@ import model.ShapeShadingType;
 
 import java.awt.Graphics2D;
 
-public class TrianglePaintProxy extends ProxyPaintStrategy {
-    boolean mySelected;
+public class TrianglePaintProxy extends ProxyPaintStrategy { 
     private int[] xPoints = new int[3];
     private int[] yPoints = new int[3];
     Stroke s = new BasicStroke(1.0f, BasicStroke.CAP_SQUARE, 
-        BasicStroke.JOIN_MITER, 10.0f, new float[] {16.0f,20.0f}, 0.0f);
+    BasicStroke.JOIN_MITER, 10.0f, new float[] {16.0f,20.0f}, 0.0f);
 
     public TrianglePaintProxy(
         ShapeColor fillColor, ShapeColor strokeColor, 
         ShapeShadingType shapeShadingType, boolean selected) {
         super(new TrianglePaintStrategy(fillColor, strokeColor, shapeShadingType), selected);
+    }
+
+    public TrianglePaintProxy( IPaintStrategy paintStrategy, boolean selected){
+        super(paintStrategy, selected);
     }
      
     public void dashedOutlinePaint (PaintCanvasBase c, 
@@ -35,4 +38,7 @@ public class TrianglePaintProxy extends ProxyPaintStrategy {
         graphics2dDashedOutline.setStroke(s);
         graphics2dDashedOutline.drawPolygon(xPoints, yPoints, 3);
     }
+
+   
+    
 }

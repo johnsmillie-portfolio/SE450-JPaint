@@ -10,7 +10,6 @@ import model.ShapeShadingType;
 import java.awt.Graphics2D;
 
 public class RectanglePaintProxy extends ProxyPaintStrategy {
-   
 
     Stroke s = new BasicStroke  (1.0f, BasicStroke.CAP_SQUARE, 
     BasicStroke.JOIN_MITER, 10.0f, new float[] {16.0f,20.0f}, 0.0f); 
@@ -19,8 +18,9 @@ public class RectanglePaintProxy extends ProxyPaintStrategy {
             ShapeColor strokeColor, ShapeShadingType shapeShadingType, 
             boolean selected) {
         super(new RectanglePaintStrategy(fillColor, strokeColor, shapeShadingType), selected);
-        
-        
+    }
+    public RectanglePaintProxy( IPaintStrategy paintStrategy, boolean selected){
+        super(paintStrategy, selected);
     }
         
     public void dashedOutlinePaint (PaintCanvasBase c, Point origin, Point endpoint){
@@ -32,6 +32,5 @@ public class RectanglePaintProxy extends ProxyPaintStrategy {
         graphics2dDashedOutline.setStroke(s);
         graphics2dDashedOutline.drawRect(x, y, width, height);
     }
-        
-
+     
 }

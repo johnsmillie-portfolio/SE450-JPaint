@@ -46,9 +46,9 @@ class RectanglePaintStrategy implements IPaintStrategy {
             graphics2dOutline.drawRect(x, y, width, height);
         }
     }
+    public IPaintStrategy getPaintStrategy() {
+        return new RectanglePaintStrategy(this.fillColor,
+        this.strokeColor, this.shapeShadingType);
+      }
 
-  /*   public IPaintStrategy getPaintStrategy() {
-        return new RectanglePaintProxy(this.fillColor, this.strokeColor, 
-            this.shapeShadingType, false);
-    } */
 }

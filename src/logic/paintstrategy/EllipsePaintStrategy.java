@@ -47,6 +47,11 @@ class EllipsePaintStrategy implements IPaintStrategy {
             graphics2dOutline.setColor(strokeColor.getColor());
             graphics2dOutline.drawOval(x, y, width, height);
         }
+    }
 
+    @Override
+    public IPaintStrategy getPaintStrategy() {
+      return new EllipsePaintStrategy(this.fillColor,
+      this.strokeColor, this.shapeShadingType);
     }
 }

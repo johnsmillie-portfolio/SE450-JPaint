@@ -52,11 +52,11 @@ class TrianglePaintStrategy implements IPaintStrategy {
 
         }
     }
-   /*  public IPaintStrategy getPaintStrategy() {
-        return new RectanglePaintProxy(this.fillColor, this.strokeColor, 
-        this.shapeShadingType, false);
-    } */
-
+        
+    public IPaintStrategy getPaintStrategy() {
+        return new TrianglePaintStrategy(this.fillColor,
+        this.strokeColor, this.shapeShadingType);
+    }
    
-}
 
+}

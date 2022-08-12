@@ -11,7 +11,7 @@ import model.ShapeShadingType;
 import java.awt.Graphics2D;
 
 public class EllipsePaintProxy extends ProxyPaintStrategy {
-    boolean mySelected;
+
     Stroke s = new BasicStroke(1.0f, BasicStroke.CAP_SQUARE, 
     BasicStroke.JOIN_MITER, 10.0f, new float[] {16.0f,20.0f}, 0.0f);
 
@@ -19,6 +19,9 @@ public class EllipsePaintProxy extends ProxyPaintStrategy {
             ShapeColor strokeColor, ShapeShadingType shapeShadingType, 
                 boolean selected) {
         super(new TrianglePaintStrategy (fillColor, strokeColor, shapeShadingType), selected);
+    }
+    public EllipsePaintProxy( IPaintStrategy paintStrategy, boolean selected){
+        super(paintStrategy, selected);
     }
         
     public void dashedOutlinePaint (PaintCanvasBase c, Point origin, Point endpoint){
@@ -30,6 +33,5 @@ public class EllipsePaintProxy extends ProxyPaintStrategy {
         graphics2dDashedOutline.setStroke(s);
         graphics2dDashedOutline.drawOval(x, y, width, height);
     }
-
     
 }

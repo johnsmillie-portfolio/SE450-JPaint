@@ -2,7 +2,7 @@ package logic.paintstrategy;
 
 import java.awt.Point;
 
-import model.ShapeColor;
+
 import view.interfaces.PaintCanvasBase;
 
 public abstract class ProxyPaintStrategy implements IProxyPaintStrategy {
@@ -26,9 +26,13 @@ public abstract class ProxyPaintStrategy implements IProxyPaintStrategy {
         this.selected = selected;
     }
 
-    
-
     public abstract void dashedOutlinePaint(PaintCanvasBase c, 
             Point origin, Point endpoint);
+    
+    public IPaintStrategy getPaintStrategy() {
+        return this.paintStrategy.getPaintStrategy();
+    }
+
+    
     
 }
