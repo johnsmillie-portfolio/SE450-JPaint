@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import logic.observer.IPublisher;
 import logic.observer.IStatefulListPublisher;
+import view.gui.PaintShapeComposite;
 import view.interfaces.IPaintShape;
 
 public class Clipboard {
@@ -30,12 +31,14 @@ public class Clipboard {
 
     public static void paste () {
         copyToClipboard();
-        for (IPaintShape paintShape : clipboard) {
-            paintShape.setPaintStrategy(false);            
+        if (clipboard != null) {
+            for (IPaintShape paintShape : clipboard) {
+                paintShape.setSelected(false);            
+            }
+        
+            (new PasteClipboardCommand(clipboard, visibleShapesListPub, 
+            selectedShapesListPub)).invoke();
         }
-       
-        (new PasteClipboardCommand(clipboard, visibleShapesListPub, 
-        selectedShapesListPub)).invoke();
     }
 
     public static void delete () {
@@ -43,4 +46,12 @@ public class Clipboard {
          visibleShapesListPub, selectedShapesListPub)).invoke();
     }
     
+    public static void group () {
+        if (selectedShapes != null || selectedShapes.size() > 0)
+            new PaintShapeComposite(selectedShapes);
+    }
+
+    public static void ungroup () {
+
+    }
 }

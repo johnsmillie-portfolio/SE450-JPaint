@@ -3,15 +3,8 @@ package view.gui;
 import view.interfaces.IPaintShape;
 import view.interfaces.PaintCanvasBase;
 import java.awt.Point;
-
-import javax.swing.plaf.synth.SynthPainter;
-
-import logic.paintstrategy.EllipsePaintProxy;
 import logic.paintstrategy.IPaintStrategy;
 import logic.paintstrategy.IProxyPaintStrategy;
-import logic.paintstrategy.ProxyPaintStrategy;
-import logic.paintstrategy.RectanglePaintProxy;
-import logic.paintstrategy.TrianglePaintProxy;
 import model.ShapeType;
 
 // TODO Contemplate a solution to the redundant origin and endpoint fields in PaintStrategy and PaintShape
@@ -20,21 +13,23 @@ public class PaintShape implements IPaintShape {
     private Point origin;
     private Point endpoint;
     private ShapeType shapeType;
-    private IPaintStrategy paintStrategy;
-    
+    private IProxyPaintStrategy paintStrategy;
+    private boolean selected;
 
     public PaintShape(Point origin, Point endpoint,
             IPaintStrategy paintStrategy, ShapeType shapeType) {
         this.origin = origin;
         this.endpoint = endpoint;
-        this.paintStrategy = paintStrategy;
+        this.paintStrategy = (IProxyPaintStrategy) paintStrategy;
         this.shapeType = shapeType;
         
     }
    
     @Override
     public void paint(PaintCanvasBase c) {
-        paintStrategy.paint(c, origin, endpoint);
+        if (selected)
+            this.paintStrategy.setSelected(true);
+        this.paintStrategy.paint(c, origin, endpoint);
     }
 
     @Override
@@ -67,22 +62,19 @@ public class PaintShape implements IPaintShape {
     }
     public IPaintShape cloneShape() {
         IPaintStrategy newPaintStrategy;
-        switch (shapeType) {
+        /*switch (shapeType) {
             case RECTANGLE:
-                 newPaintStrategy = new RectanglePaintProxy(
-                    ((ProxyPaintStrategy) this.paintStrategy).getPaintStrategy(), false);
+                 newPaintStrategy = new RectanglePaintProxy(this.paintStrategy.getPaintStrategy(), false);
                 break;
             case ELLIPSE:
-                newPaintStrategy = new EllipsePaintProxy(
-                    ((ProxyPaintStrategy) this.paintStrategy).getPaintStrategy(), false);
+                newPaintStrategy = new EllipsePaintProxy();                
                 break;
             case TRIANGLE:
-                newPaintStrategy = new TrianglePaintProxy(
-                    ((ProxyPaintStrategy) this.paintStrategy).getPaintStrategy(), false);
+                newPaintStrategy = new TrianglePaintProxy();
                 break;
             default:
                 throw new Error( "Do not recognize this shape" + shapeType);
-        }
+        } */
         PaintShape shapeClone = new PaintShape(
             new Point(this.origin), new Point(this.endpoint), 
             newPaintStrategy, this.shapeType);
@@ -92,7 +84,19 @@ public class PaintShape implements IPaintShape {
     }
     
 
-    public void setPaintStrategy (boolean selected){
-        ((IProxyPaintStrategy) this.paintStrategy).setSelected(selected);
+    public void setSelected (boolean selected){
+        this.selected = selected;
+    }
+
+    @Override
+    public Point getEndpoint() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public Point getOrigin() {
+        // TODO Auto-generated method stub
+        return null;
     }
 }
