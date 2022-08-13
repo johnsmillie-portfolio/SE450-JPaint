@@ -1,6 +1,9 @@
 # Introduction
 This is the JPaint application produced for SE450 in Summer 2022 at DePaul Univesity, instructed by Jeff Sharpe.  The substantive additions to the base code in this repository were made by John Smillie and David Zwerdling.
 
+NOTE: Starting 07/29/2022 all submissions to this project 
+were written exclusively by John Smillie.
+
 # Grading Notes
 ## Missing Features
 
@@ -26,8 +29,8 @@ The behavior of the mouse will fire different actions based on the application s
 ### 3. Observer
 The painting and selection processes both rely on dynamic lists of shapes, which are defined by their follow-on processes based on the list populations.  Because the lists are dynamic and there is dependent logic we do not want to be responsible for at the list-population logic layer, this suggests a decoupling via an observer pattern.  In the case of painting, the list of shapes will be populated by the drawing mechanism invoked by the AddNewShapeCommand.  The PaintCanvas class implements the subscriber interface and subscribe to shape list updates.  Additionally, the ClickHandler will also implement the subscriber interface, so that it may correctly calculate the selection.  In the case of selection, the list of selected shapes will be calculated and updated by the ClickHandler class, to be acted upon by any following subscribers.
 
-### 4.
-### 5. 
+### 4. Proxy
+### 5. Composite
 ### 6. 
 
 ## Additional Discussion
@@ -75,14 +78,6 @@ working”.
 - Delete
   - Deletes the selected shape(s)
 - Undo/Redo Paste and Delete
-
-
-# Currently Unimplmented Features
-
-
-## Sprint 3 (Ends on Week 8)
-
-
 - Outline Selected Shapes
   - Shapes that are selected will display with a dashed outline around
 them. These will need to be offset slightly so they don’t overlap
@@ -93,6 +88,10 @@ depending on personal preference.
 
 - Have at least four design patterns implemented
 - Whiteboard exercise/Discussion post
+
+
+# Currently Unimplmented Features
+
 
 ## Sprint 4 (Ends on Week 10)
 - Group

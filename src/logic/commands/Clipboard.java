@@ -37,18 +37,19 @@ public class Clipboard {
             }
         
             (new PasteClipboardCommand(clipboard, visibleShapesListPub, 
-            selectedShapesListPub)).invoke();
+                selectedShapesListPub)).invoke();
         }
     }
 
     public static void delete () {
         (new DeleteShapesCommand(selectedShapes, visibleShapes,
-         visibleShapesListPub, selectedShapesListPub)).invoke();
+            visibleShapesListPub, selectedShapesListPub)).invoke();
     }
     
     public static void group () {
         if (selectedShapes != null || selectedShapes.size() > 0)
-            new PaintShapeComposite(selectedShapes);
+            new AddPaintShapeCompositeCommand(new PaintShapeComposite(selectedShapes),
+                visibleShapesListPub, selectedShapesListPub).invoke();;
     }
 
     public static void ungroup () {

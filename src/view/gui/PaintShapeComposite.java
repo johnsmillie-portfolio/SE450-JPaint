@@ -4,6 +4,7 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 import java.awt.BasicStroke;
+import java.awt.Graphics2D;
 import java.awt.Stroke;
 
 
@@ -21,6 +22,8 @@ public class PaintShapeComposite implements IPaintShape {
         this.children = selectedShapes;
         this.origin = this.getOrigin();
         this.endpoint = this.getEndpoint();
+        this.selected = true;
+        this.setSelected(false);
     }
 
     public Point getEndpoint() {
@@ -58,7 +61,14 @@ public class PaintShapeComposite implements IPaintShape {
         if (this.selected){
             //TODO draw rectangle outline
             Stroke s = new BasicStroke  (1.0f, BasicStroke.CAP_SQUARE, 
-            BasicStroke.JOIN_MITER, 10.0f, new float[] {16.0f,20.0f}, 0.0f);
+            BasicStroke.JOIN_MITER, 10.0f, 
+            new float[] {16.0f,20.0f}, 0.0f);
+            int height = this.getEndpoint().y - this.getOrigin().y;
+            int width = this.getEndpoint().x - this.getOrigin().x;
+            Graphics2D graphics2dDashedOutline = c.getGraphics2D();
+            //graphics2dDashedOutline.setColor(Color.BLACK);
+            graphics2dDashedOutline.setStroke(s);
+            graphics2dDashedOutline.drawRect(this.getOrigin().x - 2, this.getOrigin().y - 2, width + 6, height + 6);
         }
         for (IPaintShape shape : children) {
             shape.paint(c);
@@ -90,7 +100,6 @@ public class PaintShapeComposite implements IPaintShape {
         for (IPaintShape shape : children) {
             shape.move(x, y);
         }
-        
     }
 
     @Override
@@ -108,6 +117,9 @@ public class PaintShapeComposite implements IPaintShape {
             shape.setSelected(selected);
         }
         
+    }
+    public List<IPaintShape> getChildren(){
+        return this.children;
     }
     
 }

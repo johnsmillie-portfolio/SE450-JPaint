@@ -1,6 +1,7 @@
 package view.interfaces;
 
 import java.awt.Point;
+import java.util.List;
 
 public interface IPaintShape {
     
@@ -11,5 +12,6 @@ public interface IPaintShape {
     void setSelected (boolean selected);
     Point getEndpoint();
     Point getOrigin();
+    //List<IPaintShape> getChildren();
 
 }
