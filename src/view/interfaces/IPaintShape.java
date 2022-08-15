@@ -8,6 +8,9 @@ public interface IPaintShape {
     boolean collides(Point from, Point to);
     void move(int x, int y);
     IPaintShape cloneShape();
-    void setPaintStrategy(boolean selected);
+    void setSelected (boolean selected);
+    Point getEndpoint();
+    Point getOrigin();
+    boolean isComposite();
 
 }

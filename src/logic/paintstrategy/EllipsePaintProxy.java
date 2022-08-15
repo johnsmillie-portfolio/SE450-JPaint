@@ -4,21 +4,24 @@ import view.interfaces.PaintCanvasBase;
 import java.awt.Point;
 import java.awt.BasicStroke;
 import java.awt.Stroke;
+
+import model.ShapeColor;
+import model.ShapeShadingType;
+
 import java.awt.Graphics2D;
 
 public class EllipsePaintProxy extends ProxyPaintStrategy {
-    boolean mySelected;
+
     Stroke s = new BasicStroke(1.0f, BasicStroke.CAP_SQUARE, 
     BasicStroke.JOIN_MITER, 10.0f, new float[] {16.0f,20.0f}, 0.0f);
 
-    public EllipsePaintProxy(IPaintStrategy paintStrategy, boolean selected) {
-        super(paintStrategy, selected);
+    public EllipsePaintProxy (ShapeColor fillColor,
+            ShapeColor strokeColor, ShapeShadingType shapeShadingType, 
+                boolean selected) {
+        super(new EllipsePaintStrategy (fillColor, strokeColor, shapeShadingType), selected);
     }
-
-    public void paint (PaintCanvasBase c, Point origin, Point endpoint){
-        if (mySelected)
-            dashedOutlinePaint(c, origin, endpoint);
-        super.paint(c, origin, endpoint);
+    public EllipsePaintProxy( IPaintStrategy paintStrategy, boolean selected){
+        super(paintStrategy, selected);
     }
         
     public void dashedOutlinePaint (PaintCanvasBase c, Point origin, Point endpoint){
@@ -29,10 +32,6 @@ public class EllipsePaintProxy extends ProxyPaintStrategy {
         Graphics2D graphics2dDashedOutline = c.getGraphics2D();
         graphics2dDashedOutline.setStroke(s);
         graphics2dDashedOutline.drawOval(x, y, width, height);
-    }
-
-    public void setSelected(boolean selected){
-        this.mySelected = selected;
     }
     
 }

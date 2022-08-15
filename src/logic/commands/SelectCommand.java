@@ -1,5 +1,6 @@
 package logic.commands;
 
+import view.gui.PaintShapeComposite;
 import view.interfaces.IPaintShape;
 import java.awt.Point;
 import java.util.List;
@@ -35,10 +36,14 @@ public class SelectCommand implements ICommand {
                             this.endpoint))
                     .toList();
             for (IPaintShape paintShape : this.visibleShapes) {
-                paintShape.setPaintStrategy(false);
+                paintShape.setSelected(false);
             }
             for (IPaintShape paintShape : selectedShapes) {
-                 paintShape.setPaintStrategy(true);
+                //TODO this is a hack job
+                if (paintShape.isComposite())
+                    ((PaintShapeComposite) paintShape).setThisSelected(true);
+                else
+                    paintShape.setSelected(true);
             }
             this.selectedShapesPublisher
                     .announce(selectedShapes);

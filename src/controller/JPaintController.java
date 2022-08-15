@@ -1,11 +1,10 @@
 package controller;
 
-import logic.commands.Clipboard;
+import logic.Clipboard;
 import logic.commands.CommandHistory;
 import model.interfaces.IApplicationState;
 import view.EventName;
 import view.interfaces.IUiModule;
-import view.interfaces.IEventCallback;
 
 public class JPaintController implements IJPaintController {
     private final IUiModule uiModule;
@@ -49,5 +48,9 @@ public class JPaintController implements IJPaintController {
                 () -> Clipboard.paste());
         uiModule.addEvent(EventName.DELETE, 
                 () -> Clipboard.delete());
+        uiModule.addEvent(EventName.GROUP, 
+                () -> Clipboard.group());
+        uiModule.addEvent(EventName.UNGROUP, 
+                () -> Clipboard.ungroup());
     }
 }

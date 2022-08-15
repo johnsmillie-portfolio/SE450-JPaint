@@ -10,7 +10,7 @@ import model.ShapeShadingType;
 
 import java.awt.Graphics2D;
 
-public class TrianglePaintStrategy implements IPaintStrategy {
+class TrianglePaintStrategy implements IPaintStrategy {
     private ShapeColor fillColor;
     private ShapeColor strokeColor;
     private ShapeShadingType shapeShadingType;
@@ -52,7 +52,11 @@ public class TrianglePaintStrategy implements IPaintStrategy {
 
         }
     }
-
+        
+    public IPaintStrategy getPaintStrategy() {
+        return new TrianglePaintStrategy(this.fillColor,
+        this.strokeColor, this.shapeShadingType);
+    }
    
-}
 
+}

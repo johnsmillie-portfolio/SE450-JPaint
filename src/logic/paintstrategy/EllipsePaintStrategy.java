@@ -11,7 +11,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 
-public class EllipsePaintStrategy implements IPaintStrategy {
+class EllipsePaintStrategy implements IPaintStrategy {
     private ShapeColor fillColor;
     private ShapeColor strokeColor;
     private ShapeShadingType shapeShadingType;
@@ -47,6 +47,11 @@ public class EllipsePaintStrategy implements IPaintStrategy {
             graphics2dOutline.setColor(strokeColor.getColor());
             graphics2dOutline.drawOval(x, y, width, height);
         }
+    }
 
+    @Override
+    public IPaintStrategy getPaintStrategy() {
+      return new EllipsePaintStrategy(this.fillColor,
+      this.strokeColor, this.shapeShadingType);
     }
 }

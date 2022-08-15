@@ -9,7 +9,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 
-public class RectanglePaintStrategy implements IPaintStrategy { 
+class RectanglePaintStrategy implements IPaintStrategy { 
     private ShapeColor fillColor;
     private ShapeColor strokeColor;
     private ShapeShadingType shapeShadingType;
@@ -45,7 +45,10 @@ public class RectanglePaintStrategy implements IPaintStrategy {
             graphics2dOutline.setColor(strokeColor.getColor());
             graphics2dOutline.drawRect(x, y, width, height);
         }
-
-        
     }
+    public IPaintStrategy getPaintStrategy() {
+        return new RectanglePaintStrategy(this.fillColor,
+        this.strokeColor, this.shapeShadingType);
+      }
+
 }
