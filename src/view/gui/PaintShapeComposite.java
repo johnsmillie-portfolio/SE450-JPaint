@@ -12,9 +12,9 @@ import view.interfaces.IPaintShape;
 import view.interfaces.PaintCanvasBase;
 
 public class PaintShapeComposite implements IPaintShape {
-    List<IPaintShape> children;
-    Point origin;
-    Point endpoint;
+    private List<IPaintShape> children;
+    private Point origin;
+    private Point endpoint;
     private boolean selected;
 
 
@@ -22,8 +22,8 @@ public class PaintShapeComposite implements IPaintShape {
         this.children = selectedShapes;
         this.origin = this.getOrigin();
         this.endpoint = this.getEndpoint();
-        this.selected = true;
         this.setSelected(false);
+        this.selected = true;
     }
 
     public Point getEndpoint() {
@@ -113,13 +113,23 @@ public class PaintShapeComposite implements IPaintShape {
 
     @Override
     public void setSelected(boolean selected) {
+        this.selected = selected;
         for (IPaintShape shape : children) {
             shape.setSelected(selected);
         }
         
     }
+    public void setThisSelected (boolean selected){
+        this.selected = selected;
+    }
     public List<IPaintShape> getChildren(){
         return this.children;
+    }
+
+    @Override
+    public boolean isComposite() {
+        
+        return true;
     }
     
 }

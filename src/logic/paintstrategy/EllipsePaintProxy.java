@@ -18,7 +18,7 @@ public class EllipsePaintProxy extends ProxyPaintStrategy {
     public EllipsePaintProxy (ShapeColor fillColor,
             ShapeColor strokeColor, ShapeShadingType shapeShadingType, 
                 boolean selected) {
-        super(new TrianglePaintStrategy (fillColor, strokeColor, shapeShadingType), selected);
+        super(new EllipsePaintStrategy (fillColor, strokeColor, shapeShadingType), selected);
     }
     public EllipsePaintProxy( IPaintStrategy paintStrategy, boolean selected){
         super(paintStrategy, selected);

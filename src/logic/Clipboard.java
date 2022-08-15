@@ -1,7 +1,12 @@
-package logic.commands;
+package logic;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import logic.commands.AddPaintShapeCompositeCommand;
+import logic.commands.DeleteShapesCommand;
+import logic.commands.PasteClipboardCommand;
+import logic.commands.UngroupPaintShapeCompositeCommand;
 import logic.observer.IPublisher;
 import logic.observer.IStatefulListPublisher;
 import view.gui.PaintShapeComposite;
@@ -30,9 +35,8 @@ public class Clipboard {
     }
 
     public static void paste () {
-        copyToClipboard();
         if (clipboard != null) {
-            for (IPaintShape paintShape : clipboard) {
+            for (IPaintShape paintShape : visibleShapes) {
                 paintShape.setSelected(false);            
             }
         
@@ -42,8 +46,9 @@ public class Clipboard {
     }
 
     public static void delete () {
-        (new DeleteShapesCommand(selectedShapes, visibleShapes,
-            visibleShapesListPub, selectedShapesListPub)).invoke();
+        if (selectedShapes != null || selectedShapes.size() > 0)
+            (new DeleteShapesCommand(selectedShapes, visibleShapes,
+                visibleShapesListPub, selectedShapesListPub)).invoke();
     }
     
     public static void group () {
@@ -53,6 +58,12 @@ public class Clipboard {
     }
 
     public static void ungroup () {
+        if (selectedShapes != null || selectedShapes.size() > 0)
+            new UngroupPaintShapeCompositeCommand(selectedShapes, visibleShapesListPub, 
+                selectedShapesListPub).invoke(); 
+
+            
+    
 
     }
 }

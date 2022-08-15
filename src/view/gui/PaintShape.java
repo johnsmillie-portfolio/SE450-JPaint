@@ -107,6 +107,11 @@ public class PaintShape implements IPaintShape {
         return this.origin;
     }
 
+    @Override
+    public boolean isComposite() {
+        return false;
+    }
+
    // @Override
     //public List<IPaintShape> getChildren() {
         

@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.swing.event.MouseInputAdapter;
 
-import logic.commands.Clipboard;
 import logic.dragstrategy.AddNewShapeDragStrategy;
 import logic.dragstrategy.IDragStrategy;
 import logic.dragstrategy.MoveDragStrategy;
