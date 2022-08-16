@@ -3,8 +3,6 @@ package view.gui;
 import view.interfaces.IPaintShape;
 import view.interfaces.PaintCanvasBase;
 import java.awt.Point;
-import java.util.List;
-
 import logic.paintstrategy.EllipsePaintProxy;
 import logic.paintstrategy.IPaintStrategy;
 import logic.paintstrategy.IProxyPaintStrategy;
@@ -112,9 +110,5 @@ public class PaintShape implements IPaintShape {
         return false;
     }
 
-   // @Override
-    //public List<IPaintShape> getChildren() {
-        
-       // return null;
-    //}
+   
 }
