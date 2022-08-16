@@ -12,6 +12,7 @@ public class AddPaintShapeCompositeCommand implements ICommand, IUndoable {
     private IPaintShape paintShapeComposite; 
     private IStatefulListPublisher<IPaintShape> visibleShapesListPub;
     private IPublisher<List<IPaintShape>> selectedShapesListPub;
+    List<IPaintShape> children;
     
     public AddPaintShapeCompositeCommand(PaintShapeComposite paintShapeComposite, 
         IStatefulListPublisher<IPaintShape> visibleShapesListPublisher, 
@@ -19,24 +20,27 @@ public class AddPaintShapeCompositeCommand implements ICommand, IUndoable {
             this.paintShapeComposite = paintShapeComposite;
             this.visibleShapesListPub = visibleShapesListPublisher;
             this.selectedShapesListPub = selectedShapesListPublisher;
-
+            this.children = new ArrayList<IPaintShape>(
+                ((PaintShapeComposite) this.paintShapeComposite).getChildren());
         }
 
     @Override
     public void undo() {
-        List<IPaintShape> announceNeedsArray = new ArrayList<IPaintShape>();
-        announceNeedsArray.addAll(((PaintShapeComposite) this.paintShapeComposite).getChildren());
-        for (IPaintShape shape : announceNeedsArray) {
+       
+        for (IPaintShape shape : children) {
             shape.setSelected(true);
         }
-        this.selectedShapesListPub.announce(announceNeedsArray);
+        this.selectedShapesListPub.announce(children);
         visibleShapesListPub.remove(this.paintShapeComposite);
-        visibleShapesListPub.addCollection(announceNeedsArray);
+        visibleShapesListPub.addCollection(children);
         
     }
 
     @Override
     public void redo() {
+        for (IPaintShape shape : children) {
+            shape.setSelected(false);
+        }
         this.addShape();
         
     }
@@ -49,11 +53,11 @@ public class AddPaintShapeCompositeCommand implements ICommand, IUndoable {
     }
 
     private void addShape() {
-        List<IPaintShape> announceNeedsArray = new ArrayList<IPaintShape>();
-        announceNeedsArray.add(paintShapeComposite);
-        this.selectedShapesListPub.announce(announceNeedsArray);
+        List<IPaintShape> announceArray = new ArrayList<IPaintShape>();
+        announceArray.add(paintShapeComposite);
+        this.selectedShapesListPub.announce(announceArray);
 
-        visibleShapesListPub.removeCollection(((PaintShapeComposite) this.paintShapeComposite).getChildren());
+        visibleShapesListPub.removeCollection(children);
         visibleShapesListPub.add(paintShapeComposite);
     }
     

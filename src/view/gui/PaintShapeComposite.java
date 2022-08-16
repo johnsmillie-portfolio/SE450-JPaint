@@ -26,47 +26,17 @@ public class PaintShapeComposite implements IPaintShape {
         this.selected = true;
     }
 
-    public Point getEndpoint() {
-        Point p = new Point(0,0);
-        for (IPaintShape shape : children) {
-            Point temp = shape.getEndpoint();
-        
-            if (temp.x > p.x) {
-                p.x = temp.x;
-            }
-            if (temp.y > p.y) {
-                p.y = temp.y;
-            }
-         }
-        return p;
-    }
-
-    public Point getOrigin() {
-        Point p = new Point(Integer.MAX_VALUE, Integer.MAX_VALUE);
-        for (IPaintShape shape : children) {
-            Point temp = shape.getOrigin();
-        
-            if (temp.x < p.x) {
-                p.x = temp.x;
-            }
-            if (temp.y < p.y) {
-                p.y = temp.y;
-            }
-         }
-        return p;
-    }
+   
 
     @Override
     public void paint(PaintCanvasBase c) {
         if (this.selected){
-            //TODO draw rectangle outline
             Stroke s = new BasicStroke  (1.0f, BasicStroke.CAP_SQUARE, 
             BasicStroke.JOIN_MITER, 10.0f, 
             new float[] {16.0f,20.0f}, 0.0f);
             int height = this.getEndpoint().y - this.getOrigin().y;
             int width = this.getEndpoint().x - this.getOrigin().x;
             Graphics2D graphics2dDashedOutline = c.getGraphics2D();
-            //graphics2dDashedOutline.setColor(Color.BLACK);
             graphics2dDashedOutline.setStroke(s);
             graphics2dDashedOutline.drawRect(this.getOrigin().x - 2, this.getOrigin().y - 2, width + 6, height + 6);
         }
@@ -121,11 +91,37 @@ public class PaintShapeComposite implements IPaintShape {
         }
         
     }
-    public void setThisSelected (boolean selected){
-        this.selected = selected;
+
+    @Override
+    public Point getEndpoint() {
+        Point p = new Point(0,0);
+        for (IPaintShape shape : children) {
+            Point temp = shape.getEndpoint();
+        
+            if (temp.x > p.x) {
+                p.x = temp.x;
+            }
+            if (temp.y > p.y) {
+                p.y = temp.y;
+            }
+         }
+        return p;
     }
-    public List<IPaintShape> getChildren(){
-        return this.children;
+    
+    @Override
+    public Point getOrigin() {
+        Point p = new Point(Integer.MAX_VALUE, Integer.MAX_VALUE);
+        for (IPaintShape shape : children) {
+            Point temp = shape.getOrigin();
+        
+            if (temp.x < p.x) {
+                p.x = temp.x;
+            }
+            if (temp.y < p.y) {
+                p.y = temp.y;
+            }
+         }
+        return p;
     }
 
     @Override
@@ -134,4 +130,11 @@ public class PaintShapeComposite implements IPaintShape {
         return true;
     }
     
+    public void setThisSelected (boolean selected){
+        this.selected = selected;
+    }
+    public List<IPaintShape> getChildren(){
+        return this.children;
+    }
+
 }

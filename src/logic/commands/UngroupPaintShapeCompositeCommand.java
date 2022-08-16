@@ -12,6 +12,7 @@ public class UngroupPaintShapeCompositeCommand implements ICommand, IUndoable {
     private List<IPaintShape> selectedShapes;
     private IStatefulListPublisher<IPaintShape> visibleShapesListPub;
     private IPublisher<List<IPaintShape>> selectedShapesListPub;
+    private List<IPaintShape> freeShapes;
 
     public UngroupPaintShapeCompositeCommand(List<IPaintShape> selectedShapes, 
         IStatefulListPublisher<IPaintShape> visibleShapesListPublisher, 
@@ -19,35 +20,51 @@ public class UngroupPaintShapeCompositeCommand implements ICommand, IUndoable {
             this.selectedShapes = selectedShapes;
             this.visibleShapesListPub = visibleShapesListPublisher;
             this.selectedShapesListPub = selectedShapesListPublisher;
+            freeShapes = new ArrayList<IPaintShape>();
         }
 
     @Override
     public void undo() {
-        // TODO Auto-generated method stub
-        
+        for (IPaintShape shape : this.selectedShapes) {
+            if (shape.isComposite()){
+                List<IPaintShape> list = new ArrayList<IPaintShape>(
+                    ((PaintShapeComposite) shape).getChildren());
+                for (IPaintShape item : list) {
+                    if(item.isComposite())
+                        ((PaintShapeComposite) item).setThisSelected(false);
+                    else
+                        item.setSelected(false);
+                }
+            }
+        }
+        selectedShapesListPub.announce(this.selectedShapes);
+        visibleShapesListPub.addCollection(this.selectedShapes);
     }
+
 
     @Override
     public void redo() {
-        // TODO Auto-generated method stub
+        this.ungroup();
         
     }
 
     @Override
     public void invoke() {
-        List<IPaintShape> freeShapes = freeChildren();
-        selectedShapesListPub.announce(freeShapes);
-        visibleShapesListPub.addCollection(freeShapes);
+        this.ungroup();
         CommandHistory.add(this);
     }
 
+    private void ungroup(){
+        freeChildren();
+        selectedShapesListPub.announce(freeShapes);
+        visibleShapesListPub.addCollection(freeShapes);
+    }
     
-    private List<IPaintShape> freeChildren() {
-        List<IPaintShape> freeShapes = new ArrayList<IPaintShape>();
+    private void freeChildren() {
         for (IPaintShape shape : this.selectedShapes) {
             if (shape.isComposite()){
-                List<IPaintShape> list = new ArrayList<IPaintShape>();
-                list.addAll(((PaintShapeComposite) shape).getChildren());
+                List<IPaintShape> list = new ArrayList<IPaintShape>(
+                    ((PaintShapeComposite) shape).getChildren());
                 for (IPaintShape item : list) {
                     if(item.isComposite())
                         ((PaintShapeComposite) item).setThisSelected(true);
@@ -60,6 +77,5 @@ public class UngroupPaintShapeCompositeCommand implements ICommand, IUndoable {
             else
                 freeShapes.add(shape);           
         }
-        return freeShapes;
     }
 }
