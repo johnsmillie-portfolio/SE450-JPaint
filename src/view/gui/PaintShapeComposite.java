@@ -97,6 +97,8 @@ public class PaintShapeComposite implements IPaintShape {
 
     @Override
     public void move(int x, int y) {
+        this.origin = new Point(this.origin.x + x, this.origin.y + y);
+        this.endpoint = new Point(this.endpoint.x + x, this.endpoint.y + y);
         for (IPaintShape shape : children) {
             shape.move(x, y);
         }
