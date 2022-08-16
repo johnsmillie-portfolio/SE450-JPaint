@@ -28,7 +28,6 @@ public class DeleteShapesCommand implements ICommand, IUndoable {
     @Override
     public void invoke() {
        this.deleteSelectedShapes();
-       //this.visibleShapesListPub.announce(visibleShapes);
        this.selectedShapesListPub.announce(new ArrayList<IPaintShape>());
        CommandHistory.add(this);
     }
@@ -42,7 +41,6 @@ public class DeleteShapesCommand implements ICommand, IUndoable {
 
     @Override
     public void undo() {
-        // TODO Auto-generated method stub
         visibleShapesListPub.announce(this.visibleShapes);
        selectedShapesListPub.announce(this.selectedShapes);
     }
@@ -50,7 +48,6 @@ public class DeleteShapesCommand implements ICommand, IUndoable {
 
     @Override
     public void redo() {
-        // TODO Auto-generated method stub
         this.invoke();
     }
 }
