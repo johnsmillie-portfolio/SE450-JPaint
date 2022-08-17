@@ -30,10 +30,7 @@ public class UngroupPaintShapeCompositeCommand implements ICommand, IUndoable {
                 List<IPaintShape> list = new ArrayList<IPaintShape>(
                     ((PaintShapeComposite) shape).getChildren());
                 for (IPaintShape item : list) {
-                    if(item.isComposite())
-                        ((PaintShapeComposite) item).setThisSelected(false);
-                    else
-                        item.setSelected(false);
+                    item.setSelected(false);
                 }
             }
         }
@@ -45,7 +42,6 @@ public class UngroupPaintShapeCompositeCommand implements ICommand, IUndoable {
     @Override
     public void redo() {
         this.ungroup();
-        
     }
 
     @Override
@@ -66,10 +62,7 @@ public class UngroupPaintShapeCompositeCommand implements ICommand, IUndoable {
                 List<IPaintShape> list = new ArrayList<IPaintShape>(
                     ((PaintShapeComposite) shape).getChildren());
                 for (IPaintShape item : list) {
-                    if(item.isComposite())
-                        ((PaintShapeComposite) item).setThisSelected(true);
-                    else
-                        item.setSelected(true);
+                    item.setSelected(true);
                 }
                 visibleShapesListPub.remove(shape);
                 freeShapes.addAll(list);

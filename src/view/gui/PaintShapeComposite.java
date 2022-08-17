@@ -86,10 +86,6 @@ public class PaintShapeComposite implements IPaintShape {
     @Override
     public void setSelected(boolean selected) {
         this.selected = selected;
-        for (IPaintShape shape : children) {
-            shape.setSelected(selected);
-        }
-        
     }
 
     @Override
@@ -126,13 +122,10 @@ public class PaintShapeComposite implements IPaintShape {
 
     @Override
     public boolean isComposite() {
-        
         return true;
     }
     
-    public void setThisSelected (boolean selected){
-        this.selected = selected;
-    }
+    
     public List<IPaintShape> getChildren(){
         return this.children;
     }

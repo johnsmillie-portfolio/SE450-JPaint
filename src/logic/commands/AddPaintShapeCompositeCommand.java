@@ -53,6 +53,9 @@ public class AddPaintShapeCompositeCommand implements ICommand, IUndoable {
     }
 
     private void addShape() {
+        for (IPaintShape shape : children) {
+            shape.setSelected(false);
+        }
         List<IPaintShape> announceArray = new ArrayList<IPaintShape>();
         announceArray.add(paintShapeComposite);
         this.selectedShapesListPub.announce(announceArray);
