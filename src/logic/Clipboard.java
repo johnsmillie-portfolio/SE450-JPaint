@@ -3,10 +3,10 @@ package logic;
 import java.util.ArrayList;
 import java.util.List;
 
-import logic.commands.AddPaintShapeCompositeCommand;
+import logic.commands.AddShapeCompositeCommand;
 import logic.commands.DeleteShapesCommand;
 import logic.commands.PasteClipboardCommand;
-import logic.commands.UngroupPaintShapeCompositeCommand;
+import logic.commands.UngroupShapeCompositeCommand;
 import logic.observer.IPublisher;
 import logic.observer.IStatefulListPublisher;
 import view.gui.PaintShapeComposite;
@@ -46,20 +46,29 @@ public class Clipboard {
     }
 
     public static void delete () {
-        if (selectedShapes != null || selectedShapes.size() > 0)
+        if (selectedShapes != null)
             (new DeleteShapesCommand(selectedShapes, visibleShapes,
                 visibleShapesListPub, selectedShapesListPub)).invoke();
     }
     
     public static void group () {
-        if (selectedShapes != null || selectedShapes.size() > 0)
-            new AddPaintShapeCompositeCommand(new PaintShapeComposite(selectedShapes),
+        if (selectedShapes.size() > 1 )
+            new AddShapeCompositeCommand(new PaintShapeComposite(selectedShapes),
                 visibleShapesListPub, selectedShapesListPub).invoke();;
     }
 
     public static void ungroup () {
-        if (selectedShapes != null || selectedShapes.size() > 0)
-            new UngroupPaintShapeCompositeCommand(selectedShapes, visibleShapesListPub, 
+        boolean hasComposite = false;
+        if (selectedShapes != null) {
+            for (IPaintShape shape : selectedShapes) {
+                if (shape.isComposite()){
+                    hasComposite = true;
+                    break;
+                }
+            }
+        }
+        if (hasComposite)
+            new UngroupShapeCompositeCommand(selectedShapes, visibleShapesListPub, 
                 selectedShapesListPub).invoke(); 
 
             

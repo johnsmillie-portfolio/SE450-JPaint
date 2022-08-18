@@ -8,13 +8,13 @@ import logic.observer.IStatefulListPublisher;
 import view.gui.PaintShapeComposite;
 import view.interfaces.IPaintShape;
 
-public class AddPaintShapeCompositeCommand implements ICommand, IUndoable {
+public class AddShapeCompositeCommand implements ICommand, IUndoable {
     private IPaintShape paintShapeComposite; 
     private IStatefulListPublisher<IPaintShape> visibleShapesListPub;
     private IPublisher<List<IPaintShape>> selectedShapesListPub;
     List<IPaintShape> children;
     
-    public AddPaintShapeCompositeCommand(PaintShapeComposite paintShapeComposite, 
+    public AddShapeCompositeCommand(PaintShapeComposite paintShapeComposite, 
         IStatefulListPublisher<IPaintShape> visibleShapesListPublisher, 
         IPublisher<List<IPaintShape>> selectedShapesListPublisher) {
             this.paintShapeComposite = paintShapeComposite;
@@ -57,7 +57,7 @@ public class AddPaintShapeCompositeCommand implements ICommand, IUndoable {
             shape.setSelected(false);
         }
         List<IPaintShape> announceArray = new ArrayList<IPaintShape>();
-        announceArray.add(paintShapeComposite);
+        announceArray.add(this.paintShapeComposite);
         this.selectedShapesListPub.announce(announceArray);
 
         visibleShapesListPub.removeCollection(children);

@@ -80,6 +80,10 @@ public class PaintShapeComposite implements IPaintShape {
         for (IPaintShape shape : children) {
            clonedShapes.add(shape.cloneShape());
         }
+        for (IPaintShape shape : clonedShapes) {
+            shape.setSelected(false);
+        }
+
         return new PaintShapeComposite(clonedShapes);
     }
 
