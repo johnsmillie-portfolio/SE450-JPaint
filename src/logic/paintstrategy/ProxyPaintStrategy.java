@@ -25,13 +25,14 @@ public abstract class ProxyPaintStrategy implements IProxyPaintStrategy {
     public void setSelected (boolean selected){
         this.selected = selected;
     }
-
-    public abstract void dashedOutlinePaint(PaintCanvasBase c, 
-            Point origin, Point endpoint);
     
+            @Override
     public IPaintStrategy getPaintStrategy() {
         return this.paintStrategy.getPaintStrategy();
     }
+    
+    public abstract void dashedOutlinePaint(PaintCanvasBase c, 
+            Point origin, Point endpoint);
 
     
     

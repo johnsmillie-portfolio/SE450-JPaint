@@ -1,37 +1,58 @@
-# Introduction
+## Introduction
 This is the JPaint application produced for SE450 in Summer 2022 at DePaul Univesity, instructed by Jeff Sharpe.  The substantive additions to the base code in this repository were made by John Smillie and David Zwerdling.
 
-NOTE: Starting 07/29/2022 all submissions to this project 
-were written exclusively by John Smillie.
+NOTE: Starting 07/29/2022 all submissions to this repository were written exclusively by John Smillie.
 
-# Grading Notes
+## Grading Notes
+
 ## Missing Features
 
 ## Bugs
-- Painting bugs on closure of popups
-    On DZwerdling's system, upon closing the mouse mode selection dialog, there are visual bugs that prevent shapes from being drawn correctly.
-- Move and/or select are currently broken
 
 ## Extra Credit
 
 ## Miscellaneous Notes
 
 ## GitHub Repository
-https://github.com/zwerdlds/SE450-JPaint
+https://github.com/JohnSmillie/SE450-JPaint
 
-## List of Design Patterns
+## List of Design Patterns:
+
 ### 1. Command
+Interfaces: ICommand, IUndoable
+Implementating Classes: AddShapeCommand, SelectCommand, MoveShapesCommand, PasteClipboardCommand,
+                        DeleteShapesCommand, AddShapeCompositeCommand, UngroupShapeCompositeCommand, UndoCommand
+
 The behavior of the user interface needs to be extensible.  While the project starts with limited functionality, more will be added.  Interacting with the logic layer should be decoupled from the interface, but the interface should have knowledge of the functions it is capable of performing.  For these reasons, the project implements a Command pattern.  The UI layer is one client capable of creating commands, which then are passed to the logic layer to be invoked, and kept in a stack, to be revoked in case of an undo.
 
 ### 2. Strategy
-The behavior of the mouse will fire different actions based on the application state. A mouse down -> move mouse -> mouse up could be used to build a new shape, or to select a current shape. This is relative to the application state. Furthermore, the painting of differernt shapes will require different algorithms based on the type of shape being painted. Different approaches will need to be applied based on the current state, and that is why we have used the Strategy Pattern to provide strategies for these implementations. "The Strategy pattern suggests that you take a class that does something specific in a lot of different ways and extract all of these algorithms into separate classes called strategies" -Refactoring Guru. We have applied this to the drag mouse and paint shape behaviors by programming to an interface and allowing implementing classes to perform our various strategies. 
+Interfaces: IDragStrategy, IPaintStrategy
+Implementing Classes: AddNewShapeDragStrategy, MoveDragStrategy, SelectDragStrategy, StatefulDragStrategy,   
+                      RectanglePaintStrategy, EllipsePaintStrategy, TrianglePaintStrategy
+
+The behavior of the mouse will fire different actions based on the application state. A mouse down -> move mouse -> mouse up could be used to build a new shape, or to select a current shape. This is relative to the application state. Furthermore, the painting of differernt shapes will require different algorithms based on the type of shape being painted. Different algorithms will need to be applied based on the current state, and that is why we have used the Strategy Pattern to provide strategies for these implementations. "The Strategy pattern suggests that you take a class that does something specific in a lot of different ways and extract all of these algorithms into separate classes called strategies" -refactoring.guru. We have applied this to the drag mouse and paint shape behaviors by programming to an interface and allowing implementing classes to perform our various strategies. 
 
 ### 3. Observer
+Interfaces: IPublisher, ISubscriber, IStatefulPublisher, IStatefulListPublisher, IRetriggerable
+Implementing Classes: SimplePublisher, StatefulListPublisher, ClickHandler, Clipboard, PaintCanvas
+
 The painting and selection processes both rely on dynamic lists of shapes, which are defined by their follow-on processes based on the list populations.  Because the lists are dynamic and there is dependent logic we do not want to be responsible for at the list-population logic layer, this suggests a decoupling via an observer pattern.  In the case of painting, the list of shapes will be populated by the drawing mechanism invoked by the AddNewShapeCommand.  The PaintCanvas class implements the subscriber interface and subscribe to shape list updates.  Additionally, the ClickHandler will also implement the subscriber interface, so that it may correctly calculate the selection.  In the case of selection, the list of selected shapes will be calculated and updated by the ClickHandler class, to be acted upon by any following subscribers.
 
 ### 4. Proxy
+Interfaces: IProxyPaintStrategy 
+Implementing Classes: ProxyPaintStrategy, RectanglePaintProxy, EllipsePaintProxy, TrianglePaintProxy
+
+Each IPaintShape object must be capable of being selected. This state, and the accompanying dashed outline, are supplemental to the IPaintStrategy. Using the Proxy Pattern, ProxyPaintStrategy class implements the IPaintStrategy through an inherited interface IProxyPaintStrategy, and is used to control access to each of the implementing IPaintStrategy classes, providing an absract dashedOutlinePaint method. A concrete *ShapePaintProxy composes each concrete *ShapePaintStrategy and implements dashedOutlinePaint when the shape is selected. Because the proxy implements the same interface as each *ShapePaintStrategy, it can be passed to any client that expects a paint strategy. 
+
+
 ### 5. Composite
-### 6. 
+Interfaces: IPaintShape
+Implementing Classes: PaintShape, PaintShapeComposite
+
+The ability to group shapes requires a new type of shape, comprised of other shapes, that acts as a single shape. The Composite Pattern enables the use of individual shapes and composite shapes through the common interface IPaintShape. The methods implemented by the concrete classes PaintShape and PaintShapeComposite are neary identical. In many cases, the composite class is performing logic on a list of the "children" of the composite. If one of those children are themselves a PaintShapeComposite, then the logic will be performed on its children. AddShapeCompositeCommand and UngroupShapeCompositeCommand implement the group/ungroup behavior using PaintShapeComposite objects.
+
+
+
 
 ## Additional Discussion
 
@@ -41,10 +62,10 @@ The painting and selection processes both rely on dynamic lists of shapes, which
 - Investigate using strategy pattern for drawing disparate shape types
 - Investigate refactoring shape to take paint context as constructor
 
-# To-Do
-- Whiteboard exercise/Discussion post
+## To-Do
 
-# Completed Features
+
+## Completed Features
 
 ## Sprint 1
 - Draw a filled-in (always green) Rectangle
@@ -90,9 +111,6 @@ depending on personal preference.
 - Whiteboard exercise/Discussion post
 
 
-# Currently Unimplmented Features
-
-
 ## Sprint 4 (Ends on Week 10)
 - Group
   - Clicking this button will cause all Selected shapes to operate as a
@@ -110,6 +128,8 @@ grouped.
   - If a selected group is comprised of one or more groups, only the
 outer-most group is ungrouped
 - Undo/Redo Group and Ungroup
+
+## Currently Unimplmented Features
 
 ## Additional Requirements
 - Have at least 5 design patterns implemented

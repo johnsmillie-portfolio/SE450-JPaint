@@ -8,13 +8,13 @@ import logic.observer.IStatefulListPublisher;
 import view.gui.PaintShapeComposite;
 import view.interfaces.IPaintShape;
 
-public class UngroupPaintShapeCompositeCommand implements ICommand, IUndoable {
+public class UngroupShapeCompositeCommand implements ICommand, IUndoable {
     private List<IPaintShape> selectedShapes;
     private IStatefulListPublisher<IPaintShape> visibleShapesListPub;
     private IPublisher<List<IPaintShape>> selectedShapesListPub;
     private List<IPaintShape> freeShapes;
 
-    public UngroupPaintShapeCompositeCommand(List<IPaintShape> selectedShapes, 
+    public UngroupShapeCompositeCommand(List<IPaintShape> selectedShapes, 
         IStatefulListPublisher<IPaintShape> visibleShapesListPublisher, 
         IPublisher<List<IPaintShape>> selectedShapesListPublisher) {
             this.selectedShapes = selectedShapes;
@@ -30,22 +30,20 @@ public class UngroupPaintShapeCompositeCommand implements ICommand, IUndoable {
                 List<IPaintShape> list = new ArrayList<IPaintShape>(
                     ((PaintShapeComposite) shape).getChildren());
                 for (IPaintShape item : list) {
-                    if(item.isComposite())
-                        ((PaintShapeComposite) item).setThisSelected(false);
-                    else
-                        item.setSelected(false);
+                    item.setSelected(false);
                 }
             }
+            else
+                shape.setSelected(true);
         }
         selectedShapesListPub.announce(this.selectedShapes);
+        visibleShapesListPub.removeCollection(this.freeShapes);
         visibleShapesListPub.addCollection(this.selectedShapes);
     }
-
 
     @Override
     public void redo() {
         this.ungroup();
-        
     }
 
     @Override
@@ -66,10 +64,7 @@ public class UngroupPaintShapeCompositeCommand implements ICommand, IUndoable {
                 List<IPaintShape> list = new ArrayList<IPaintShape>(
                     ((PaintShapeComposite) shape).getChildren());
                 for (IPaintShape item : list) {
-                    if(item.isComposite())
-                        ((PaintShapeComposite) item).setThisSelected(true);
-                    else
-                        item.setSelected(true);
+                    item.setSelected(true);
                 }
                 visibleShapesListPub.remove(shape);
                 freeShapes.addAll(list);

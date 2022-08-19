@@ -5,7 +5,6 @@ import java.util.List;
 import controller.IJPaintController;
 import controller.JPaintController;
 import logic.ClickHandler;
-import logic.Clipboard;
 import logic.observer.SimplePublisher;
 import model.persistence.ApplicationState;
 import view.gui.Gui;
