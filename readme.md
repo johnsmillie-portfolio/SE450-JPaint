@@ -8,6 +8,12 @@ NOTE: Starting 07/29/2022 all submissions to this repository were written exclus
 ## Missing Features
 
 ## Bugs
+I have encountered 2 bugs:
+
+1. After a substantial number of commands, including multiple group->copy->paste->ungroup->repeat sequences, some shapes exhibit exaggerated move behavior. 
+
+2. (I cannot recreate this with any consistency) Occasionally, and perhaps coinciding with an extensive number of commands, the dashed outline when selecting and grouping shapes fails to encompass the shapes.  
+
 
 ## Extra Credit
 
